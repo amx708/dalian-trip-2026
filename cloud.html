@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%BA%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<title>大连7天自由行攻略 · 7/28–8/3</title>
+<style>
+  :root{
+    --bg:#f4f9fc; --card:#ffffff; --ink:#1f2d3d; --sub:#5a6b7b;
+    --line:#e2edf3; --sea:#0a6ebd; --sea2:#1488c9; --sun:#f4813f; --sun2:#f4a259;
+    --good:#1f9d6b; --warn:#e0533d; --chip:#eaf4fb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 16px 60px}
+  header{background:linear-gradient(135deg,#0a6ebd,#1488c9 60%,#37a7d6);color:#fff;
+    padding:30px 16px 26px;margin-bottom:18px}
+  header .inner{max-width:960px;margin:0 auto;padding:0 16px}
+  header h1{font-size:25px;letter-spacing:.5px}
+  header .meta{margin-top:8px;font-size:14px;opacity:.92}
+  header .lead{margin-top:14px;background:rgba(255,255,255,.14);border-radius:10px;
+    padding:12px 14px;font-size:14.5px;line-height:1.65}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-34px 0 20px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px 12px;text-align:center;box-shadow:0 4px 14px rgba(20,136,201,.06)}
+  .kpi .v{font-size:20px;font-weight:700;color:var(--sea)}
+  .kpi .l{font-size:12px;color:var(--sub);margin-top:3px}
+  .ver{font-size:12.5px;color:var(--sea2);background:var(--card);border:1px dashed var(--sea2);
+    border-radius:8px;padding:6px 12px;margin:0 0 12px;display:inline-block}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:5;
+    background:var(--bg);padding:10px 0 12px;border-bottom:1px solid var(--line);margin-bottom:18px}
+  .tab{border:1px solid var(--line);background:var(--card);color:var(--sub);
+    padding:7px 15px;border-radius:20px;font-size:14px;cursor:pointer;transition:.15s}
+  .tab:hover{border-color:var(--sea2)}
+  .tab.on{background:var(--sea);color:#fff;border-color:var(--sea)}
+  .panel{display:none}
+  .panel.on{display:block;animation:fade .25s}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+  h2{font-size:19px;margin:6px 0 14px;padding-left:11px;border-left:4px solid var(--sea)}
+  h3{font-size:15.5px;margin:18px 0 8px;color:var(--sea2)}
+  p,li{font-size:14.5px;color:var(--ink)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:16px;margin-bottom:14px;box-shadow:0 2px 10px rgba(31,45,61,.04)}
+  .day{display:flex;gap:14px;align-items:flex-start}
+  .day .num{flex:0 0 52px;height:52px;border-radius:12px;background:var(--chip);
+    color:var(--sea);font-weight:700;font-size:15px;display:flex;align-items:center;
+    justify-content:center;text-align:center;line-height:1.2}
+  .day .num small{display:block;font-size:11px;color:var(--sub);font-weight:500}
+  .day .body{flex:1}
+  .day .body b{color:var(--ink)}
+  .tag{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:20px;
+    background:var(--chip);color:var(--sea2);margin:2px 4px 2px 0}
+  .tag.free{background:#e7f7ef;color:var(--good)}
+  .tag.pay{background:#fff1e8;color:var(--sun)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 4px}
+  th,td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+  th{background:#eef6fb;color:var(--sea);font-weight:600}
+  tr:nth-child(even) td{background:#fafdfe}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .spot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+  .spot .hd{background:linear-gradient(120deg,#eaf4fb,#f4fbfe);padding:12px 14px}
+  .spot .hd b{font-size:15px;color:var(--sea)}
+
+  .spot-link{color:var(--sea);text-decoration:none;cursor:pointer;
+    border-bottom:1px dashed var(--sea2)}
+  .spot-link:hover{color:var(--sea2);background:#eaf4fb;border-radius:4px}
+  .links{margin:10px 0 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .ext{display:inline-block;padding:6px 14px;border-radius:20px;background:var(--sea);color:#fff;font-size:13px;text-decoration:none;font-weight:600;transition:.15s}
+  .ext:hover{background:var(--sea2)}
+
+  .spot .hd .meta{font-size:12px;color:var(--sub);margin-top:3px}
+  .spot .bd{padding:11px 14px;font-size:13px;color:var(--sub)}
+  .spot .bd .hl{color:var(--ink);margin-top:6px}
+  .note{background:#fff8f2;border:1px solid #ffe0cc;border-radius:10px;
+    padding:12px 14px;font-size:13.5px;color:#9a4a25;margin:10px 0}
+  .note b{color:var(--warn)}
+  ul.tips{list-style:none}
+  ul.tips li{padding:8px 0 8px 26px;position:relative;border-bottom:1px dashed var(--line);font-size:14px}
+  ul.tips li:before{content:"✓";position:absolute;left:0;top:8px;color:var(--good);font-weight:700}
+  ul.tips li.warn:before{content:"!";color:var(--warn)}
+  .pack{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 18px;font-size:13.5px}
+  .pack div{padding:5px 0;border-bottom:1px dashed var(--line)}
+  .foot{font-size:12px;color:var(--sub);margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
+  .price{font-weight:700;color:var(--sun)}
+  a{color:var(--sea2);word-break:break-all}
+  .plan-table td{line-height:1.55;vertical-align:top}
+  .plan-table td[contenteditable]{cursor:text}
+  .plan-table td[contenteditable]:hover{background:#fffdf3}
+  .plan-table td[contenteditable]:focus{background:#fff6e8;box-shadow:inset 0 0 0 2px var(--sun);border-radius:4px}
+  .edit-hint{background:#eef9f1;border-color:#cdeadd;color:#1f7a52}
+  .edit-hint b{color:var(--good)}
+  
+  /* 关键字搜索高亮 */
+  .search-bar{display:flex;gap:8px;margin:10px 0 14px;align-items:center}
+  .search-bar input{flex:1;border:2px solid var(--line);border-radius:10px;
+    padding:9px 14px;font-size:14px;outline:none;transition:.2s;
+    background:var(--card);color:var(--ink)}
+  .search-bar input:focus{border-color:var(--sea);box-shadow:0 0 0 3px rgba(10,110,189,.12)}
+  .search-bar .btn{background:var(--sea);color:#fff;border:none;padding:9px 18px;
+    border-radius:10px;font-size:13.5px;cursor:pointer;white-space:nowrap}
+  .search-bar .btn:hover{background:var(--sea2)}
+  .search-bar .btn.clear{background:var(--sub);font-size:12px;padding:7px 12px}
+  .plan-table tr.highlight{background:#fff3c4 !important;box-shadow:inset 3px 0 0 var(--sun);transition:background .2s}
+  .plan-table tr.highlight td{background:transparent !important}
+  .search-count{font-size:12.5px;color:var(--sub);white-space:nowrap}
+
+@media(max-width:680px){
+  .wrap{padding:0 11px 50px}
+  header{padding:22px 14px 20px;margin-bottom:14px}
+  header h1{font-size:20px}
+  header .lead{font-size:13.5px;padding:10px 12px}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:-26px}
+  .kpi .v{font-size:16px}.kpi .l{font-size:11px}
+  .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding:8px 0 8px}
+  .tab{white-space:nowrap;font-size:13px;padding:6px 12px;flex:0 0 auto}
+  h2{font-size:17px;margin:4px 0 10px}
+  h3{font-size:14.5px}
+  p,li{font-size:14px}
+  .card{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .plan-table{font-size:12.5px;min-width:560px}
+  .plan-table td,.plan-table th{padding:7px 8px}
+  .grid{grid-template-columns:1fr}
+  .pack{grid-template-columns:1fr}
+  .day{flex-direction:column}.day .num{flex:0 0 auto;width:100%}
+  .links{flex-wrap:wrap;gap:7px}
+  .ext{font-size:12.5px;padding:6px 12px}
+  .search-bar{flex-wrap:wrap}
+  .search-bar input{flex:1 1 100%}
+}
+  /* ===== 本地编辑 / 自动保存（仅存本机） ===== */
+  #editbar{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;gap:8px;align-items:center;
+    padding:9px 12px;background:rgba(18,28,46,.95);color:#fff;font-size:13px;
+    box-shadow:0 -3px 12px rgba(0,0,0,.3);}
+  #editbar button{flex:0 0 auto;border:0;border-radius:9px;padding:8px 13px;font-size:13px;cursor:pointer;}
+  #editToggle{background:#ff7a18;color:#fff;font-weight:700;}
+  #editReset{background:#33425c;color:#dfe6f0;}
+  #editStatus{flex:1 1 auto;text-align:left;opacity:.92;font-size:12.5px;line-height:1.3;}
+  body{padding-bottom:58px;}
+  body.editing [contenteditable="true"]{outline:1.6px dashed #ff7a18;outline-offset:1px;
+    background:#fffbe9;border-radius:5px;}
+  body.editing .plan-table td[contenteditable="true"],
+  body.editing .plan-table th[contenteditable="true"]{background:#fffbe9;}
+  @media(max-width:680px){
+    #editbar{font-size:12px;padding:8px 9px;gap:6px;}
+    #editbar button{padding:7px 10px;font-size:12px;}
+    body{padding-bottom:62px;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>🌊 大连7天自由行攻略</h1>
+    <div class="meta">行程对应日期 2026/7/28（周二）– 8/3（周一） · 自由行 · 慢玩不赶</div>
+    <div class="lead"><b>一句话结论：</b>7月的大连是避暑天花板——白天 27–29℃、海风干爽不黏腻，<b>早晚必带薄外套</b>。行程按"海边+城市+近郊"错峰排布，核心景点几乎全免费，人均 <span class="price">约 4500–7200 元</span>（不含往返大交通）。出发前装好「大连e出行」APP，别租单车（全城没有共享单车）。</div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="kpis">
+    <div class="kpi"><div class="v">22–28℃</div><div class="l">日均气温</div></div>
+    <div class="kpi"><div class="v">约70%</div><div class="l">免费景点占比</div></div>
+    <div class="kpi"><div class="v">¥4500+</div><div class="l">单人7天起</div></div>
+    <div class="kpi"><div class="v">地铁+网约车</div><div class="l">最优出行</div></div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <div class="tab on" data-t="overview">概览 · 天气/预算</div>
+    <div class="tab" data-t="plan">每日行程</div>
+    <div class="tab" data-t="spots">景点详解</div>
+    <div class="tab" data-t="food">美食地图</div>
+    <div class="tab" data-t="traffic">交通指南</div>
+    <div class="tab" data-t="avoid">避坑清单</div>
+    <div class="tab" data-t="stay">住宿指南</div>
+  </div>
+
+  <!-- 概览 -->
+  <section class="panel on" id="overview">
+    <h2>👨‍👩‍👧‍👦 出行人群 & 怎么玩（8人）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>成员</th><th>人数</th><th>玩法取向</th></tr>
+        <tr><td>2 对夫妻（成人）</td><td>4</td><td>可偷闲：夜生活/酒吧、洗浴搓澡按摩、东港夜景</td></tr>
+        <tr><td>高中生（男）</td><td>1</td><td>爱刺激：发现王国、滨海路骑行、夜市</td></tr>
+        <tr><td>初中生（男）</td><td>1</td><td>同哥哥，略收着；动物园/金石滩玩水也爱</td></tr>
+        <tr><td>小学生（女）</td><td>1</td><td>萌系：老虎滩海洋动物、星海喂海鸥、圣亚</td></tr>
+        <tr><td>幼儿园（女）</td><td>1</td><td>浅玩：沙滩挖沙、喂海鸥；需大人陪护 + 推车</td></tr>
+      </table>
+      <div class="note">🧭 <b>排线逻辑：</b>白天走「老少皆宜」主线（星海广场 / 滨海路 / 棒棰岛 / 金石滩玩水 / 老虎滩 / 森林动物园），晚上夫妻可抽空去酒吧或洗浴搓澡按摩（见「美食地图·夜生活」「放松环节」）；初高中男生加 <b>发现王国</b> 最爽。幼儿园宝宝带推车，午睡点选室内（圣亚 / 水族 / 商场）。</div>
+      <div class="note">🚐 <b>8人出行提示：</b>网约车多为 5 座，8 人需 <b>2 辆</b> 或租一辆商务车 / 包车；餐厅提前订大桌；防晒 / 薄外套按人头备齐。预算详见下卡，8 人合计约 <b>¥3.8万–6.2万</b>（不含往返大交通，丰俭由人）。</div>
+    </div>
+
+    <h2>📅 7月下旬天气（2026年7月参考）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>时段</th><th>体感/气温</th><th>穿搭建议</th></tr>
+        <tr><td>正午 11–15点</td><td>27–29℃，紫外线指数 9–10（强）</td><td>速干短袖 + 防晒衣 + 渔夫帽，每2小时补防晒</td></tr>
+        <tr><td>清晨/傍晚海边</td><td>20–23℃，海风 4–5级偏凉</td><td>薄长裤 + 皮肤衣/针织开衫，怕冷加冲锋衣</td></tr>
+        <tr><td>夜间</td><td>降至 21℃左右，盖薄被</td><td>随身薄外套必带</td></tr>
+        <tr><td>降水</td><td>午后易突降短时阵雨</td><td>便携折叠伞/雨披</td></tr>
+      </table>
+      <div class="note">🌡️ 大连三面环海，海陆风循环导致<b>昼夜温差 6–10℃</b>，体感比实际温度更凉。防晒和薄外套是两件必需品，海边风大手机/帽子要拿稳。</div>
+    </div>
+
+    <h2>💰 7天预算估算（单人·中等舒适·不含往返大交通）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>项目</th><th>估算</th><th>说明</th></tr>
+        <tr><td>住宿（6晚）</td><td class="price">¥3000–4800</td><td>暑期旺季，中档 500–800/晚；周五六翻倍，提前订</td></tr>
+        <tr><td>餐饮</td><td class="price">¥1000–1500</td><td>小吃人均 30–60；海鲜大餐 120–200/人</td></tr>
+        <tr><td>门票</td><td class="price">¥100–300</td><td>棒棰岛20+金石滩地质公园60+老虎滩(可选)220</td></tr>
+        <tr><td>市内交通</td><td class="price">¥400–600</td><td>地铁+网约车，金石滩轻轨单程约8元</td></tr>
+        <tr><td>洗浴/按摩</td><td class="price">¥200–500</td><td>搓澡+按摩可选，丰俭由人</td></tr>
+        <tr><td><b>合计</b></td><td class="price"><b>¥4800–7800</b></td><td>丰俭由人，穷游可压到 3800 内</td></tr>
+      </table>
+      <div class="note">🏨 暑期是大连绝对旺季，<b>酒店至少提前 1–2 周预订</b>，否则同档涨价 50%–100%。推荐住青泥洼桥/西安路（双地铁）或星海广场（看海）。</div>
+    </div>
+
+    <h2>👕 穿搭指南（7月·洋葱式分层）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>类别</th><th>带什么</th><th>数量</th><th>说明</th></tr>
+        <tr><td>上衣</td><td>速干短袖T恤</td><td>5–7件</td><td>出汗/玩水每天换</td></tr>
+        <tr><td>防晒层</td><td>防晒衣/薄皮肤衣</td><td>1件</td><td>白天防晒+早晚保暖两用</td></tr>
+        <tr><td>保暖层</td><td>薄外套/针织开衫/轻风衣</td><td>1件</td><td>21℃海边风一吹就凉</td></tr>
+        <tr><td>下装</td><td>短裤</td><td>2–3条</td><td>—</td></tr>
+        <tr><td>下装</td><td>浅色长裙/轻薄长裤</td><td>1–2条</td><td>拍照出片+防蚊防晒</td></tr>
+        <tr><td>玩水</td><td>泳衣+浴巾</td><td>1套</td><td>棒棰岛/黄金海岸下水</td></tr>
+        <tr><td>配饰</td><td>防晒帽(带绳)、墨镜、冰袖、丝巾</td><td>—</td><td>帽/丝巾注意防风</td></tr>
+        <tr><td>雨具</td><td>便携折叠伞/雨披</td><td>1</td><td>午后易阵雨</td></tr>
+      </table>
+      <div class="note">👟 <b>鞋子：</b>别只穿洞洞鞋——坡路多、底软走一天脚疼，礁石区还打滑。<b>主力穿防滑运动鞋/帆布鞋，洞洞鞋当"下海+赶海"备用</b>带一双即可。浅色衣物反射阳光不吸热、拍照也出片。</div>
+    </div>
+
+    <h2>🎒 出发前行李清单</h2>
+    <div class="card">
+      <div class="pack">
+        <div>✅ 高倍防晒霜（SPF50+）</div><div>✅ 薄外套/皮肤衣</div>
+        <div>✅ 防晒帽 + 墨镜</div><div>✅ 防滑运动鞋 + 洞洞鞋(备用)</div>
+        <div>✅ 便携折叠伞</div><div>✅ 充电宝</div>
+        <div>✅ 肠胃药（吃海鲜常备）</div><div>✅ 驱蚊液</div>
+        <div>✅ 大连e出行 APP</div><div>✅ 少量现金（海边小店无信号）</div>
+        <div>✅ 赶海小桶+铲子（可选）</div><div>✅ 防水袋（玩水用）</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 每日行程 -->
+  <section class="panel" id="plan">
+    <h2>🗺️ 7天慢玩路线（可直接改的行程本）</h2>
+    <div class="note edit-hint">✏️ 表格里任意格子都能直接改——加景点、调顺序、写备注都行，当你的私人行程本用。改完截图即可保存。</div>
+    <div class="search-bar">
+      <input type="text" id="planSearch" placeholder="🔍 输入关键字搜行程（如：棒棰岛、正黄旗、地铁、早餐…）" autocomplete="off">
+      <button class="btn" onclick="doSearch()">搜索</button>
+      <button class="btn clear" onclick="clearSearch()">清除</button>
+      <span class="search-count" id="searchCount"></span>
+    </div>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>日期</th><th>Day</th><th>主题</th><th>关键词</th><th>详细安排（随手改）</th></tr>
+        <tr id="day1">
+          <td>7/28 周二</td>
+          <td>Day1</td>
+          <td>抵达 · 市区初体验</td>
+          <td>星海广场 / 莲花山 / 东港水城</td>
+          <td>
+            ✈️ 09:10→12:40 广州白云T2 → 大连周水子<br>
+            🚌 机场→酒店：地铁2号线直达（星海广场站），放行李<br>
+            🍱 <b>13:00 午餐</b> → 凯德和平广场（近酒店）/ 星海广场周边简餐<br>
+            🏞️ <b>14:00–16:30 星海广场</b>（喂海鸥🕊️、百年城雕、跨海大桥合影）
+            &nbsp;&nbsp;🎫 免费 | 全天开放<br>
+            &nbsp;&nbsp;🚌 步行可达（酒店就在星海片区）<br>
+            🌄 <b>17:00–18:00 莲花山</b>小火车登顶看日落
+            &nbsp;&nbsp;🎫 门票¥20（含小火车）| 夏季至19:00<br>
+            &nbsp;&nbsp;🚌 打车约15分钟/公交<br>
+            🍽️ <b>18:30 晚餐</b> → 东港威尼斯水城附近（8人建议提前订大桌）<br>
+            🌙 <b>19:40 东港音乐喷泉</b>（周五加20:40场）+ 威尼斯水城夜景散步
+            &nbsp;&nbsp;🎫 喷泉免费 | 🕐 夏19:40/周五六加20:40场 | 水城全天免费<br>
+            🍺 21:00+ 可选：东港喝一杯（见美食地图·夜生活）<br>
+            💡 首日不赶，适应节奏为主。航班若延误顺延。
+          </td>
+        </tr>
+        <tr id="day2">
+          <td>7/29 周三</td>
+          <td>Day2</td>
+          <td>治愈玻璃海专线</td>
+          <td>棒棰岛 / 滨海路 / 渔人码头</td>
+          <td>
+            🍳 <b>9:00 早餐</b> → 酒店周边 / 凯德和平B1美食城<br>
+            🏖️ <b>10:00–12:00 棒棰岛</b>（果冻蓝海水！带泳衣可下水）<br>
+            &nbsp;&nbsp;🚌 打车约25分钟 / 也可公交（人多打车方便，8人需2辆或商务车）<br>
+            &nbsp;&nbsp;🎫 门票¥20/人<br>
+            🍱 <b>12:15 午餐</b> → 棒棰岛景区内简餐 或 自带干粮海边野餐<br>
+            🛵 <b>13:30–16:00 滨海路</b>租电动车骑行（坡多景色绝，别硬走10km+）<br>
+            &nbsp;&nbsp;💡 租车点：棒棰岛出口/渔人码头入口；双人车约¥60–80/h<br>
+            📸 <b>16:30–18:00 渔人码头</b>拍彩色房子+渔船日落（出片圣地）<br>
+            🍽️ <b>18:30 晚餐</b> → 渔人码头附近海鲜大排档（8人可拼几桌）<br>
+            &nbsp;&nbsp;⭐⭐⭐ 推荐：<b>正黄旗海鲜烧烤</b>（露天吹海风，至24点）<br>
+            💡 体力好的下午可加森林动物园（从滨海路顺路）。
+          </td>
+        </tr>
+        <tr id="day3">
+          <td>7/30 周四</td>
+          <td>Day3</td>
+          <td>金石滩一日游</td>
+          <td>地质公园 / 黄金海岸 / 发现王国</td>
+          <td>
+            🍳 <b>8:30 早餐</b> → 提前半小时起，今天要赶轻轨<br>
+            🚃 <b>9:00–10:00 轻轨3号线</b> → 金石滩（约1h，¥8/人）<br>
+            &nbsp;&nbsp;📍 地铁1号线转3号线（火车站换乘），8人坐一节车厢刚好<br>
+            🏞️ <b>10:15–12:00 滨海国家地质公园</b>（恐龙探海、龟背石、滨海栈道）<br>
+            &nbsp;&nbsp;🎫 ¥60/人 | 园区观光环线¥20全天不限次（老少皆宜选这个）<br>
+            🍱 <b>12:15 午餐</b> → 金石滩园区内快餐厅 / 黄金海岸附近小吃<br>
+            🏖️ <b>13:30–16:30 黄金海岸</b>玩水/赶海（查潮汐表！）<br>
+            &nbsp;&nbsp;🏖️ 带娃必去：沙细水浅安全；带浴巾+防晒霜<br>
+            🎢 <b>可选 14:00–17:00 发现王国</b>（刺激项目多，小孩身高限制注意）<br>
+            &nbsp;&nbsp;🎫 联票¥220 | 排队久建议买快通<br>
+            🚃 <b>17:30–18:30 返程</b>轻轨回市区<br>
+            🍽️ <b>19:00 晚餐</b> → 回西安路/星海吃（比金石滩便宜好吃）<br>
+            💡 金石滩全天户外多，带足水+帽子+补涂防晒。
+          </td>
+        </tr>
+        <tr id="day4">
+          <td>7/31 周五</td>
+          <td>Day4</td>
+          <td>城市漫游 · 复古骑行</td>
+          <td>中山广场 / 港东五街 / 俄街 / 201路</td>
+          <td>
+            🍳 <b>9:00 早餐</b> → 酒店周边<br>
+            🏛️ <b>10:00–11:30 中山广场</b>欧式建筑群拍照（大连标志性地标）
+            &nbsp;&nbsp;🎫 免费 | 全天<br>
+            &nbsp;&nbsp;🚌 地铁2号线"友好广场"站，步行3分钟<br>
+            🏘️ <b>11:45–12:30 俄罗斯风情街</b>复古街景逛吃<br>
+            &nbsp;&nbsp;⚠️ 特产慎买（贵且不一定正宗），拍照就好<br>
+            🍱 <b>12:40 午餐</b> → ⭐⭐ <b>天津街 / 中原小吃街</b>（步行从俄街过来10分钟）<br>
+            &nbsp;&nbsp;🥟 推荐：焖子、海胆水饺、铁板鱿鱼——8人分头排队效率高<br>
+            🚋 <b>14:00–15:00 201路有轨电车</b>体验
+            &nbsp;&nbsp;🎫 ¥2/人 | 首班车约05:00，末班约23:00<br>
+            &nbsp;&nbsp;📍 华乐广场站上车 → 坐几站感受即可，不用全程<br>
+            📸 <b>15:30–16:30 港东五街</b>船舶穿城打卡
+            &nbsp;&nbsp;🎫 免费 | ⏰ 大船约11:00和16:00经过（看运气）<br>
+            ☕ <b>17:00 下午茶/休息</b> → 西安路商圈咖啡馆坐坐（老人孩子歇脚）<br>
+            🍽️ <b>18:30 晚餐</b> → 西安路/青泥洼桥（选择超多）<br>
+            🌙 <b>20:00+</b> 可选夜生活（见美食地图·夜生活附录）<br>
+            💡 今天最轻松，Citywalk节奏，适合老人孩子。
+          </td>
+        </tr>
+        <tr id="day5">
+          <td>8/01 周六</td>
+          <td>Day5</td>
+          <td>海洋 / 亲子日</td>
+          <td>老虎滩 / 森林动物园</td>
+          <td>
+            🍳 <b>9:00 早餐</b> → 酒店周边<br>
+            🐋 <b>二选一：</b><br>
+            &nbsp;&nbsp;<b>A. 老虎滩海洋公园</b>（5A，适合全年龄）<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;🎫 联票¥220/人 | 🚌 地铁2号线"虎滩新城"站<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;🕘 9:30开园 → 极地馆(白鲸/海豚表演) → 海底隧道 → 珊瑚馆<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;⏰ 表演时间入园后看当日公告，提前10分钟占位<br>
+            &nbsp;&nbsp;<b>B. 森林动物园</b>（大熊猫🐼，树荫多凉快）<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;🎫 ¥120/人 | 🚌 公交/打车 | 🕐 8:00–17:00<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;💡 暑热选这个——林密有熊猫，孩子最爱<br>
+            🍱 <b>12:30 午餐</b> → 园区内餐厅 或 自带便当（园区餐饮偏贵）<br>
+            🎪 <b>13:30–16:00</b>继续游玩 / 园区内休息区午休（幼儿园小朋友可在此小睡）<br>
+            🌆 <b>17:00–18:30 交大/山东路夜市</b>（平价海鲜小吃天堂）<br>
+            &nbsp;&nbsp;🚌 从老虎滩/动物园打车约20分钟<br>
+            🍽️ <b>18:30 晚餐</b> → 就在夜市解决！边逛边吃<br>
+            &nbsp;&nbsp;🦐 推荐：海鲜烧烤、焖子、烤冷面——便宜大碗<br>
+            💡 周六园区人多，联票建议提前网上买。
+          </td>
+        </tr>
+        <tr id="day6">
+          <td>8/02 周日</td>
+          <td>Day6</td>
+          <td>旅顺半日 · 人文历史</td>
+          <td>旅顺军港 / 日俄监狱 / 潜艇博物馆</td>
+          <td>
+            🍳 <b>8:00 早餐</b> → 早点起，旅顺单程约1h<br>
+            🚃 <b>8:30–9:30 出发旅顺</b>（"半部近代史"）<br>
+            &nbsp;&nbsp;🚌 <b>8人推荐：包一辆商务车/中巴（往返约¥400–600）</b><br>
+            &nbsp;&nbsp;或：地铁12号线（旅顺新港方向）+公交，便宜但慢+换乘多<br>
+            🏛️ <b>10:00–11:30 旅顺军港公园</b> → <span style="color:var(--warn)"><b>⚠️ 日俄监狱旧址（可去可不去）</b></span><br>
+            &nbsp;&nbsp;🎫 军港公园免费 | 日俄监狱<span style="color:var(--warn)">免费但历史沉重，小学生以下建议跳过</span>（周一闭馆，周日开放）<br>
+            &nbsp;&nbsp;<span style="color:var(--warn)">💔 <b>避坑提醒：</b>内容压抑、心情有负担者可直接跳过，不遗憾。</span> 小学生/幼儿园可在军港海边玩沙。<br>
+            🍱 <b>12:15 午餐</b> → 旅顺市区简餐（旅顺县城不大，随便找家干净的面馆/快餐）<br>
+            🚢 <b>13:30–14:30 潜艇博物馆</b>（真实潜艇内部参观！）<br>
+            &nbsp;&nbsp;🎫 ¥30/人 | 🕐 8:00–17:00(周一闭馆) | 💡 初高中男生会喜欢<br>
+            🚌 <b>15:00–16:00 返回市区</b><br>
+            😴 <b>16:30 回酒店休整</b>（洗澡+小睡，晚上才有精力放松）<br>
+            🍽️ <b>18:00 晚餐</b> → 凯德和平 / 西安路（轻量晚餐，留肚子待会泡澡饿了再吃）<br>
+            🛁 <b>19:30 放松环节</b> → ⭐⭐⭐ <b>水月松间</b> 泡+搓+按摩一条龙<br>
+            &nbsp;&nbsp;📍 就在凯德和平广场，离酒店近！人均¥183<br>
+            &nbsp;&nbsp;详见「景点详解·放松环节」<br>
+            💡 周日部分场馆可能提前闭馆，优先级：日俄监狱 > 潜艇 > 军港。<br>
+            <br>
+            <span style="background:#e8f5e9;border-left:4px solid #4caf50;padding:6px 10px;display:inline-block;font-size:13.5px"><b>🔄 不去旅顺的替代方案：</b><br>上午改为 <a class="spot-link" onclick="gotoDay(1)" title="点击查看 Day1 星海区域">⭐⭐⭐ 圣亚海洋世界</a>（五馆联票¥190，就在酒店步行距离/星海广场旁）或 <b>星海公园游乐场</b>（带小孩首选，免费入园+项目另付费）；下午照常 16:30 回酒店休整 + 19:30 水月松间泡澡。省掉往返旅顺约2h车程 → <a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1 星海详情" style="font-size:12px">📎 点此跳到 Day1 星海区域详情</a></span><br>
+            <span style="background:#e3f2fd;border-left:4px solid #2196f3;padding:6px 10px;display:inline-block;font-size:13.5px;margin-top:8px"><b>🔵 去旅顺但不去日俄监狱的方案：</b><br>保留军港公园+潜艇博物馆，把日俄监狱时段换成更轻松正向的玩法：<br>🏔️ <b>白玉山景区</b>（登顶俯瞰整个旅顺口+军港全貌，¥40/人，约1h，视野震撼、不压抑，8人合影绝佳）<br>🏛️ <b>太阳沟历史街区</b>（俄式/日式老建筑群散步拍照，免费，顺路慢逛，氛围好）<br>⏱ 调整后半天：10:00 军港公园 → 11:00 白玉山登顶 → 12:15 午餐 → 13:00 太阳沟散步 → 13:30 潜艇博物馆 → 15:00 返程<br>💡 既有"半部近代史"人文感，又避开压抑内容，带小孩也合适。</span>
+          </td>
+        </tr>
+        <tr id="day7">
+          <td>8/03 周一</td>
+          <td>自然醒</td>
+          <td>收尾 · 返程</td>
+          <td>早市 / 特产 / 机场</td>
+          <td>
+            😴 <b>自然醒（不设闹钟）</b> → 最后一天睡到饱<br>
+            🥟 <b>早上 大连早市</b>（本地人才知道的打开方式）<br>
+            &nbsp;&nbsp;📍 推荐：太原街早市 / 三八广场早市 / 兴工街早市<br>
+            &nbsp;&nbsp;🍜 豆腐脑+油条+咸菜+鸡蛋果子 = 本地人标配早餐<br>
+            &nbsp;&nbsp;🚌 打车约10–15分钟（问前台哪个最近）| 🕐 约5:00–9:00收摊，早去！<br>
+            📸 <b>10:00–11:30 补拍</b>没逛够的角落 / 星海广场晨间人少再来一张<br>
+            🛍️ <b>11:30 特产采购</b> → 大菜市/超市（比机场/景区便宜一半）
+            &nbsp;&nbsp;🕐 大菜市约6:00–16:00 | 超市到21:00+<br>
+            &nbsp;&nbsp;🦐 推荐：干海鲜/海胆罐头/即食海参/烤鱼片<br>
+            🍱 <b>12:30 最后一顿午餐</b> → 找家想吃的再吃一顿（海肠饺子？焖子？）<br>
+            🧳 <b>13:30 退房 + 去机场</b><br>
+            &nbsp;&nbsp;🚌 地铁2号线直达周水子机场（约35分钟）<br>
+            &nbsp;&nbsp;💡 行李可寄存酒店前台（如果太早退房），轻装出门<br>
+            ✈️ <b>16:00 航班起飞 → 19:50 到广州白云T2</b><br>
+            &nbsp;&nbsp;⏰ 提前2小时到机场（14:00前到达最稳）<br>
+            📝 <b>回家清单：</b>特产买了没？充电器带了没？证件在手？
+          </td>
+        </tr>
+      </table>
+    <div class="note">🕐 以上为"舒适不赶"节奏。若只玩4–5天，优先保留 Day1+Day2+Day3+Day4，金石滩和棒棰岛是大连精华。</div>
+  </section>
+
+  <!-- 景点 -->
+  <section class="panel" id="spots">
+    <h2>📍 核心景点速查（门票/时间/亮点）</h2>
+    <div class="grid">
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1 行程"><b>⭐⭐⭐ 星海广场</b></a><div class="meta">免费 · 全天 · 沙河口区中山路572号
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E6%98%9F%E6%B5%B7%E5%B9%BF%E5%9C%BA" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.581,38.879&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E6%B2%99%E6%B2%B3%E5%8F%A3%E5%8C%BA%E6%98%9F%E6%B5%B7%E5%B9%BF%E5%9C%BA%28%E4%B8%AD%E5%B1%B1%E8%B7%AF572%E5%8F%B7%29&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">亚洲最大城市广场。喂海鸥、百年城雕、跨海大桥灯光秀+音乐喷泉（夏季傍晚）。<div class="hl">📅 <b>Day1 · 14:00–16:30</b>（中午落地后直奔）⏱ 1.5–2h，傍晚最佳</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(2)" title="点击直达 Day2 行程"><b>⭐⭐⭐ 棒棰岛</b></a><div class="meta">¥20（观光车另20）· 8:10–18:00 · 中山区迎宾路1号
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E6%A3%92%E6%A3%B0%E5%B2%9B" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.665,38.868&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8C%BA%E6%A3%92%E6%A3%B0%E5%B2%9B%E6%99%AF%E5%8C%BA%28%E8%BF%8E%E5%AE%BE%E8%B7%AF1%E5%8F%B7%29&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">市区水质天花板，果冻蓝海水+干净沙滩，安静人少，日系氛围。<div class="hl">📅 <b>Day2 · 10:00–12:00</b> ⏱ 8点前人少果冻蓝，带泳衣可下水</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1 行程"><b>⭐⭐ 莲花山观景台</b></a><div class="meta">小火车登顶 · 全天 · 滨海西路
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E8%8E%B2%E8%8A%B1%E5%B1%B1%E8%A7%82%E6%99%AF%E5%8F%B0" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.560,38.862&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E8%A5%BF%E5%B2%97%E5%8C%BA%E8%8E%B2%E8%8A%B1%E5%B1%B1%E8%A7%82%E6%99%AF%E5%8F%B0%28%E6%BB%A8%E6%B5%B7%E8%A5%BF%E8%B7%AF%29&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">俯瞰大连山海全景第一机位，日落封神。<div class="hl">📅 <b>Day1 · 17:00–18:00</b> ⏱ 日落封神，老人小孩坐小火车登顶</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(2)" title="点击直达 Day2 行程"><b>⭐⭐ 滨海路</b></a><div class="meta">免费 · 全天 · 全长约32km
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E6%BB%A8%E6%B5%B7%E8%B7%AF" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.620,38.872&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8C%BA%E6%BB%A8%E6%B5%B7%E8%B7%AF%28%E4%BB%98%E5%AE%B6%E5%BA%84%29&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">依山傍海网红栈道，一步一景。坡陡弯多，<b>不建议徒步全程</b>。<div class="hl">📅 <b>Day2 · 13:30–16:00</b> ⏱ 租电动车(¥60–80/h)，别徒步全程</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(2)" title="点击直达 Day2 行程"><b>⭐⭐⭐ 渔人码头</b></a><div class="meta">免费 · 全天 · 老虎滩东侧
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E6%B8%94%E4%BA%BA%E7%A0%81%E5%A4%B4" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.651,38.878&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8C%BA%E6%B8%94%E4%BA%BA%E7%A0%81%E5%A4%B4%28%E8%80%81%E8%99%8E%E6%BB%A9%29&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">彩色欧式建筑+渔船港湾，文艺拍照圣地，傍晚落日绝。<div class="hl">📅 <b>Day2 · 16:30–18:00</b> ⏱ 傍晚日落绝，配海鲜烧烤晚餐</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(3)" title="点击直达 Day3 行程"><b>⭐⭐⭐ 金石滩度假区</b></a><div class="meta">地质公园¥60 · 黄金海岸免费 · 金州区
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E9%87%91%E7%9F%B3%E6%BB%A9%E5%BA%A6%E5%81%87%E5%8C%BA" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.854,39.052&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E9%87%91%E5%B7%9E%E5%8C%BA%E9%87%91%E7%9F%B3%E6%BB%A9%E5%BA%A6%E5%81%87%E5%8C%BA&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">世界地质公园，亿年海蚀奇石+十里黄金海岸，可赶海。轻轨3号线直达。<div class="hl">📅 <b>Day3 · 全天（9:00轻轨出发）</b> ⏱ 留一整天，观光环线20元不限次</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1 行程"><b>⭐⭐⭐ 东港威尼斯水城</b></a><div class="meta">免费 · 夜景18:00亮灯 · 东港商务区
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E4%B8%9C%E6%B8%AF%E5%A8%81%E5%B0%BC%E6%96%AF%E6%B0%B4%E5%9F%8E" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.648,38.921&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8C%BA%E4%B8%9C%E6%B8%AF%E5%A8%81%E5%B0%BC%E6%96%AF%E6%B0%B4%E5%9F%8E&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">欧式运河街区，贡多拉游船+音乐喷泉（东港夏季 19:40，周五六加 20:40 场），夜游必去。<div class="hl">📅 <b>Day1 · 19:40+（音乐喷泉+夜景）</b> ⏱ 夏季19:40喷泉，周五六加20:40场</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(5)" title="点击直达 Day5 行程"><b>⭐⭐ 老虎滩海洋公园</b></a><div class="meta">五馆联票¥210–220 · 8:30–17:00
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E8%80%81%E8%99%8E%E6%BB%A9%E6%B5%B7%E6%B4%8B%E5%85%AC%E5%9B%AD" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.632,38.877&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8C%BA%E8%80%81%E8%99%8E%E6%BB%A9%E6%B5%B7%E6%B4%8B%E5%85%AC%E5%9B%AD&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">5A级，白鲸/海豚表演、极地馆、珊瑚馆、海底隧道。亲子首选。<div class="hl">📅 <b>Day5 · 9:30–16:00</b>（二选一）⏱ 留大半天，联票¥220提前网上买</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(4)" title="点击直达 Day4 行程"><b>⭐ 201路有轨电车</b></a><div class="meta">¥2 · 百年木质车厢 · 老城区
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/201%E8%B7%AF%E6%9C%89%E8%BD%A8%E7%94%B5%E8%BD%A6" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.635,38.918&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8C%BA201%E8%B7%AF%E6%9C%89%E8%BD%A8%E7%94%B5%E8%BD%A6%28%E5%8D%8E%E4%B9%90%E5%B9%BF%E5%9C%BA%E7%AB%99%29&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">穿越百年老城的复古浪漫，民主广场拍车厢+老建筑出片率极高。<div class="hl">📅 <b>Day4 · 14:00–15:00</b> ⏱ ¥2坐几站感受即可，不用全程</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(4)" title="点击直达 Day4 行程"><b>⭐⭐ 中山广场 / 俄罗斯风情街</b></a><div class="meta">免费 · 全天 · 市中心
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E4%B8%AD%E5%B1%B1%E5%B9%BF%E5%9C%BA%20/%20%E4%BF%84%E7%BD%97%E6%96%AF%E9%A3%8E%E6%83%85%E8%A1%97" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.631,38.918&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8C%BA%E4%B8%AD%E5%B1%B1%E5%B9%BF%E5%9C%BA&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">中山广场欧式建筑群集中；俄罗斯风情街尖顶洋房复古街拍。<div class="hl">📅 <b>Day4 · 10:00–12:30</b> ⏱ 各0.5–1h，俄街特产店拍照就好别买</div></div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(6)" title="点击直达 Day6 行程"><b>⭐ 旅顺（军港/日俄监狱/潜艇馆）</b></a><div class="meta">多免费/低价 · 距市区约40km
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E6%97%85%E9%A1%BA%EF%BC%88%E5%86%9B%E6%B8%AF/%E6%97%A5%E4%BF%84%E7%9B%91%E7%8B%B1/%E6%BD%9C%E8%89%87%E9%A6%86%EF%BC%89" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.253,38.828&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E6%97%85%E9%A1%BA%E5%8F%A3%E5%8C%BA%E6%97%85%E9%A1%BA%E5%86%9B%E6%B8%AF&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">"半部近代史"，人文历史爱好者的宝藏半日线。<div class="hl">📅 <b>Day6 · 10:00–14:30</b> <span style="color:var(--warn);font-weight:700">⚠️ 可去可不去</span> ⏱ 半日，心情有负担者直接跳过</div><br><br><div style="background:#e3f2fd;border-left:4px solid #2196f3;padding:10px 12px;border-radius:6px;font-size:13.5px"><b>🔵 去旅顺但不去日俄监狱：</b><br>保留军港公园+潜艇博物馆，把日俄监狱换成：<br>🏔️ <b>白玉山景区</b>（登顶俯瞰旅顺口+军港全貌，¥40/人，约1h，视野震撼、不压抑，8人合影绝佳）<br>🏛️ <b>太阳沟历史街区</b>（俄式/日式老建筑群散步拍照，免费，氛围好）<br>⏱ 调整：10:00 军港 → 11:00 白玉山 → 12:15 午餐 → 13:00 太阳沟 → 13:30 潜艇 → 15:00 返程<br>💡 既有人文感又避开压抑内容。</div><br><b style="color:var(--sea)">🔄 不去旅顺的替代方案：</b>把这天上午改为「星海广场深度游」——带小孩去<b>圣亚海洋世界</b>（五馆联票¥190，就在酒店步行距离）或 <b>星海公园游乐场</b>；下午照常安排水月松间泡澡放松。省掉往返旅顺的车程和沉重情绪，轻松不累。</div></div>
+
+      <div class="spot"><div class="hd"><a class="spot-link" onclick="gotoDay(4)" title="点击直达 Day4 行程"><b>⭐ 港东五街 · 船舶穿城</b></a><div class="meta">免费 · 全天 · 东港区
+  <div class="links">
+    <a class="ext" href="https://www.douyin.com/search/%E6%B8%AF%E4%B8%9C%E4%BA%94%E8%A1%97%20%C2%B7%20%E8%88%B9%E8%88%B6%E7%A9%BF%E5%9F%8E" target="_blank" rel="noopener">📱 抖音看环境</a>
+    <a class="ext" href="https://uri.amap.com/marker?position=121.658,38.927&name=%E5%A4%A7%E8%BF%9E%E5%B8%82%E4%B8%AD%E5%B1%B1%E5%8C%BA%E6%B8%AF%E4%B8%9C%E4%BA%94%E8%A1%97&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a></div>
+  </div></div>
+        <div class="bd">网红打卡点：街道尽头就是海，货轮/邮轮穿城而过的画面绝了。<div class="hl">📅 <b>Day4 · 15:30–16:30</b> ⏱ 大船约11:00和16:00经过，傍晚光线佳</div></div></div>
+    </div>
+
+    <h2 style="margin-top:28px">🎨 附加 · 大连风情画（最佳时段 & 氛围）</h2>
+    <div class="note">📝 城市氛围观察，仅供参考。旅游主线还是看海、吃海鲜、泡澡搓澡——附赠风景，别本末倒置。</div>
+    <h3>各区域氛围观察（按风格）</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>区域</th><th>为什么去</th><th>最佳时段</th><th>📅 行程直达</th></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1"><b>东港威尼斯水城</b></a></td><td>夜景+酒吧集群，大连最潮夜生活区，穿搭精致</td><td>晚上 19–23 点</td><td>📅 <b>Day1 · 18:30–20:00</b> 东港夜景+威尼斯水城</td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1"><b>星海广场 / 星海公园</b></a></td><td>海景散步、滑板、骑行的年轻人多，清爽运动风</td><td>傍晚</td><td>📅 <b>Day1 · 14:00–17:30</b> 星海广场主游 | 📅 <b style="color:var(--sea)">Day6 替代方案</b>: 圣亚海洋世界¥190 / 星海公园游乐场 → <a class="spot-link" onclick="gotoDay(6)" title="点击直达 Day6 替代方案">点此跳到 Day6</a></td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(4)" title="点击直达 Day4"><b>青泥洼桥 / 西安路商圈</b></a></td><td>市中心购物核心，周边大学（海事、东财、理工）学生客流大</td><td>下午–晚上</td><td>📅 <b>Day4 · 全天</b> 201路电车+中山广场/俄风街，就在青泥洼桥片区</td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(2)" title="点击直达 Day2"><b>大学城周边</b></a><span style="font-size:12px;color:var(--sub)">（高新园区/黑石礁）</span></td><td>纯天然——操场、食堂、夜市，学生集中且真实</td><td>放学/晚饭点</td><td>📅 <b>Day2 · 下午返程顺路</b> 棒棰岛/渔人码头回程经过黑石礁一带</td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(6)" title="点击直达 Day6"><b>高端商场</b></a><span style="font-size:12px;color:var(--sub)">（恒隆、柏威年、凯德和平）</span></td><td>精致人群、咖啡馆坐拥党，审美在线</td><td>周末下午</td><td>📅 <b>Day6 · 18:00</b> 凯德和平晚餐 + 水月松间泡澡（就在凯德和平B1）</td></tr>
+      </table>
+    </div>
+    <h3>顺路提示（对应每日行程）</h3>
+    <div class="card">
+      <ul class="tips">
+        <li><b>Day1</b> 星海 + 东港夜景 → 这两个点本就在路线上，顺带逛。</li>
+        <li><b>Day4</b> 西安路 / 青泥洼桥商圈 → 逛街顺带感受城市脉搏。</li>
+        <li><b>Day2</b> 棒棰岛/星海附近就是黑石礁（大学城边缘），可顺道一瞥。</li>
+      </ul>
+    </div>
+    <div class="note">💬 以上为个人主观感受，仅供参考。</div>
+
+    <h2 style="margin-top:28px">🛁 附加 · 放松环节（可去可不去）</h2>
+    <div class="note">🧴 玩累了再考虑，不是必选项。大连洗浴<b>严格分性别</b>（男宾男师傅、女宾女师傅），正规店无异性服务；介意被搓就自己泡自己搓。按摩认准<b>明码标价+持证+点评4.5分以上</b>的连锁/中医店，避开标"特服"的擦边小店。<br>店名前的 <b>⭐</b> 表示推荐度：<b>⭐⭐⭐</b>=强烈推荐（首推）/ <b>⭐⭐</b>=推荐 / <b>⭐</b>=可去。评级为个人观点，可随手改。</div>
+
+    <h3>🛁💆 洗浴 & 按摩推荐（一张表搞定）</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>类型</th><th>店名（⭐推荐度）</th><th>位置</th><th>人均</th><th>特色</th></tr>
+        <tr><td rowspan="1">🏨 洗浴</td><td><b>⭐⭐⭐ 水月松间温泉</b></td><td>凯德和平广场</td><td>¥79+搓¥69/人均¥183</td><td>新中式轻奢，温泉+汗蒸+餐饮+私汤客房，可过夜；<b>Day6旅顺回来顺路首选</b></td></tr>
+        <tr><td>🏨 洗浴</td><td><b>⭐⭐ 泉溪温泉生活馆</b></td><td>西安路</td><td>人均¥137</td><td>多种汗蒸+搓澡套餐+窑洞休息，适合带娃</td></tr>
+        <tr><td>🏨 洗浴</td><td><b>⭐⭐ 水月潭洗浴</b></td><td>市区</td><td>人均¥200+</td><td>红酒搓+奶浴，工作日晚人少</td></tr>
+        <tr><td>💆 足道</td><td><b>⭐⭐⭐ 鸥迪足道</b></td><td>东港/亿达云集</td><td>¥86–150</td><td>辽宁十强，50分钟不推销</td></tr>
+        <tr><td>💆 足道</td><td><b>⭐⭐ 良子足道</b></td><td>明泽街</td><td>¥193起</td><td>全国老牌，技法稳</td></tr>
+        <tr><td>💆 足道</td><td><b>⭐⭐ 好乐足道</b></td><td>火车站周边</td><td>¥88+</td><td>88–128/60分钟，价格透明</td></tr>
+        <tr><td>💆 中医推拿</td><td><b>⭐⭐ 养生堂</b></td><td>中山广场</td><td>¥198–238</td><td>腰酸背痛/颈椎不适首选</td></tr>
+        <tr><td>💆 社区口碑</td><td><b>⭐ 手有余温 / 松骨堂</b></td><td>西安路/中山路</td><td>¥380/90分</td><td>持证技师、按需计时、不推销</td></tr>
+        <tr><td>💆 上门</td><td><b>⭐⭐ 康悦到家</b></td><td>沙河口</td><td>¥298起</td><td>不想出门，技师上门</td></tr>
+      </table>
+      <p style="margin-top:8px;font-size:13.5px;color:var(--sub)">想体验东北洗浴环境就<b>只泡+蒸+休息，跳过搓澡</b>；或选带私汤房自己来。避开街边标"特服"的小店。⚠️ 火车站周边约 60% 的"38元足疗"小店有加项收费/无资质风险，别贪便宜。</p>
+    </div>
+    <div class="note">💡 <b>顺路：</b>Day6 旅顺回来去<b>水月松间</b>泡+搓+按摩一条龙最爽。⚠️ 火车站周边约 60% 的"38元足疗"小店有加项收费/无资质风险，别贪便宜。</div>
+
+    <h3>🚿 自己搓教程（5步）</h3>
+    <div class="card">
+      <ul class="tips">
+        <li><b>先泡</b>：温水泡 10–15 分钟，毛孔张开、角质软化。</li>
+        <li><b>涂沐浴露别冲</b>：全身打泡保留润滑，干搓伤皮。</li>
+        <li><b>开搓</b>：搓澡巾顺纹理，力度"微红不破"；四肢→肚子→胸口→脖子。</li>
+        <li><b>搓后背</b>：长条巾双手拉锯，或长柄搓背刷。</li>
+        <li><b>冲净+涂身体乳</b>：趁湿涂乳防干痒。</li>
+      </ul>
+      <div class="note">⚠️ 一周 1–2 次足够；破皮/发炎处避开；<b>搓完毛孔大开，别立刻吹空调/暴晒/下海</b>。纯棉搓澡巾没用，必须涤纶/尼龙才出泥。</div>
+    </div>
+
+  </section>
+
+  <!-- 美食 -->
+  <section class="panel" id="food">
+    <h2>🦞 必吃清单（特色菜 → 去处 → 人均）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>特色</th><th>是什么</th><th>推荐去处</th><th>人均</th></tr>
+        <tr><td><b>海胆水饺</b></td><td>皮薄馅足，鲜掉眉毛的爆款</td><td>品海楼等海景餐厅</td><td>¥60–100</td></tr>
+        <tr><td><b>海肠捞饭</b></td><td>冷水海肠+韭菜，米饭杀手</td><td>市区海鲜馆/夜市</td><td>¥50–90</td></tr>
+        <tr><td><b>海鲜焖子</b></td><td>焖子+海鲜+麻酱，街头代表</td><td>夜市/小吃街</td><td>¥15–30</td></tr>
+        <tr><td><b>鲅鱼/海菜饺子</b></td><td>本地家常鲜味</td><td>任意饺子馆</td><td>¥30–60</td></tr>
+        <tr><td><b>咸鱼饼子</b></td><td>经典家常，咸香酥脆</td><td>老菜馆</td><td>¥30–50</td></tr>
+        <tr><td><b>清蒸皮皮虾/虾爬子</b></td><td>原味鲜甜，夏季肥美</td><td>市场现买现加工</td><td>¥80–150</td></tr>
+        <tr><td><b>烤鱿鱼/铁板鱿鱼</b></td><td>夜市王者</td><td>交大/山东路夜市</td><td>¥10–30</td></tr>
+        <tr><td><b>红油肉</b></td><td>甜口酱汁嫩里脊，本地人爱</td><td>老菜馆</td><td>¥40–60</td></tr>
+      </table>
+    </div>
+
+    <h2>📍 去哪儿吃（按区域）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>区域</th><th>定位</th><th>适合</th></tr>
+        <tr><td><b>交大夜市 / 山东路夜市</b></td><td>学生党天堂，平价海鲜小吃、烤鱿鱼、炸串</td><td>穷游/夜宵/小吃扫街</td></tr>
+        <tr><td><b>天津街 / 中原小吃街</b></td><td>老牌美食街，汇聚各类老字号小吃</td><td>逛老城顺路吃</td></tr>
+        <tr><td><b>新长兴 / 桃源市场</b></td><td>本地人常去，海鲜现买现加工</td><td>实现"海鲜自由"，人均80+</td></tr>
+        <tr><td><b>星海/黑石礁海景餐厅</b></td><td>靠窗看海，氛围感拉满</td><td>正餐/请客/纪念日</td></tr>
+      </table>
+      <div class="note">🦀 吃海鲜选<b>正规店铺或市场现买现加工</b>，避开景区高价大排档；先问单价+加工费再点；不吃路边生腌，备肠胃药。大连日料性价比也高，百元能吃蓝鳍刺身。</div>
+
+    <h2>📺 实地探店补充</h2>
+    <div class="note">🎬 以下为实地探店补充，<b>价格/营业以当下大众点评为准</b>，出发前再核一眼。店名前的 <b>⭐</b> 表示推荐度：<b>⭐⭐⭐</b>=强烈推荐（首推）/ <b>⭐⭐</b>=推荐 / <b>⭐</b>=可去；带娃/老人可优先 ⭐⭐⭐。评级为个人观点，可随手改。</div>
+
+    <h3>🛍️ ⭐⭐ 大连商场 1 楼小吃（青泥洼桥）</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>小吃</th><th>价格 / 特点</th><th>点评</th></tr>
+        <tr><td><b>焖子</b></td><td>¥10 · 地瓜粉+蒜蓉+芝麻酱，底脆顶软</td><td>大连招牌小吃，必吃</td></tr>
+        <tr><td><b>培根派</b></td><td>现烤酥脆，培根+葱花+酱料</td><td>排队王，值得等</td></tr>
+        <tr><td><b>海胆 / 全家福包子</b></td><td>¥25–50 · 手掌大，海胆/牡蛎/海参/虾/扇贝爆汁</td><td>海胆包像蟹黄包，鲜</td></tr>
+        <tr><td><b>鸡排面</b></td><td>红烧甜辣，面条似凉面</td><td>东北口味，重甜辣</td></tr>
+      </table>
+      <p style="margin-top:8px;font-size:13px;color:var(--sub)">一楼像小吃天堂，网红店全在排队；多人同行可<b>分工排队</b>，一会吃全。</p>
+      <div class="links">
+        <div style="width:100%;font-size:13px;color:var(--sub);margin-bottom:2px">📍 地址：中山区青泥洼桥·大连商场1楼（青泥洼桥商圈）</div>
+        <a class="ext" href="https://uri.amap.com/search?keyword=%E5%A4%A7%E8%BF%9E%E5%95%86%E5%9C%BA%20%E9%9D%92%E6%B3%A5%E6%B4%BC%E6%A1%A5&city=%E5%A4%A7%E8%BF%9E&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a>
+        <a class="ext" href="https://www.douyin.com/search/%E5%A4%A7%E8%BF%9E%E5%95%86%E5%9C%BA%20%E5%B0%8F%E5%90%83" target="_blank" rel="noopener">📱 抖音介绍</a>
+        <a class="spot-link" onclick="gotoDay(4)">🔗 跳 Day4 行程</a>
+      </div>
+    </div>
+
+    <h3>🥟 ⭐⭐ 小平岛 · 日丰源饺子（老菜）</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>菜</th><th>价格 / 特点</th><th>点评</th></tr>
+        <tr><td><b>海肠饺子</b></td><td>¥120/盘（约¥6/只）· 韭菜+海肠</td><td>鲜脆爆汁，<b>本地人直接吃不蘸料</b></td></tr>
+        <tr><td><b>海胆蒸蛋</b></td><td>海胆+蛋羹，滑嫩</td><td>大连菜离不开海胆</td></tr>
+        <tr><td><b>葱油鸟贝</b></td><td>鸟贝+大量生葱</td><td>鲁菜+东北融合，近两年网红</td></tr>
+        <tr><td><b>黄鱼鱼丸汤</b></td><td>手工黄鱼丸</td><td>咸鲜带酱油</td></tr>
+        <tr><td><b>三酱</b></td><td>鲍鱼+红螺+小海螺</td><td>酱汁浓郁，先吸一口汁</td></tr>
+        <tr><td><b>海胶</b></td><td>牛毛菜琼脂冻，蒜醋味</td><td>果冻口感，酸辣爽口</td></tr>
+      </table>
+      <p style="margin-top:8px;font-size:13px;color:var(--sub)">小平岛离市中心较远（偏僻但本地有名），适合专门跑一趟吃海肠饺子。</p>
+      <div class="links">
+        <div style="width:100%;font-size:13px;color:var(--sub);margin-bottom:2px">📍 地址：甘井子区小平岛（离市中心较远，适合专程/顺路）</div>
+        <a class="ext" href="https://uri.amap.com/search?keyword=%E6%97%A5%E4%B8%B0%E6%BA%90%E9%A5%BA%E5%AD%90%20%E5%A4%A7%E8%BF%9E&city=%E5%A4%A7%E8%BF%9E&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a>
+        <a class="ext" href="https://www.douyin.com/search/%E6%97%A5%E4%B8%B0%E6%BA%90%E9%A5%BA%E5%AD%90" target="_blank" rel="noopener">📱 抖音介绍</a>
+        <a class="spot-link" onclick="gotoDay(4)">🔗 跳 Day4 行程</a>
+      </div>
+    </div>
+
+    <h3>🦐 ⭐⭐⭐ 钱库里 · 海鲜自助（现捞活海鲜）</h3>
+    <div class="card">
+      <ul class="tips">
+        <li><b>店名：</b><b>钱库里海鲜自助</b>，星海广场店最火。</li>
+        <li><b>地址：</b>沙河口区星海广场F区10号（马栏河边，近星海广场）。另有华南店、唐山街店（唐山街店已改自取海鲜火锅，人均约¥201）。</li>
+        <li><b>营业：</b>午餐 11:00–15:30、晚餐 16:30–22:00，<b>不限时</b>；晚上约18:30有唱跳演出（介意吵就白天/坐远点）。</li>
+        <li><b>人均（分店差很多）：</b>星海广场店（最火）约 ¥349–499，常见挂牌¥499，开海季/促销回落到¥349；唐山街店（已改自取火锅）约 ¥219–259；华南店居中。价格随季节波动，<b>以当天大众点评为准</b>；70岁以上/儿童有优惠。</li>
+        <li><b>招牌：</b>帝王蟹(冰冻,每次1份不限次)、波士顿龙虾(半只不限次)、大闸蟹、鲍鱼、海螺、A级金枕榴莲、鹅肝/牛舌、生鱼片；桌上蒸锅+涮锅两吃。</li>
+        <li class="warn"><b>押金/浪费：</b>每人收¥100押金，浪费限100克，超量不退——勤拿少取。</li>
+      <div class="links">
+        <div style="width:100%;font-size:13px;color:var(--sub);margin-bottom:2px">📍 地址：沙河口区星海广场F区10号（马栏河边，近星海广场）</div>
+        <a class="ext" href="https://uri.amap.com/search?keyword=%E9%92%B1%E5%BA%93%E9%87%8C%E6%B5%B7%E9%B2%9C%E8%87%AA%E5%8A%A9%20%E6%98%9F%E6%B5%B7%E5%B9%BF%E5%9C%BA&city=%E5%A4%A7%E8%BF%9E&src=mypage&coordinate=gaode&callnative=1" target="_blank" rel="noopener">🗺️ 高德地图</a>
+        <a class="ext" href="https://www.douyin.com/search/%E9%92%B1%E5%BA%93%E9%87%8C%E6%B5%B7%E9%B2%9C%E8%87%AA%E5%8A%A9" target="_blank" rel="noopener">📱 抖音介绍</a>
+        <a class="spot-link" onclick="gotoDay(1)">🔗 跳 Day1 行程</a>
+      </div>
+      </ul>
+    </div>
+      </div>
+    <h2 style="margin-top:28px">🍸 附加 · 夜生活（可去可不去）</h2>
+    <div class="note">🍻 晚上想松一口再加，不是必选项。喝酒别开车，网约车往返；营业时间以大众点评实时为准。</div>
+    <div class="note">💡 你下周（7–8月）去正好撞上<b>辽河口啤酒节深夜食堂</b>（季节性限定），拍照发圈获赞，人均 15–30 就能嗨到凌晨。</div>
+
+    <h3>🍷 酒吧（按区域，顺行程走）</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>店（⭐推荐度）</th><th>区域</th><th>特色 / 营业</th><th>人均</th></tr>
+        <tr><td><b>⭐⭐⭐ Old News</b></td><td>东港/中山广场</td><td>细节控鸡尾酒，微醺梦境 17:30–02:00</td><td>中高</td></tr>
+        <tr><td><b>⭐⭐ LAMP BAR</b></td><td>东港</td><td>梧桐掩映酒馆，鸡尾酒稳</td><td>中</td></tr>
+        <tr><td><b>⭐⭐ H9 Bar</b></td><td>东港地铁B口</td><td>约会聊天 14:00–01:00</td><td>¥93</td></tr>
+        <tr><td><b>⭐⭐ VIVA</b></td><td>星海广场·君悦内</td><td>当季水果鸡尾酒 19:00–00:00</td><td>偏高</td></tr>
+        <tr><td><b>⭐⭐ 亭下 TEA WINE STOP</b></td><td>星海公园对面</td><td>精酿餐吧，文化活动多</td><td>¥67</td></tr>
+        <tr><td><b>⭐⭐ NO.ME</b></td><td>西安路/劳动公园</td><td>鸡尾酒+精酿可定制 18:00–02:00</td><td>¥103</td></tr>
+        <tr><td><b>⭐ 34 TH3TYFO4R</b></td><td>青泥洼桥</td><td>星空顶，经典酒单 19:00–01:30</td><td>中</td></tr>
+        <tr><td><b>⭐ 阿卡贝拉音乐汇</b></td><td>印象城</td><td>常邀乐团现场演出</td><td>中</td></tr>
+      </table>
+    </div>
+
+    <h3>🍢 夜宵大排档</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>去处（⭐推荐度）</th><th>亮点</th><th>营业 / 人均</th></tr>
+        <tr><td><b>⭐⭐⭐ 辽河口啤酒节深夜食堂</b></td><td>7–8月限定，四大战区，拍照发圈</td><td>至凌晨2点 / ¥15–30</td></tr>
+        <tr><td><b>⭐⭐⭐ 正黄旗海鲜烧烤</b></td><td>本土11年，海鲜按个挑、露天吹海风</td><td>至24点 / ¥100–189</td></tr>
+        <tr><td><b>⭐⭐ 锦鹏海鲜烧烤</b></td><td>东港店，海肠捞饭绝</td><td>至凌晨3点</td></tr>
+        <tr><td><b>⭐⭐ 歹街（固定夜市）</b></td><td>三鲜焖子、海肠捞饭、铁板鱿鱼</td><td>¥30–60</td></tr>
+        <tr><td><b>⭐ 黑石礁夜市</b></td><td>铁板鱿鱼+凉拌鸡架，性价比</td><td>低</td></tr>
+        <tr><td><b>⭐⭐ 喜鼎海胆水饺</b></td><td>东港凯丹，38元/只，游客打卡</td><td>¥150</td></tr>
+      </table>
+      <div class="note">💡 <b>顺路：</b>Day1 东港水城夜景 → 旁边 Old News/H9/锦鹏大排档，一条龙最省腿。<b>喝酒别开车</b>，网约车往返；营业时间以大众点评实时为准，去前查一眼。</div>
+    </div>
+    </section>
+
+  <!-- 交通 -->
+  <section class="panel" id="traffic">
+    <h2>🚇 大交通（怎么到大连）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>方式</th><th>到市中心</th><th>费用(单人)</th><th>建议</th></tr>
+        <tr><td><b>飞机·周水子机场</b></td><td>地铁2号线 30分钟</td><td>¥5（地铁）/打车¥25</td><td>所有旅客性价比首选</td></tr>
+        <tr><td><b>高铁·大连站</b></td><td>出站即核心区</td><td>按里程</td><td>优先选，省时省腿</td></tr>
+        <tr><td><b>高铁·大连北站</b></td><td>地铁1号线 40–50分钟</td><td>车票+地铁¥4</td><td>只买到北站票时备选</td></tr>
+      </table>
+    </div>
+
+    <h2>🚉 市内交通（骨架=地铁）</h2>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>方式</th><th>线路/范围</th><th>费用</th><th>备注</th></tr>
+        <tr><td><b>地铁</b></td><td>1/2号线覆盖90%景点；3号线去金石滩</td><td>¥2–7</td><td>用「大连e出行」APP刷码（支付宝/微信不能直接刷）</td></tr>
+        <tr><td><b>201路有轨电车</b></td><td>穿越老城区</td><td>¥2</td><td>百年木质车厢，拍照出片</td></tr>
+        <tr><td><b>环城旅游巴士</b></td><td>串联25个景点，当日无限次</td><td>¥20–30</td><td>懒人/带娃首选，1.3m以下免费</td></tr>
+        <tr><td><b>轻轨3号线</b></td><td>大连站→金石滩</td><td>¥8/约1h</td><td>去金石滩必坐，旺季加车</td></tr>
+        <tr><td><b>网约车</b></td><td>市内补位</td><td>¥10–30</td><td>比出租车便宜，避开早晚高峰</td></tr>
+      </table>
+      <div class="note">🛵 大连<b>全城没有共享单车</b>！滨海路坡陡弯急，旺季别自驾（易堵）；玩滨海路租电动车（约¥50/天）或打车分段。出站不搭话黑车，拒绝司机推荐的高回扣餐厅。</div>
+    </div>
+  </section>
+
+  <!-- 避坑 -->
+  <section class="panel" id="avoid">
+    <h2>⚠️ 避坑 & 实用 Tips（提炼自本地攻略）</h2>
+    <div class="card">
+      <ul class="tips">
+        <li class="warn"><b>穿对鞋：</b>全程坡路+礁石，别穿高跟鞋，防滑凉鞋/帆布鞋最佳；洞洞鞋只当玩水备用。</li>
+        <li class="warn"><b>防晒全天候：</b>海边紫外线强，阴天也要涂；正午滨海路无遮挡，尽量早晚玩。</li>
+        <li class="warn"><b>薄外套随身：</b>早晚海边风凉，逛夜市/广场会冷，必带一件。</li>
+        <li class="warn"><b>海鲜防宰：</b>大排档先问单价+加工费；特产去大菜市/超市，别在火车站/景区买。</li>
+        <li class="warn"><b>只下正规浴场：</b>礁石区暗流危险；赶海查潮汐表，涨潮立刻上岸。</li>
+        <li class="warn"><b>线上购票：</b>热门景点（老虎滩、发现王国）提前3–7天预约，比现场便宜。</li>
+        <li class="warn"><b>酒店早订：</b>暑期周五六翻倍，提前1–2周锁定。</li>
+        <li class="warn"><b>备现金+肠胃药：</b>海边小店可能无信号；吃海鲜易肠胃不适。</li>
+        <li class="warn"><b>洗浴/按摩分性别：</b>正规店男宾男师傅、女宾女师傅；标"特服"的小店不正经，别去。</li>
+        <li><b>金石滩留整天：</b>离市区40km，别短途仓促打卡。</li>
+        <li><b>201路避高峰：</b>复古电车体验感好但挤，错峰更舒服。</li>
+        <li><b>海边风大：</b>手机、帽子、丝巾一定拿稳，容易吹进海里。</li>
+        <li><b>随身水+零食：</b>海边景区便利店少，自备省心。</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 住宿 -->
+  <section class="panel" id="stay">
+    <h2>🏨 住宿指南 · 酒店 vs 民宿（都能改）</h2>
+    <div class="note edit-hint">✏️ 本页所有表格的格子都能直接改——片区对比、已订信息、预算方案、避雷提醒都随手填。把你的真实预订填进去，当入住备忘用。改完截图即可保存。</div>
+    <div class="note">📍 选对区域体验直接翻倍。2026年7月实测：暑期绝对旺季，<b>至少提前1–2周预订</b>；连锁酒店¥150–300/晚就干净安全，想省钱直接选西安路连锁。</div>
+
+    <h3>四大核心片区对比</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>片区</th><th>价格/晚</th><th>优势</th><th>不足</th><th>适合</th></tr>
+        <tr><td><b>西安路/青泥洼桥</b></td><td>连锁 ¥160–280<br>青旅 ¥65–80/人<br>民宿 ¥100–200</td><td>双地铁枢纽，夜市美食多，20分钟到星海/东港</td><td>无海景，房间偏小</td><td>穷游/吃货/学生</td></tr>
+        <tr><td><b>星海广场</b></td><td>民宿 ¥138–258<br>品质酒店 ¥750+</td><td>步行到海边，海景看跨海大桥夜景，近圣亚</td><td>暑期傍晚堵车，餐饮偏贵</td><td>亲子/首次来连/看海</td></tr>
+        <tr><td><b>东港商务区</b></td><td>民宿 ¥145–265<br>河景房 ¥400+</td><td>欧式建筑群，夜景出片，安静整洁</td><td>小吃少，吃地道夜市需地铁10分钟</td><td>情侣拍照/品质</td></tr>
+        <tr><td><b>金石滩</b></td><td>¥300–600</td><td>出门黄金沙滩，玩水/发现王国</td><td>离市区远，轻轨1小时</td><td>专程玩水/亲子度假</td></tr>
+      </table>
+    </div>
+
+    <h3>📌 本次行程已订（入住备忘，可改）</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>项目</th><th>内容（随手改）</th></tr>
+        <tr><td><b>已订酒店</b></td><td>大连新星港湾酒店式公寓</td></tr>
+        <tr><td><b>位置</b></td><td>星海广场 / 沙河口区</td></tr>
+        <tr><td><b>最近地铁</b></td><td>地铁1号线 星海广场站（步行可达）</td></tr>
+        <tr><td><b>周边</b></td><td>近凯德和平广场 / 圣亚海洋世界 / 星海公园</td></tr>
+        <tr><td><b>类型</b></td><td>酒店式公寓（非标准酒店）</td></tr>
+        <tr><td><b>入住–退房</b></td><td>7/28 入住 – 8/3 退房（按订单核对）</td></tr>
+        <tr><td><b>订单确认号</b></td><td>（填订单号/确认短信，方便前台报房）</td></tr>
+        <tr><td><b>提醒</b></td><td>卫生与服务评价参差，订前看近期真实点评；胜在位置核心，去星海广场/滨海路/莲花山都近。</td></tr>
+      </table>
+    </div>
+
+    <h3>酒店 vs 民宿（怎么选）</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>维度</th><th>酒店</th><th>民宿</th></tr>
+        <tr><td><b>标准化/安全</b></td><td>连锁（全季/亚朵/如家/汉庭/宜必思）干净、有前台、有评价兜底</td><td>良莠不齐，靠平台和点评筛</td></tr>
+        <tr><td><b>普通价格</b></td><td>¥150–300/晚</td><td>¥100–265/晚（同片区更便宜）</td></tr>
+        <tr><td><b>海景体验</b></td><td>真·推窗见海只有星海C位（君悦/一方城堡），¥750+/晚起</td><td>氛围好但<b>踩雷多</b>：很多"海景房"实际夹缝看海、高层遮挡、近海潮湿返潮蚊虫多、海风噪音大</td></tr>
+        <tr><td><b>推荐</b></td><td>求稳、第一次来、赶行程 → 选连锁酒店最省心</td><td>想拍照/纪念日 → 选<b>星海外围高层民宿 ¥180–320</b>，步行10分钟到海边，落地窗看日落，比C位酒店省一半</td></tr>
+      </table>
+    </div>
+
+    <h3>按预算的推荐方案</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>预算档位</th><th>推荐方案（随手改）</th></tr>
+        <tr><td><b>穷游党 ¥150–300/晚</b></td><td>首选西安路/青泥洼桥，连锁酒店双地铁枢纽，楼下中原小吃街+201路电车；主街临街房车流噪音大，选小区内楼栋规避。</td></tr>
+        <tr><td><b>品质党 ¥400–800/晚</b></td><td>星海广场C位或东港商务区。星海君悦直面跨海大桥、下楼即沙滩；东港四季安静私密度假（距老城较远）。</td></tr>
+        <tr><td><b>看海性价比党 ¥180–320/晚</b></td><td>星海广场外围高层民宿，步行10分钟到海边，落地窗看大桥日落——穷游看海的正确姿势。</td></tr>
+      </table>
+    </div>
+
+    <h3>⚠️ 避雷提醒</h3>
+    <div class="card">
+      <table class="plan-table">
+        <tr><th>提醒</th><th>具体内容（随手改）</th></tr>
+        <tr><td><b>别信"低价海景房"网红滤镜</b></td><td>夹缝看海、遮挡、潮湿返潮、海风噪音是高频投诉，订前看真实点评图。</td></tr>
+        <tr><td><b>景区手写招牌小旅馆别碰</b></td><td>又吵又贵还不一定干净，订房走携程等正规平台，有评价兜底。</td></tr>
+        <tr><td><b>提前订</b></td><td>暑期热门海景户型需提前1–2周，临时订选不到心仪房型。</td></tr>
+        <tr><td><b>金石滩慎选</b></td><td>除非专程玩水，否则每天轻轨1小时通勤太累。</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <div class="foot">
+    数据来源：携程旅行攻略（2026年7月）、大连本地宝、新浪旅游交通攻略（2026年7月）、Trip.com 大连避暑清单、京东商品页（搓澡装备，见配套《京东搓澡装备清单》）、美食探店实地记录（大连商场小吃/小平岛日丰源海肠饺子/钱库里海鲜自助）。<br>
+    天气为 2026年7月气候均值参考，具体以出行前天气预报为准；门票/开放时间/营业状态可能调整，出发前请二次核实。<br>
+    <b>以上为攻略整理，非商业预订建议，请按实际情况灵活调整。</b>
+  </div>
+</div>
+
+<script>
+  // 统一面板切换：tab点击 与 跳转共用，避免逻辑分叉
+  function showPanel(name){
+    document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});
+    var tab=document.querySelector('.tab[data-t="'+name+'"]');
+    var panel=document.getElementById(name);
+    if(tab)tab.classList.add('on');
+    if(panel)panel.classList.add('on');
+    return panel;
+  }
+
+  // 点击景点卡片跳转到每日行程对应日
+  function gotoDay(n){
+    showPanel('plan');
+    var target=document.getElementById('day'+n);
+    if(target){
+      // 等一帧确保面板已渲染(display:block)再滚动，兜底不抛错
+      requestAnimationFrame(function(){
+        try{ target.scrollIntoView({block:'center',behavior:'smooth'}); }
+        catch(e){ try{ target.scrollIntoView(); }catch(_){} }
+      });
+      target.classList.add('highlight');
+      setTimeout(function(){target.classList.remove('highlight');},3000);
+    }
+  }
+
+  // 行程关键字搜索
+  function doSearch(){
+    var q=document.getElementById('planSearch').value.trim().toLowerCase();
+    showPanel('plan');
+    var rows=document.querySelectorAll('#plan .plan-table tr');
+    var cnt=0;
+    rows.forEach(function(r){r.classList.remove('highlight')});
+    if(!q){document.getElementById('searchCount').textContent='';return}
+    for(var i=1;i<rows.length;i++){
+      var r=rows[i];
+      if(r.textContent.toLowerCase().indexOf(q)!==-1){r.classList.add('highlight');cnt++}
+    }
+    document.getElementById('searchCount').textContent='找到 '+cnt+' 条匹配';
+    var first=document.querySelector('#plan .plan-table tr.highlight');
+    if(first) setTimeout(function(){first.scrollIntoView({behavior:'smooth',block:'center'})},300);
+  }
+  function clearSearch(){
+    document.getElementById('planSearch').value='';
+    document.querySelectorAll('#plan .plan-table tr.highlight').forEach(function(r){
+      r.classList.remove('highlight');
+    });
+    document.getElementById('searchCount').textContent='';
+  }
+  document.getElementById('planSearch').addEventListener('keydown',function(e){
+    if(e.key==='Enter')doSearch();
+    if(e.key==='Escape')clearSearch();
+  });
+
+  // tab 点击切换（与 showPanel 统一）
+  document.querySelectorAll('.tab').forEach(function(t){
+    t.onclick=function(){
+      showPanel(t.dataset.t);
+      window.scrollTo({top:document.querySelector('.tabs').offsetTop-10,behavior:'smooth'});
+    };
+  });
+    /* ===== 云端共享版：编辑直接存 GitHub（多端同步） ===== */
+  (function(){
+    var REPO='amx708/dalian-trip-2026';
+    var PATH='cloud-data.json';
+    var TOKEN='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';
+    var API='https://api.github.com/repos/'+REPO+'/contents/'+PATH;
+    var AUTH={'Authorization':'Bearer '+TOKEN,'Accept':'application/vnd.github.v3+json'};
+    var editBtn, statusEl, saveTimer;
+    function pad(n){ return ('0'+n).slice(-2); }
+    function b64e(s){ return btoa(unescape(encodeURIComponent(s))); }
+    function b64d(b){ return decodeURIComponent(escape(atob(b))); }
+    function editableEls(){
+      var sel='.plan-table td,.plan-table th,.card p,.card li,.card h3,.card h4,.card .note,.ed';
+      return Array.prototype.slice.call(document.querySelectorAll(sel)).filter(function(el){
+        if(el.querySelector('a')) return false;
+        if(el.closest('.tabs')) return false;
+        return true;
+      });
+    }
+    function docVersion(){
+      var els=editableEls();
+      var f=document.querySelector('.plan-table');
+      return els.length+'|'+document.title+'|'+(f?(f.parentElement.id||f.parentElement.className):'x');
+    }
+    function flash(m){ if(statusEl) statusEl.textContent=m; }
+    function load(){
+      return fetch(API,{headers:AUTH}).then(function(r){
+        if(r.status===404) return null;
+        if(!r.ok) throw new Error('load'+r.status);
+        return r.json();
+      }).then(function(j){
+        if(!j) return false;
+        var d=JSON.parse(b64d(j.content));
+        if(d.v!==docVersion()) return false;
+        var els=editableEls();
+        for(var k in d.map){ var el=els[+k]; if(el) el.innerHTML=d.map[k]; }
+        return true;
+      }).catch(function(e){ flash('⚠️ 云端读取失败'); return false; });
+    }
+    function save(){
+      clearTimeout(saveTimer);
+      var els=editableEls(), map={};
+      els.forEach(function(el,i){ map[i]=el.innerHTML; });
+      var body=JSON.stringify({v:docVersion(), map:map});
+      fetch(API,{headers:AUTH}).then(function(r){
+        if(r.status===404) return null;
+        if(!r.ok) throw new Error('get');
+        return r.json();
+      }).then(function(j){
+        var payload={ message:'cloud edit '+new Date().toISOString(), content:b64e(body) };
+        if(j) payload.sha=j.sha;
+        return fetch(API,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},AUTH),body:JSON.stringify(payload)});
+      }).then(function(r){ if(!r.ok) throw new Error('put'+r.status); return r.json(); })
+      .then(function(j){ flash('☁️ 已存云端 '+pad(new Date().getHours())+':'+pad(new Date().getMinutes())); })
+      .catch(function(e){ flash('⚠️ 云端保存失败（可重试）'); });
+    }
+    function onInput(){ flash('… 输入中'); clearTimeout(saveTimer); saveTimer=setTimeout(save,900); }
+    function resetCloud(){
+      return fetch(API,{headers:AUTH}).then(function(r){
+        if(r.status===404) return null;
+        if(!r.ok) throw new Error('get');
+        return r.json();
+      }).then(function(j){
+        if(!j) return null;
+        return fetch(API,{method:'DELETE',headers:Object.assign({'Content-Type':'application/json'},AUTH),body:JSON.stringify({message:'reset to official',sha:j.sha})});
+      });
+    }
+    function init(){
+      var bar=document.getElementById('editbar'); if(!bar) return;
+      editBtn=document.getElementById('editToggle');
+      statusEl=document.getElementById('editStatus');
+      var resetBtn=document.getElementById('editReset');
+      flash('☁️ 云端只读（点编辑可改，改完大家同步）');
+      load().then(function(ok){ flash(ok?'📝 已载入云端改动':'☁️ 云端只读（点编辑可改，改完大家同步）'); });
+      editBtn.addEventListener('click',function(){
+        var on=document.body.classList.toggle('editing');
+        editableEls().forEach(function(el){ if(on) el.setAttribute('contenteditable','true'); else el.removeAttribute('contenteditable'); });
+        if(on){ flash('✏️ 编辑中：改完自动存云端'); editBtn.textContent='🔒 完成'; }
+        else { save(); editBtn.textContent='✏️ 编辑'; }
+      });
+      resetBtn.addEventListener('click',function(){
+        if(confirm('还原成官方原版？云端保存的改动会被所有人清除（不可恢复）。')){
+          resetCloud().then(function(){ location.reload(); }).catch(function(){ location.reload(); });
+        }
+      });
+      document.addEventListener('input',function(e){
+        if(document.body.classList.contains('editing') && e.target.closest && e.target.closest('.plan-table,.card')) onInput();
+      });
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+</script>
+  <div id="editbar">
+    <button id="editToggle" type="button">✏️ 编辑</button>
+    <button id="editReset" type="button">↺ 还原</button>
+    <span id="editStatus">☁️ 云端只读（点编辑可改，改完大家同步）</span>
+  </div>
+</body>
+</html>
