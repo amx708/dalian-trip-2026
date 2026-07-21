@@ -129,6 +129,24 @@
   .search-bar{flex-wrap:wrap}
   .search-bar input{flex:1 1 100%}
 }
+  /* ===== 本地编辑 / 自动保存（仅存本机） ===== */
+  #editbar{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;gap:8px;align-items:center;
+    padding:9px 12px;background:rgba(18,28,46,.95);color:#fff;font-size:13px;
+    box-shadow:0 -3px 12px rgba(0,0,0,.3);}
+  #editbar button{flex:0 0 auto;border:0;border-radius:9px;padding:8px 13px;font-size:13px;cursor:pointer;}
+  #editToggle{background:#ff7a18;color:#fff;font-weight:700;}
+  #editReset{background:#33425c;color:#dfe6f0;}
+  #editStatus{flex:1 1 auto;text-align:left;opacity:.92;font-size:12.5px;line-height:1.3;}
+  body{padding-bottom:58px;}
+  body.editing [contenteditable="true"]{outline:1.6px dashed #ff7a18;outline-offset:1px;
+    background:#fffbe9;border-radius:5px;}
+  body.editing .plan-table td[contenteditable="true"],
+  body.editing .plan-table th[contenteditable="true"]{background:#fffbe9;}
+  @media(max-width:680px){
+    #editbar{font-size:12px;padding:8px 9px;gap:6px;}
+    #editbar button{padding:7px 10px;font-size:12px;}
+    body{padding-bottom:62px;}
+  }
 </style>
 </head>
 <body>
@@ -164,11 +182,11 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>成员</th><th>人数</th><th>玩法取向</th></tr>
-        <tr><td contenteditable="true">2 对夫妻（成人）</td><td contenteditable="true">4</td><td contenteditable="true">可偷闲：夜生活/酒吧、洗浴搓澡按摩、东港夜景</td></tr>
-        <tr><td contenteditable="true">高中生（男）</td><td contenteditable="true">1</td><td contenteditable="true">爱刺激：发现王国、滨海路骑行、夜市</td></tr>
-        <tr><td contenteditable="true">初中生（男）</td><td contenteditable="true">1</td><td contenteditable="true">同哥哥，略收着；动物园/金石滩玩水也爱</td></tr>
-        <tr><td contenteditable="true">小学生（女）</td><td contenteditable="true">1</td><td contenteditable="true">萌系：老虎滩海洋动物、星海喂海鸥、圣亚</td></tr>
-        <tr><td contenteditable="true">幼儿园（女）</td><td contenteditable="true">1</td><td contenteditable="true">浅玩：沙滩挖沙、喂海鸥；需大人陪护 + 推车</td></tr>
+        <tr><td>2 对夫妻（成人）</td><td>4</td><td>可偷闲：夜生活/酒吧、洗浴搓澡按摩、东港夜景</td></tr>
+        <tr><td>高中生（男）</td><td>1</td><td>爱刺激：发现王国、滨海路骑行、夜市</td></tr>
+        <tr><td>初中生（男）</td><td>1</td><td>同哥哥，略收着；动物园/金石滩玩水也爱</td></tr>
+        <tr><td>小学生（女）</td><td>1</td><td>萌系：老虎滩海洋动物、星海喂海鸥、圣亚</td></tr>
+        <tr><td>幼儿园（女）</td><td>1</td><td>浅玩：沙滩挖沙、喂海鸥；需大人陪护 + 推车</td></tr>
       </table>
       <div class="note">🧭 <b>排线逻辑：</b>白天走「老少皆宜」主线（星海广场 / 滨海路 / 棒棰岛 / 金石滩玩水 / 老虎滩 / 森林动物园），晚上夫妻可抽空去酒吧或洗浴搓澡按摩（见「美食地图·夜生活」「放松环节」）；初高中男生加 <b>发现王国</b> 最爽。幼儿园宝宝带推车，午睡点选室内（圣亚 / 水族 / 商场）。</div>
       <div class="note">🚐 <b>8人出行提示：</b>网约车多为 5 座，8 人需 <b>2 辆</b> 或租一辆商务车 / 包车；餐厅提前订大桌；防晒 / 薄外套按人头备齐。预算详见下卡，8 人合计约 <b>¥3.8万–6.2万</b>（不含往返大交通，丰俭由人）。</div>
@@ -178,10 +196,10 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>时段</th><th>体感/气温</th><th>穿搭建议</th></tr>
-        <tr><td contenteditable="true">正午 11–15点</td><td contenteditable="true">27–29℃，紫外线指数 9–10（强）</td><td contenteditable="true">速干短袖 + 防晒衣 + 渔夫帽，每2小时补防晒</td></tr>
-        <tr><td contenteditable="true">清晨/傍晚海边</td><td contenteditable="true">20–23℃，海风 4–5级偏凉</td><td contenteditable="true">薄长裤 + 皮肤衣/针织开衫，怕冷加冲锋衣</td></tr>
-        <tr><td contenteditable="true">夜间</td><td contenteditable="true">降至 21℃左右，盖薄被</td><td contenteditable="true">随身薄外套必带</td></tr>
-        <tr><td contenteditable="true">降水</td><td contenteditable="true">午后易突降短时阵雨</td><td contenteditable="true">便携折叠伞/雨披</td></tr>
+        <tr><td>正午 11–15点</td><td>27–29℃，紫外线指数 9–10（强）</td><td>速干短袖 + 防晒衣 + 渔夫帽，每2小时补防晒</td></tr>
+        <tr><td>清晨/傍晚海边</td><td>20–23℃，海风 4–5级偏凉</td><td>薄长裤 + 皮肤衣/针织开衫，怕冷加冲锋衣</td></tr>
+        <tr><td>夜间</td><td>降至 21℃左右，盖薄被</td><td>随身薄外套必带</td></tr>
+        <tr><td>降水</td><td>午后易突降短时阵雨</td><td>便携折叠伞/雨披</td></tr>
       </table>
       <div class="note">🌡️ 大连三面环海，海陆风循环导致<b>昼夜温差 6–10℃</b>，体感比实际温度更凉。防晒和薄外套是两件必需品，海边风大手机/帽子要拿稳。</div>
     </div>
@@ -190,12 +208,12 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>项目</th><th>估算</th><th>说明</th></tr>
-        <tr><td contenteditable="true">住宿（6晚）</td><td contenteditable="true" class="price">¥3000–4800</td><td contenteditable="true">暑期旺季，中档 500–800/晚；周五六翻倍，提前订</td></tr>
-        <tr><td contenteditable="true">餐饮</td><td contenteditable="true" class="price">¥1000–1500</td><td contenteditable="true">小吃人均 30–60；海鲜大餐 120–200/人</td></tr>
-        <tr><td contenteditable="true">门票</td><td contenteditable="true" class="price">¥100–300</td><td contenteditable="true">棒棰岛20+金石滩地质公园60+老虎滩(可选)220</td></tr>
-        <tr><td contenteditable="true">市内交通</td><td contenteditable="true" class="price">¥400–600</td><td contenteditable="true">地铁+网约车，金石滩轻轨单程约8元</td></tr>
-        <tr><td contenteditable="true">洗浴/按摩</td><td contenteditable="true" class="price">¥200–500</td><td contenteditable="true">搓澡+按摩可选，丰俭由人</td></tr>
-        <tr><td contenteditable="true"><b>合计</b></td><td contenteditable="true" class="price"><b>¥4800–7800</b></td><td contenteditable="true">丰俭由人，穷游可压到 3800 内</td></tr>
+        <tr><td>住宿（6晚）</td><td class="price">¥3000–4800</td><td>暑期旺季，中档 500–800/晚；周五六翻倍，提前订</td></tr>
+        <tr><td>餐饮</td><td class="price">¥1000–1500</td><td>小吃人均 30–60；海鲜大餐 120–200/人</td></tr>
+        <tr><td>门票</td><td class="price">¥100–300</td><td>棒棰岛20+金石滩地质公园60+老虎滩(可选)220</td></tr>
+        <tr><td>市内交通</td><td class="price">¥400–600</td><td>地铁+网约车，金石滩轻轨单程约8元</td></tr>
+        <tr><td>洗浴/按摩</td><td class="price">¥200–500</td><td>搓澡+按摩可选，丰俭由人</td></tr>
+        <tr><td><b>合计</b></td><td class="price"><b>¥4800–7800</b></td><td>丰俭由人，穷游可压到 3800 内</td></tr>
       </table>
       <div class="note">🏨 暑期是大连绝对旺季，<b>酒店至少提前 1–2 周预订</b>，否则同档涨价 50%–100%。推荐住青泥洼桥/西安路（双地铁）或星海广场（看海）。</div>
     </div>
@@ -204,14 +222,14 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>类别</th><th>带什么</th><th>数量</th><th>说明</th></tr>
-        <tr><td contenteditable="true">上衣</td><td contenteditable="true">速干短袖T恤</td><td contenteditable="true">5–7件</td><td contenteditable="true">出汗/玩水每天换</td></tr>
-        <tr><td contenteditable="true">防晒层</td><td contenteditable="true">防晒衣/薄皮肤衣</td><td contenteditable="true">1件</td><td contenteditable="true">白天防晒+早晚保暖两用</td></tr>
-        <tr><td contenteditable="true">保暖层</td><td contenteditable="true">薄外套/针织开衫/轻风衣</td><td contenteditable="true">1件</td><td contenteditable="true">21℃海边风一吹就凉</td></tr>
-        <tr><td contenteditable="true">下装</td><td contenteditable="true">短裤</td><td contenteditable="true">2–3条</td><td contenteditable="true">—</td></tr>
-        <tr><td contenteditable="true">下装</td><td contenteditable="true">浅色长裙/轻薄长裤</td><td contenteditable="true">1–2条</td><td contenteditable="true">拍照出片+防蚊防晒</td></tr>
-        <tr><td contenteditable="true">玩水</td><td contenteditable="true">泳衣+浴巾</td><td contenteditable="true">1套</td><td contenteditable="true">棒棰岛/黄金海岸下水</td></tr>
-        <tr><td contenteditable="true">配饰</td><td contenteditable="true">防晒帽(带绳)、墨镜、冰袖、丝巾</td><td contenteditable="true">—</td><td contenteditable="true">帽/丝巾注意防风</td></tr>
-        <tr><td contenteditable="true">雨具</td><td contenteditable="true">便携折叠伞/雨披</td><td contenteditable="true">1</td><td contenteditable="true">午后易阵雨</td></tr>
+        <tr><td>上衣</td><td>速干短袖T恤</td><td>5–7件</td><td>出汗/玩水每天换</td></tr>
+        <tr><td>防晒层</td><td>防晒衣/薄皮肤衣</td><td>1件</td><td>白天防晒+早晚保暖两用</td></tr>
+        <tr><td>保暖层</td><td>薄外套/针织开衫/轻风衣</td><td>1件</td><td>21℃海边风一吹就凉</td></tr>
+        <tr><td>下装</td><td>短裤</td><td>2–3条</td><td>—</td></tr>
+        <tr><td>下装</td><td>浅色长裙/轻薄长裤</td><td>1–2条</td><td>拍照出片+防蚊防晒</td></tr>
+        <tr><td>玩水</td><td>泳衣+浴巾</td><td>1套</td><td>棒棰岛/黄金海岸下水</td></tr>
+        <tr><td>配饰</td><td>防晒帽(带绳)、墨镜、冰袖、丝巾</td><td>—</td><td>帽/丝巾注意防风</td></tr>
+        <tr><td>雨具</td><td>便携折叠伞/雨披</td><td>1</td><td>午后易阵雨</td></tr>
       </table>
       <div class="note">👟 <b>鞋子：</b>别只穿洞洞鞋——坡路多、底软走一天脚疼，礁石区还打滑。<b>主力穿防滑运动鞋/帆布鞋，洞洞鞋当"下海+赶海"备用</b>带一双即可。浅色衣物反射阳光不吸热、拍照也出片。</div>
     </div>
@@ -243,11 +261,11 @@
       <table class="plan-table">
         <tr><th>日期</th><th>Day</th><th>主题</th><th>关键词</th><th>详细安排（随手改）</th></tr>
         <tr id="day1">
-          <td contenteditable="true">7/28 周二</td>
-          <td contenteditable="true">Day1</td>
-          <td contenteditable="true">抵达 · 市区初体验</td>
-          <td contenteditable="true">星海广场 / 莲花山 / 东港水城</td>
-          <td contenteditable="true">
+          <td>7/28 周二</td>
+          <td>Day1</td>
+          <td>抵达 · 市区初体验</td>
+          <td>星海广场 / 莲花山 / 东港水城</td>
+          <td>
             ✈️ 09:10→12:40 广州白云T2 → 大连周水子<br>
             🚌 机场→酒店：地铁2号线直达（星海广场站），放行李<br>
             🍱 <b>13:00 午餐</b> → 凯德和平广场（近酒店）/ 星海广场周边简餐<br>
@@ -265,11 +283,11 @@
           </td>
         </tr>
         <tr id="day2">
-          <td contenteditable="true">7/29 周三</td>
-          <td contenteditable="true">Day2</td>
-          <td contenteditable="true">治愈玻璃海专线</td>
-          <td contenteditable="true">棒棰岛 / 滨海路 / 渔人码头</td>
-          <td contenteditable="true">
+          <td>7/29 周三</td>
+          <td>Day2</td>
+          <td>治愈玻璃海专线</td>
+          <td>棒棰岛 / 滨海路 / 渔人码头</td>
+          <td>
             🍳 <b>9:00 早餐</b> → 酒店周边 / 凯德和平B1美食城<br>
             🏖️ <b>10:00–12:00 棒棰岛</b>（果冻蓝海水！带泳衣可下水）<br>
             &nbsp;&nbsp;🚌 打车约25分钟 / 也可公交（人多打车方便，8人需2辆或商务车）<br>
@@ -284,11 +302,11 @@
           </td>
         </tr>
         <tr id="day3">
-          <td contenteditable="true">7/30 周四</td>
-          <td contenteditable="true">Day3</td>
-          <td contenteditable="true">金石滩一日游</td>
-          <td contenteditable="true">地质公园 / 黄金海岸 / 发现王国</td>
-          <td contenteditable="true">
+          <td>7/30 周四</td>
+          <td>Day3</td>
+          <td>金石滩一日游</td>
+          <td>地质公园 / 黄金海岸 / 发现王国</td>
+          <td>
             🍳 <b>8:30 早餐</b> → 提前半小时起，今天要赶轻轨<br>
             🚃 <b>9:00–10:00 轻轨3号线</b> → 金石滩（约1h，¥8/人）<br>
             &nbsp;&nbsp;📍 地铁1号线转3号线（火车站换乘），8人坐一节车厢刚好<br>
@@ -305,11 +323,11 @@
           </td>
         </tr>
         <tr id="day4">
-          <td contenteditable="true">7/31 周五</td>
-          <td contenteditable="true">Day4</td>
-          <td contenteditable="true">城市漫游 · 复古骑行</td>
-          <td contenteditable="true">中山广场 / 港东五街 / 俄街 / 201路</td>
-          <td contenteditable="true">
+          <td>7/31 周五</td>
+          <td>Day4</td>
+          <td>城市漫游 · 复古骑行</td>
+          <td>中山广场 / 港东五街 / 俄街 / 201路</td>
+          <td>
             🍳 <b>9:00 早餐</b> → 酒店周边<br>
             🏛️ <b>10:00–11:30 中山广场</b>欧式建筑群拍照（大连标志性地标）
             &nbsp;&nbsp;🎫 免费 | 全天<br>
@@ -330,11 +348,11 @@
           </td>
         </tr>
         <tr id="day5">
-          <td contenteditable="true">8/01 周六</td>
-          <td contenteditable="true">Day5</td>
-          <td contenteditable="true">海洋 / 亲子日</td>
-          <td contenteditable="true">老虎滩 / 森林动物园</td>
-          <td contenteditable="true">
+          <td>8/01 周六</td>
+          <td>Day5</td>
+          <td>海洋 / 亲子日</td>
+          <td>老虎滩 / 森林动物园</td>
+          <td>
             🍳 <b>9:00 早餐</b> → 酒店周边<br>
             🐋 <b>二选一：</b><br>
             &nbsp;&nbsp;<b>A. 老虎滩海洋公园</b>（5A，适合全年龄）<br>
@@ -354,11 +372,11 @@
           </td>
         </tr>
         <tr id="day6">
-          <td contenteditable="true">8/02 周日</td>
-          <td contenteditable="true">Day6</td>
-          <td contenteditable="true">旅顺半日 · 人文历史</td>
-          <td contenteditable="true">旅顺军港 / 日俄监狱 / 潜艇博物馆</td>
-          <td contenteditable="true">
+          <td>8/02 周日</td>
+          <td>Day6</td>
+          <td>旅顺半日 · 人文历史</td>
+          <td>旅顺军港 / 日俄监狱 / 潜艇博物馆</td>
+          <td>
             🍳 <b>8:00 早餐</b> → 早点起，旅顺单程约1h<br>
             🚃 <b>8:30–9:30 出发旅顺</b>（"半部近代史"）<br>
             &nbsp;&nbsp;🚌 <b>8人推荐：包一辆商务车/中巴（往返约¥400–600）</b><br>
@@ -382,11 +400,11 @@
           </td>
         </tr>
         <tr id="day7">
-          <td contenteditable="true">8/03 周一</td>
-          <td contenteditable="true">自然醒</td>
-          <td contenteditable="true">收尾 · 返程</td>
-          <td contenteditable="true">早市 / 特产 / 机场</td>
-          <td contenteditable="true">
+          <td>8/03 周一</td>
+          <td>自然醒</td>
+          <td>收尾 · 返程</td>
+          <td>早市 / 特产 / 机场</td>
+          <td>
             😴 <b>自然醒（不设闹钟）</b> → 最后一天睡到饱<br>
             🥟 <b>早上 大连早市</b>（本地人才知道的打开方式）<br>
             &nbsp;&nbsp;📍 推荐：太原街早市 / 三八广场早市 / 兴工街早市<br>
@@ -504,11 +522,11 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>区域</th><th>为什么去</th><th>最佳时段</th><th>📅 行程直达</th></tr>
-        <tr><td contenteditable="true"><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1"><b>东港威尼斯水城</b></a></td><td contenteditable="true">夜景+酒吧集群，大连最潮夜生活区，穿搭精致</td><td contenteditable="true">晚上 19–23 点</td><td contenteditable="true">📅 <b>Day1 · 18:30–20:00</b> 东港夜景+威尼斯水城</td></tr>
-        <tr><td contenteditable="true"><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1"><b>星海广场 / 星海公园</b></a></td><td contenteditable="true">海景散步、滑板、骑行的年轻人多，清爽运动风</td><td contenteditable="true">傍晚</td><td contenteditable="true">📅 <b>Day1 · 14:00–17:30</b> 星海广场主游 | 📅 <b style="color:var(--sea)">Day6 替代方案</b>: 圣亚海洋世界¥190 / 星海公园游乐场 → <a class="spot-link" onclick="gotoDay(6)" title="点击直达 Day6 替代方案">点此跳到 Day6</a></td></tr>
-        <tr><td contenteditable="true"><a class="spot-link" onclick="gotoDay(4)" title="点击直达 Day4"><b>青泥洼桥 / 西安路商圈</b></a></td><td contenteditable="true">市中心购物核心，周边大学（海事、东财、理工）学生客流大</td><td contenteditable="true">下午–晚上</td><td contenteditable="true">📅 <b>Day4 · 全天</b> 201路电车+中山广场/俄风街，就在青泥洼桥片区</td></tr>
-        <tr><td contenteditable="true"><a class="spot-link" onclick="gotoDay(2)" title="点击直达 Day2"><b>大学城周边</b></a><span style="font-size:12px;color:var(--sub)">（高新园区/黑石礁）</span></td><td contenteditable="true">纯天然——操场、食堂、夜市，学生集中且真实</td><td contenteditable="true">放学/晚饭点</td><td contenteditable="true">📅 <b>Day2 · 下午返程顺路</b> 棒棰岛/渔人码头回程经过黑石礁一带</td></tr>
-        <tr><td contenteditable="true"><a class="spot-link" onclick="gotoDay(6)" title="点击直达 Day6"><b>高端商场</b></a><span style="font-size:12px;color:var(--sub)">（恒隆、柏威年、凯德和平）</span></td><td contenteditable="true">精致人群、咖啡馆坐拥党，审美在线</td><td contenteditable="true">周末下午</td><td contenteditable="true">📅 <b>Day6 · 18:00</b> 凯德和平晚餐 + 水月松间泡澡（就在凯德和平B1）</td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1"><b>东港威尼斯水城</b></a></td><td>夜景+酒吧集群，大连最潮夜生活区，穿搭精致</td><td>晚上 19–23 点</td><td>📅 <b>Day1 · 18:30–20:00</b> 东港夜景+威尼斯水城</td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(1)" title="点击直达 Day1"><b>星海广场 / 星海公园</b></a></td><td>海景散步、滑板、骑行的年轻人多，清爽运动风</td><td>傍晚</td><td>📅 <b>Day1 · 14:00–17:30</b> 星海广场主游 | 📅 <b style="color:var(--sea)">Day6 替代方案</b>: 圣亚海洋世界¥190 / 星海公园游乐场 → <a class="spot-link" onclick="gotoDay(6)" title="点击直达 Day6 替代方案">点此跳到 Day6</a></td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(4)" title="点击直达 Day4"><b>青泥洼桥 / 西安路商圈</b></a></td><td>市中心购物核心，周边大学（海事、东财、理工）学生客流大</td><td>下午–晚上</td><td>📅 <b>Day4 · 全天</b> 201路电车+中山广场/俄风街，就在青泥洼桥片区</td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(2)" title="点击直达 Day2"><b>大学城周边</b></a><span style="font-size:12px;color:var(--sub)">（高新园区/黑石礁）</span></td><td>纯天然——操场、食堂、夜市，学生集中且真实</td><td>放学/晚饭点</td><td>📅 <b>Day2 · 下午返程顺路</b> 棒棰岛/渔人码头回程经过黑石礁一带</td></tr>
+        <tr><td><a class="spot-link" onclick="gotoDay(6)" title="点击直达 Day6"><b>高端商场</b></a><span style="font-size:12px;color:var(--sub)">（恒隆、柏威年、凯德和平）</span></td><td>精致人群、咖啡馆坐拥党，审美在线</td><td>周末下午</td><td>📅 <b>Day6 · 18:00</b> 凯德和平晚餐 + 水月松间泡澡（就在凯德和平B1）</td></tr>
       </table>
     </div>
     <h3>顺路提示（对应每日行程）</h3>
@@ -528,15 +546,15 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>类型</th><th>店名（⭐推荐度）</th><th>位置</th><th>人均</th><th>特色</th></tr>
-        <tr><td contenteditable="true" rowspan="1">🏨 洗浴</td><td contenteditable="true"><b>⭐⭐⭐ 水月松间温泉</b></td><td contenteditable="true">凯德和平广场</td><td contenteditable="true">¥79+搓¥69/人均¥183</td><td contenteditable="true">新中式轻奢，温泉+汗蒸+餐饮+私汤客房，可过夜；<b>Day6旅顺回来顺路首选</b></td></tr>
-        <tr><td contenteditable="true">🏨 洗浴</td><td contenteditable="true"><b>⭐⭐ 泉溪温泉生活馆</b></td><td contenteditable="true">西安路</td><td contenteditable="true">人均¥137</td><td contenteditable="true">多种汗蒸+搓澡套餐+窑洞休息，适合带娃</td></tr>
-        <tr><td contenteditable="true">🏨 洗浴</td><td contenteditable="true"><b>⭐⭐ 水月潭洗浴</b></td><td contenteditable="true">市区</td><td contenteditable="true">人均¥200+</td><td contenteditable="true">红酒搓+奶浴，工作日晚人少</td></tr>
-        <tr><td contenteditable="true">💆 足道</td><td contenteditable="true"><b>⭐⭐⭐ 鸥迪足道</b></td><td contenteditable="true">东港/亿达云集</td><td contenteditable="true">¥86–150</td><td contenteditable="true">辽宁十强，50分钟不推销</td></tr>
-        <tr><td contenteditable="true">💆 足道</td><td contenteditable="true"><b>⭐⭐ 良子足道</b></td><td contenteditable="true">明泽街</td><td contenteditable="true">¥193起</td><td contenteditable="true">全国老牌，技法稳</td></tr>
-        <tr><td contenteditable="true">💆 足道</td><td contenteditable="true"><b>⭐⭐ 好乐足道</b></td><td contenteditable="true">火车站周边</td><td contenteditable="true">¥88+</td><td contenteditable="true">88–128/60分钟，价格透明</td></tr>
-        <tr><td contenteditable="true">💆 中医推拿</td><td contenteditable="true"><b>⭐⭐ 养生堂</b></td><td contenteditable="true">中山广场</td><td contenteditable="true">¥198–238</td><td contenteditable="true">腰酸背痛/颈椎不适首选</td></tr>
-        <tr><td contenteditable="true">💆 社区口碑</td><td contenteditable="true"><b>⭐ 手有余温 / 松骨堂</b></td><td contenteditable="true">西安路/中山路</td><td contenteditable="true">¥380/90分</td><td contenteditable="true">持证技师、按需计时、不推销</td></tr>
-        <tr><td contenteditable="true">💆 上门</td><td contenteditable="true"><b>⭐⭐ 康悦到家</b></td><td contenteditable="true">沙河口</td><td contenteditable="true">¥298起</td><td contenteditable="true">不想出门，技师上门</td></tr>
+        <tr><td rowspan="1">🏨 洗浴</td><td><b>⭐⭐⭐ 水月松间温泉</b></td><td>凯德和平广场</td><td>¥79+搓¥69/人均¥183</td><td>新中式轻奢，温泉+汗蒸+餐饮+私汤客房，可过夜；<b>Day6旅顺回来顺路首选</b></td></tr>
+        <tr><td>🏨 洗浴</td><td><b>⭐⭐ 泉溪温泉生活馆</b></td><td>西安路</td><td>人均¥137</td><td>多种汗蒸+搓澡套餐+窑洞休息，适合带娃</td></tr>
+        <tr><td>🏨 洗浴</td><td><b>⭐⭐ 水月潭洗浴</b></td><td>市区</td><td>人均¥200+</td><td>红酒搓+奶浴，工作日晚人少</td></tr>
+        <tr><td>💆 足道</td><td><b>⭐⭐⭐ 鸥迪足道</b></td><td>东港/亿达云集</td><td>¥86–150</td><td>辽宁十强，50分钟不推销</td></tr>
+        <tr><td>💆 足道</td><td><b>⭐⭐ 良子足道</b></td><td>明泽街</td><td>¥193起</td><td>全国老牌，技法稳</td></tr>
+        <tr><td>💆 足道</td><td><b>⭐⭐ 好乐足道</b></td><td>火车站周边</td><td>¥88+</td><td>88–128/60分钟，价格透明</td></tr>
+        <tr><td>💆 中医推拿</td><td><b>⭐⭐ 养生堂</b></td><td>中山广场</td><td>¥198–238</td><td>腰酸背痛/颈椎不适首选</td></tr>
+        <tr><td>💆 社区口碑</td><td><b>⭐ 手有余温 / 松骨堂</b></td><td>西安路/中山路</td><td>¥380/90分</td><td>持证技师、按需计时、不推销</td></tr>
+        <tr><td>💆 上门</td><td><b>⭐⭐ 康悦到家</b></td><td>沙河口</td><td>¥298起</td><td>不想出门，技师上门</td></tr>
       </table>
       <p style="margin-top:8px;font-size:13.5px;color:var(--sub)">想体验东北洗浴环境就<b>只泡+蒸+休息，跳过搓澡</b>；或选带私汤房自己来。避开街边标"特服"的小店。⚠️ 火车站周边约 60% 的"38元足疗"小店有加项收费/无资质风险，别贪便宜。</p>
     </div>
@@ -562,14 +580,14 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>特色</th><th>是什么</th><th>推荐去处</th><th>人均</th></tr>
-        <tr><td contenteditable="true"><b>海胆水饺</b></td><td contenteditable="true">皮薄馅足，鲜掉眉毛的爆款</td><td contenteditable="true">品海楼等海景餐厅</td><td contenteditable="true">¥60–100</td></tr>
-        <tr><td contenteditable="true"><b>海肠捞饭</b></td><td contenteditable="true">冷水海肠+韭菜，米饭杀手</td><td contenteditable="true">市区海鲜馆/夜市</td><td contenteditable="true">¥50–90</td></tr>
-        <tr><td contenteditable="true"><b>海鲜焖子</b></td><td contenteditable="true">焖子+海鲜+麻酱，街头代表</td><td contenteditable="true">夜市/小吃街</td><td contenteditable="true">¥15–30</td></tr>
-        <tr><td contenteditable="true"><b>鲅鱼/海菜饺子</b></td><td contenteditable="true">本地家常鲜味</td><td contenteditable="true">任意饺子馆</td><td contenteditable="true">¥30–60</td></tr>
-        <tr><td contenteditable="true"><b>咸鱼饼子</b></td><td contenteditable="true">经典家常，咸香酥脆</td><td contenteditable="true">老菜馆</td><td contenteditable="true">¥30–50</td></tr>
-        <tr><td contenteditable="true"><b>清蒸皮皮虾/虾爬子</b></td><td contenteditable="true">原味鲜甜，夏季肥美</td><td contenteditable="true">市场现买现加工</td><td contenteditable="true">¥80–150</td></tr>
-        <tr><td contenteditable="true"><b>烤鱿鱼/铁板鱿鱼</b></td><td contenteditable="true">夜市王者</td><td contenteditable="true">交大/山东路夜市</td><td contenteditable="true">¥10–30</td></tr>
-        <tr><td contenteditable="true"><b>红油肉</b></td><td contenteditable="true">甜口酱汁嫩里脊，本地人爱</td><td contenteditable="true">老菜馆</td><td contenteditable="true">¥40–60</td></tr>
+        <tr><td><b>海胆水饺</b></td><td>皮薄馅足，鲜掉眉毛的爆款</td><td>品海楼等海景餐厅</td><td>¥60–100</td></tr>
+        <tr><td><b>海肠捞饭</b></td><td>冷水海肠+韭菜，米饭杀手</td><td>市区海鲜馆/夜市</td><td>¥50–90</td></tr>
+        <tr><td><b>海鲜焖子</b></td><td>焖子+海鲜+麻酱，街头代表</td><td>夜市/小吃街</td><td>¥15–30</td></tr>
+        <tr><td><b>鲅鱼/海菜饺子</b></td><td>本地家常鲜味</td><td>任意饺子馆</td><td>¥30–60</td></tr>
+        <tr><td><b>咸鱼饼子</b></td><td>经典家常，咸香酥脆</td><td>老菜馆</td><td>¥30–50</td></tr>
+        <tr><td><b>清蒸皮皮虾/虾爬子</b></td><td>原味鲜甜，夏季肥美</td><td>市场现买现加工</td><td>¥80–150</td></tr>
+        <tr><td><b>烤鱿鱼/铁板鱿鱼</b></td><td>夜市王者</td><td>交大/山东路夜市</td><td>¥10–30</td></tr>
+        <tr><td><b>红油肉</b></td><td>甜口酱汁嫩里脊，本地人爱</td><td>老菜馆</td><td>¥40–60</td></tr>
       </table>
     </div>
 
@@ -577,10 +595,10 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>区域</th><th>定位</th><th>适合</th></tr>
-        <tr><td contenteditable="true"><b>交大夜市 / 山东路夜市</b></td><td contenteditable="true">学生党天堂，平价海鲜小吃、烤鱿鱼、炸串</td><td contenteditable="true">穷游/夜宵/小吃扫街</td></tr>
-        <tr><td contenteditable="true"><b>天津街 / 中原小吃街</b></td><td contenteditable="true">老牌美食街，汇聚各类老字号小吃</td><td contenteditable="true">逛老城顺路吃</td></tr>
-        <tr><td contenteditable="true"><b>新长兴 / 桃源市场</b></td><td contenteditable="true">本地人常去，海鲜现买现加工</td><td contenteditable="true">实现"海鲜自由"，人均80+</td></tr>
-        <tr><td contenteditable="true"><b>星海/黑石礁海景餐厅</b></td><td contenteditable="true">靠窗看海，氛围感拉满</td><td contenteditable="true">正餐/请客/纪念日</td></tr>
+        <tr><td><b>交大夜市 / 山东路夜市</b></td><td>学生党天堂，平价海鲜小吃、烤鱿鱼、炸串</td><td>穷游/夜宵/小吃扫街</td></tr>
+        <tr><td><b>天津街 / 中原小吃街</b></td><td>老牌美食街，汇聚各类老字号小吃</td><td>逛老城顺路吃</td></tr>
+        <tr><td><b>新长兴 / 桃源市场</b></td><td>本地人常去，海鲜现买现加工</td><td>实现"海鲜自由"，人均80+</td></tr>
+        <tr><td><b>星海/黑石礁海景餐厅</b></td><td>靠窗看海，氛围感拉满</td><td>正餐/请客/纪念日</td></tr>
       </table>
       <div class="note">🦀 吃海鲜选<b>正规店铺或市场现买现加工</b>，避开景区高价大排档；先问单价+加工费再点；不吃路边生腌，备肠胃药。大连日料性价比也高，百元能吃蓝鳍刺身。</div>
 
@@ -591,10 +609,10 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>小吃</th><th>价格 / 特点</th><th>点评</th></tr>
-        <tr><td contenteditable="true"><b>焖子</b></td><td contenteditable="true">¥10 · 地瓜粉+蒜蓉+芝麻酱，底脆顶软</td><td contenteditable="true">大连招牌小吃，必吃</td></tr>
-        <tr><td contenteditable="true"><b>培根派</b></td><td contenteditable="true">现烤酥脆，培根+葱花+酱料</td><td contenteditable="true">排队王，值得等</td></tr>
-        <tr><td contenteditable="true"><b>海胆 / 全家福包子</b></td><td contenteditable="true">¥25–50 · 手掌大，海胆/牡蛎/海参/虾/扇贝爆汁</td><td contenteditable="true">海胆包像蟹黄包，鲜</td></tr>
-        <tr><td contenteditable="true"><b>鸡排面</b></td><td contenteditable="true">红烧甜辣，面条似凉面</td><td contenteditable="true">东北口味，重甜辣</td></tr>
+        <tr><td><b>焖子</b></td><td>¥10 · 地瓜粉+蒜蓉+芝麻酱，底脆顶软</td><td>大连招牌小吃，必吃</td></tr>
+        <tr><td><b>培根派</b></td><td>现烤酥脆，培根+葱花+酱料</td><td>排队王，值得等</td></tr>
+        <tr><td><b>海胆 / 全家福包子</b></td><td>¥25–50 · 手掌大，海胆/牡蛎/海参/虾/扇贝爆汁</td><td>海胆包像蟹黄包，鲜</td></tr>
+        <tr><td><b>鸡排面</b></td><td>红烧甜辣，面条似凉面</td><td>东北口味，重甜辣</td></tr>
       </table>
       <p style="margin-top:8px;font-size:13px;color:var(--sub)">一楼像小吃天堂，网红店全在排队；多人同行可<b>分工排队</b>，一会吃全。</p>
       <div class="links">
@@ -609,12 +627,12 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>菜</th><th>价格 / 特点</th><th>点评</th></tr>
-        <tr><td contenteditable="true"><b>海肠饺子</b></td><td contenteditable="true">¥120/盘（约¥6/只）· 韭菜+海肠</td><td contenteditable="true">鲜脆爆汁，<b>本地人直接吃不蘸料</b></td></tr>
-        <tr><td contenteditable="true"><b>海胆蒸蛋</b></td><td contenteditable="true">海胆+蛋羹，滑嫩</td><td contenteditable="true">大连菜离不开海胆</td></tr>
-        <tr><td contenteditable="true"><b>葱油鸟贝</b></td><td contenteditable="true">鸟贝+大量生葱</td><td contenteditable="true">鲁菜+东北融合，近两年网红</td></tr>
-        <tr><td contenteditable="true"><b>黄鱼鱼丸汤</b></td><td contenteditable="true">手工黄鱼丸</td><td contenteditable="true">咸鲜带酱油</td></tr>
-        <tr><td contenteditable="true"><b>三酱</b></td><td contenteditable="true">鲍鱼+红螺+小海螺</td><td contenteditable="true">酱汁浓郁，先吸一口汁</td></tr>
-        <tr><td contenteditable="true"><b>海胶</b></td><td contenteditable="true">牛毛菜琼脂冻，蒜醋味</td><td contenteditable="true">果冻口感，酸辣爽口</td></tr>
+        <tr><td><b>海肠饺子</b></td><td>¥120/盘（约¥6/只）· 韭菜+海肠</td><td>鲜脆爆汁，<b>本地人直接吃不蘸料</b></td></tr>
+        <tr><td><b>海胆蒸蛋</b></td><td>海胆+蛋羹，滑嫩</td><td>大连菜离不开海胆</td></tr>
+        <tr><td><b>葱油鸟贝</b></td><td>鸟贝+大量生葱</td><td>鲁菜+东北融合，近两年网红</td></tr>
+        <tr><td><b>黄鱼鱼丸汤</b></td><td>手工黄鱼丸</td><td>咸鲜带酱油</td></tr>
+        <tr><td><b>三酱</b></td><td>鲍鱼+红螺+小海螺</td><td>酱汁浓郁，先吸一口汁</td></tr>
+        <tr><td><b>海胶</b></td><td>牛毛菜琼脂冻，蒜醋味</td><td>果冻口感，酸辣爽口</td></tr>
       </table>
       <p style="margin-top:8px;font-size:13px;color:var(--sub)">小平岛离市中心较远（偏僻但本地有名），适合专门跑一趟吃海肠饺子。</p>
       <div class="links">
@@ -651,14 +669,14 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>店（⭐推荐度）</th><th>区域</th><th>特色 / 营业</th><th>人均</th></tr>
-        <tr><td contenteditable="true"><b>⭐⭐⭐ Old News</b></td><td contenteditable="true">东港/中山广场</td><td contenteditable="true">细节控鸡尾酒，微醺梦境 17:30–02:00</td><td contenteditable="true">中高</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐ LAMP BAR</b></td><td contenteditable="true">东港</td><td contenteditable="true">梧桐掩映酒馆，鸡尾酒稳</td><td contenteditable="true">中</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐ H9 Bar</b></td><td contenteditable="true">东港地铁B口</td><td contenteditable="true">约会聊天 14:00–01:00</td><td contenteditable="true">¥93</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐ VIVA</b></td><td contenteditable="true">星海广场·君悦内</td><td contenteditable="true">当季水果鸡尾酒 19:00–00:00</td><td contenteditable="true">偏高</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐ 亭下 TEA WINE STOP</b></td><td contenteditable="true">星海公园对面</td><td contenteditable="true">精酿餐吧，文化活动多</td><td contenteditable="true">¥67</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐ NO.ME</b></td><td contenteditable="true">西安路/劳动公园</td><td contenteditable="true">鸡尾酒+精酿可定制 18:00–02:00</td><td contenteditable="true">¥103</td></tr>
-        <tr><td contenteditable="true"><b>⭐ 34 TH3TYFO4R</b></td><td contenteditable="true">青泥洼桥</td><td contenteditable="true">星空顶，经典酒单 19:00–01:30</td><td contenteditable="true">中</td></tr>
-        <tr><td contenteditable="true"><b>⭐ 阿卡贝拉音乐汇</b></td><td contenteditable="true">印象城</td><td contenteditable="true">常邀乐团现场演出</td><td contenteditable="true">中</td></tr>
+        <tr><td><b>⭐⭐⭐ Old News</b></td><td>东港/中山广场</td><td>细节控鸡尾酒，微醺梦境 17:30–02:00</td><td>中高</td></tr>
+        <tr><td><b>⭐⭐ LAMP BAR</b></td><td>东港</td><td>梧桐掩映酒馆，鸡尾酒稳</td><td>中</td></tr>
+        <tr><td><b>⭐⭐ H9 Bar</b></td><td>东港地铁B口</td><td>约会聊天 14:00–01:00</td><td>¥93</td></tr>
+        <tr><td><b>⭐⭐ VIVA</b></td><td>星海广场·君悦内</td><td>当季水果鸡尾酒 19:00–00:00</td><td>偏高</td></tr>
+        <tr><td><b>⭐⭐ 亭下 TEA WINE STOP</b></td><td>星海公园对面</td><td>精酿餐吧，文化活动多</td><td>¥67</td></tr>
+        <tr><td><b>⭐⭐ NO.ME</b></td><td>西安路/劳动公园</td><td>鸡尾酒+精酿可定制 18:00–02:00</td><td>¥103</td></tr>
+        <tr><td><b>⭐ 34 TH3TYFO4R</b></td><td>青泥洼桥</td><td>星空顶，经典酒单 19:00–01:30</td><td>中</td></tr>
+        <tr><td><b>⭐ 阿卡贝拉音乐汇</b></td><td>印象城</td><td>常邀乐团现场演出</td><td>中</td></tr>
       </table>
     </div>
 
@@ -666,12 +684,12 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>去处（⭐推荐度）</th><th>亮点</th><th>营业 / 人均</th></tr>
-        <tr><td contenteditable="true"><b>⭐⭐⭐ 辽河口啤酒节深夜食堂</b></td><td contenteditable="true">7–8月限定，四大战区，拍照发圈</td><td contenteditable="true">至凌晨2点 / ¥15–30</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐⭐ 正黄旗海鲜烧烤</b></td><td contenteditable="true">本土11年，海鲜按个挑、露天吹海风</td><td contenteditable="true">至24点 / ¥100–189</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐ 锦鹏海鲜烧烤</b></td><td contenteditable="true">东港店，海肠捞饭绝</td><td contenteditable="true">至凌晨3点</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐ 歹街（固定夜市）</b></td><td contenteditable="true">三鲜焖子、海肠捞饭、铁板鱿鱼</td><td contenteditable="true">¥30–60</td></tr>
-        <tr><td contenteditable="true"><b>⭐ 黑石礁夜市</b></td><td contenteditable="true">铁板鱿鱼+凉拌鸡架，性价比</td><td contenteditable="true">低</td></tr>
-        <tr><td contenteditable="true"><b>⭐⭐ 喜鼎海胆水饺</b></td><td contenteditable="true">东港凯丹，38元/只，游客打卡</td><td contenteditable="true">¥150</td></tr>
+        <tr><td><b>⭐⭐⭐ 辽河口啤酒节深夜食堂</b></td><td>7–8月限定，四大战区，拍照发圈</td><td>至凌晨2点 / ¥15–30</td></tr>
+        <tr><td><b>⭐⭐⭐ 正黄旗海鲜烧烤</b></td><td>本土11年，海鲜按个挑、露天吹海风</td><td>至24点 / ¥100–189</td></tr>
+        <tr><td><b>⭐⭐ 锦鹏海鲜烧烤</b></td><td>东港店，海肠捞饭绝</td><td>至凌晨3点</td></tr>
+        <tr><td><b>⭐⭐ 歹街（固定夜市）</b></td><td>三鲜焖子、海肠捞饭、铁板鱿鱼</td><td>¥30–60</td></tr>
+        <tr><td><b>⭐ 黑石礁夜市</b></td><td>铁板鱿鱼+凉拌鸡架，性价比</td><td>低</td></tr>
+        <tr><td><b>⭐⭐ 喜鼎海胆水饺</b></td><td>东港凯丹，38元/只，游客打卡</td><td>¥150</td></tr>
       </table>
       <div class="note">💡 <b>顺路：</b>Day1 东港水城夜景 → 旁边 Old News/H9/锦鹏大排档，一条龙最省腿。<b>喝酒别开车</b>，网约车往返；营业时间以大众点评实时为准，去前查一眼。</div>
     </div>
@@ -683,9 +701,9 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>方式</th><th>到市中心</th><th>费用(单人)</th><th>建议</th></tr>
-        <tr><td contenteditable="true"><b>飞机·周水子机场</b></td><td contenteditable="true">地铁2号线 30分钟</td><td contenteditable="true">¥5（地铁）/打车¥25</td><td contenteditable="true">所有旅客性价比首选</td></tr>
-        <tr><td contenteditable="true"><b>高铁·大连站</b></td><td contenteditable="true">出站即核心区</td><td contenteditable="true">按里程</td><td contenteditable="true">优先选，省时省腿</td></tr>
-        <tr><td contenteditable="true"><b>高铁·大连北站</b></td><td contenteditable="true">地铁1号线 40–50分钟</td><td contenteditable="true">车票+地铁¥4</td><td contenteditable="true">只买到北站票时备选</td></tr>
+        <tr><td><b>飞机·周水子机场</b></td><td>地铁2号线 30分钟</td><td>¥5（地铁）/打车¥25</td><td>所有旅客性价比首选</td></tr>
+        <tr><td><b>高铁·大连站</b></td><td>出站即核心区</td><td>按里程</td><td>优先选，省时省腿</td></tr>
+        <tr><td><b>高铁·大连北站</b></td><td>地铁1号线 40–50分钟</td><td>车票+地铁¥4</td><td>只买到北站票时备选</td></tr>
       </table>
     </div>
 
@@ -693,11 +711,11 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>方式</th><th>线路/范围</th><th>费用</th><th>备注</th></tr>
-        <tr><td contenteditable="true"><b>地铁</b></td><td contenteditable="true">1/2号线覆盖90%景点；3号线去金石滩</td><td contenteditable="true">¥2–7</td><td contenteditable="true">用「大连e出行」APP刷码（支付宝/微信不能直接刷）</td></tr>
-        <tr><td contenteditable="true"><b>201路有轨电车</b></td><td contenteditable="true">穿越老城区</td><td contenteditable="true">¥2</td><td contenteditable="true">百年木质车厢，拍照出片</td></tr>
-        <tr><td contenteditable="true"><b>环城旅游巴士</b></td><td contenteditable="true">串联25个景点，当日无限次</td><td contenteditable="true">¥20–30</td><td contenteditable="true">懒人/带娃首选，1.3m以下免费</td></tr>
-        <tr><td contenteditable="true"><b>轻轨3号线</b></td><td contenteditable="true">大连站→金石滩</td><td contenteditable="true">¥8/约1h</td><td contenteditable="true">去金石滩必坐，旺季加车</td></tr>
-        <tr><td contenteditable="true"><b>网约车</b></td><td contenteditable="true">市内补位</td><td contenteditable="true">¥10–30</td><td contenteditable="true">比出租车便宜，避开早晚高峰</td></tr>
+        <tr><td><b>地铁</b></td><td>1/2号线覆盖90%景点；3号线去金石滩</td><td>¥2–7</td><td>用「大连e出行」APP刷码（支付宝/微信不能直接刷）</td></tr>
+        <tr><td><b>201路有轨电车</b></td><td>穿越老城区</td><td>¥2</td><td>百年木质车厢，拍照出片</td></tr>
+        <tr><td><b>环城旅游巴士</b></td><td>串联25个景点，当日无限次</td><td>¥20–30</td><td>懒人/带娃首选，1.3m以下免费</td></tr>
+        <tr><td><b>轻轨3号线</b></td><td>大连站→金石滩</td><td>¥8/约1h</td><td>去金石滩必坐，旺季加车</td></tr>
+        <tr><td><b>网约车</b></td><td>市内补位</td><td>¥10–30</td><td>比出租车便宜，避开早晚高峰</td></tr>
       </table>
       <div class="note">🛵 大连<b>全城没有共享单车</b>！滨海路坡陡弯急，旺季别自驾（易堵）；玩滨海路租电动车（约¥50/天）或打车分段。出站不搭话黑车，拒绝司机推荐的高回扣餐厅。</div>
     </div>
@@ -735,10 +753,10 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>片区</th><th>价格/晚</th><th>优势</th><th>不足</th><th>适合</th></tr>
-        <tr><td contenteditable="true"><b>西安路/青泥洼桥</b></td><td contenteditable="true">连锁 ¥160–280<br>青旅 ¥65–80/人<br>民宿 ¥100–200</td><td contenteditable="true">双地铁枢纽，夜市美食多，20分钟到星海/东港</td><td contenteditable="true">无海景，房间偏小</td><td contenteditable="true">穷游/吃货/学生</td></tr>
-        <tr><td contenteditable="true"><b>星海广场</b></td><td contenteditable="true">民宿 ¥138–258<br>品质酒店 ¥750+</td><td contenteditable="true">步行到海边，海景看跨海大桥夜景，近圣亚</td><td contenteditable="true">暑期傍晚堵车，餐饮偏贵</td><td contenteditable="true">亲子/首次来连/看海</td></tr>
-        <tr><td contenteditable="true"><b>东港商务区</b></td><td contenteditable="true">民宿 ¥145–265<br>河景房 ¥400+</td><td contenteditable="true">欧式建筑群，夜景出片，安静整洁</td><td contenteditable="true">小吃少，吃地道夜市需地铁10分钟</td><td contenteditable="true">情侣拍照/品质</td></tr>
-        <tr><td contenteditable="true"><b>金石滩</b></td><td contenteditable="true">¥300–600</td><td contenteditable="true">出门黄金沙滩，玩水/发现王国</td><td contenteditable="true">离市区远，轻轨1小时</td><td contenteditable="true">专程玩水/亲子度假</td></tr>
+        <tr><td><b>西安路/青泥洼桥</b></td><td>连锁 ¥160–280<br>青旅 ¥65–80/人<br>民宿 ¥100–200</td><td>双地铁枢纽，夜市美食多，20分钟到星海/东港</td><td>无海景，房间偏小</td><td>穷游/吃货/学生</td></tr>
+        <tr><td><b>星海广场</b></td><td>民宿 ¥138–258<br>品质酒店 ¥750+</td><td>步行到海边，海景看跨海大桥夜景，近圣亚</td><td>暑期傍晚堵车，餐饮偏贵</td><td>亲子/首次来连/看海</td></tr>
+        <tr><td><b>东港商务区</b></td><td>民宿 ¥145–265<br>河景房 ¥400+</td><td>欧式建筑群，夜景出片，安静整洁</td><td>小吃少，吃地道夜市需地铁10分钟</td><td>情侣拍照/品质</td></tr>
+        <tr><td><b>金石滩</b></td><td>¥300–600</td><td>出门黄金沙滩，玩水/发现王国</td><td>离市区远，轻轨1小时</td><td>专程玩水/亲子度假</td></tr>
       </table>
     </div>
 
@@ -746,14 +764,14 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>项目</th><th>内容（随手改）</th></tr>
-        <tr><td contenteditable="true"><b>已订酒店</b></td><td contenteditable="true">大连新星港湾酒店式公寓</td></tr>
-        <tr><td contenteditable="true"><b>位置</b></td><td contenteditable="true">星海广场 / 沙河口区</td></tr>
-        <tr><td contenteditable="true"><b>最近地铁</b></td><td contenteditable="true">地铁1号线 星海广场站（步行可达）</td></tr>
-        <tr><td contenteditable="true"><b>周边</b></td><td contenteditable="true">近凯德和平广场 / 圣亚海洋世界 / 星海公园</td></tr>
-        <tr><td contenteditable="true"><b>类型</b></td><td contenteditable="true">酒店式公寓（非标准酒店）</td></tr>
-        <tr><td contenteditable="true"><b>入住–退房</b></td><td contenteditable="true">7/28 入住 – 8/3 退房（按订单核对）</td></tr>
-        <tr><td contenteditable="true"><b>订单确认号</b></td><td contenteditable="true">（填订单号/确认短信，方便前台报房）</td></tr>
-        <tr><td contenteditable="true"><b>提醒</b></td><td contenteditable="true">卫生与服务评价参差，订前看近期真实点评；胜在位置核心，去星海广场/滨海路/莲花山都近。</td></tr>
+        <tr><td><b>已订酒店</b></td><td>大连新星港湾酒店式公寓</td></tr>
+        <tr><td><b>位置</b></td><td>星海广场 / 沙河口区</td></tr>
+        <tr><td><b>最近地铁</b></td><td>地铁1号线 星海广场站（步行可达）</td></tr>
+        <tr><td><b>周边</b></td><td>近凯德和平广场 / 圣亚海洋世界 / 星海公园</td></tr>
+        <tr><td><b>类型</b></td><td>酒店式公寓（非标准酒店）</td></tr>
+        <tr><td><b>入住–退房</b></td><td>7/28 入住 – 8/3 退房（按订单核对）</td></tr>
+        <tr><td><b>订单确认号</b></td><td>（填订单号/确认短信，方便前台报房）</td></tr>
+        <tr><td><b>提醒</b></td><td>卫生与服务评价参差，订前看近期真实点评；胜在位置核心，去星海广场/滨海路/莲花山都近。</td></tr>
       </table>
     </div>
 
@@ -761,10 +779,10 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>维度</th><th>酒店</th><th>民宿</th></tr>
-        <tr><td contenteditable="true"><b>标准化/安全</b></td><td contenteditable="true">连锁（全季/亚朵/如家/汉庭/宜必思）干净、有前台、有评价兜底</td><td contenteditable="true">良莠不齐，靠平台和点评筛</td></tr>
-        <tr><td contenteditable="true"><b>普通价格</b></td><td contenteditable="true">¥150–300/晚</td><td contenteditable="true">¥100–265/晚（同片区更便宜）</td></tr>
-        <tr><td contenteditable="true"><b>海景体验</b></td><td contenteditable="true">真·推窗见海只有星海C位（君悦/一方城堡），¥750+/晚起</td><td contenteditable="true">氛围好但<b>踩雷多</b>：很多"海景房"实际夹缝看海、高层遮挡、近海潮湿返潮蚊虫多、海风噪音大</td></tr>
-        <tr><td contenteditable="true"><b>推荐</b></td><td contenteditable="true">求稳、第一次来、赶行程 → 选连锁酒店最省心</td><td contenteditable="true">想拍照/纪念日 → 选<b>星海外围高层民宿 ¥180–320</b>，步行10分钟到海边，落地窗看日落，比C位酒店省一半</td></tr>
+        <tr><td><b>标准化/安全</b></td><td>连锁（全季/亚朵/如家/汉庭/宜必思）干净、有前台、有评价兜底</td><td>良莠不齐，靠平台和点评筛</td></tr>
+        <tr><td><b>普通价格</b></td><td>¥150–300/晚</td><td>¥100–265/晚（同片区更便宜）</td></tr>
+        <tr><td><b>海景体验</b></td><td>真·推窗见海只有星海C位（君悦/一方城堡），¥750+/晚起</td><td>氛围好但<b>踩雷多</b>：很多"海景房"实际夹缝看海、高层遮挡、近海潮湿返潮蚊虫多、海风噪音大</td></tr>
+        <tr><td><b>推荐</b></td><td>求稳、第一次来、赶行程 → 选连锁酒店最省心</td><td>想拍照/纪念日 → 选<b>星海外围高层民宿 ¥180–320</b>，步行10分钟到海边，落地窗看日落，比C位酒店省一半</td></tr>
       </table>
     </div>
 
@@ -772,9 +790,9 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>预算档位</th><th>推荐方案（随手改）</th></tr>
-        <tr><td contenteditable="true"><b>穷游党 ¥150–300/晚</b></td><td contenteditable="true">首选西安路/青泥洼桥，连锁酒店双地铁枢纽，楼下中原小吃街+201路电车；主街临街房车流噪音大，选小区内楼栋规避。</td></tr>
-        <tr><td contenteditable="true"><b>品质党 ¥400–800/晚</b></td><td contenteditable="true">星海广场C位或东港商务区。星海君悦直面跨海大桥、下楼即沙滩；东港四季安静私密度假（距老城较远）。</td></tr>
-        <tr><td contenteditable="true"><b>看海性价比党 ¥180–320/晚</b></td><td contenteditable="true">星海广场外围高层民宿，步行10分钟到海边，落地窗看大桥日落——穷游看海的正确姿势。</td></tr>
+        <tr><td><b>穷游党 ¥150–300/晚</b></td><td>首选西安路/青泥洼桥，连锁酒店双地铁枢纽，楼下中原小吃街+201路电车；主街临街房车流噪音大，选小区内楼栋规避。</td></tr>
+        <tr><td><b>品质党 ¥400–800/晚</b></td><td>星海广场C位或东港商务区。星海君悦直面跨海大桥、下楼即沙滩；东港四季安静私密度假（距老城较远）。</td></tr>
+        <tr><td><b>看海性价比党 ¥180–320/晚</b></td><td>星海广场外围高层民宿，步行10分钟到海边，落地窗看大桥日落——穷游看海的正确姿势。</td></tr>
       </table>
     </div>
 
@@ -782,10 +800,10 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>提醒</th><th>具体内容（随手改）</th></tr>
-        <tr><td contenteditable="true"><b>别信"低价海景房"网红滤镜</b></td><td contenteditable="true">夹缝看海、遮挡、潮湿返潮、海风噪音是高频投诉，订前看真实点评图。</td></tr>
-        <tr><td contenteditable="true"><b>景区手写招牌小旅馆别碰</b></td><td contenteditable="true">又吵又贵还不一定干净，订房走携程等正规平台，有评价兜底。</td></tr>
-        <tr><td contenteditable="true"><b>提前订</b></td><td contenteditable="true">暑期热门海景户型需提前1–2周，临时订选不到心仪房型。</td></tr>
-        <tr><td contenteditable="true"><b>金石滩慎选</b></td><td contenteditable="true">除非专程玩水，否则每天轻轨1小时通勤太累。</td></tr>
+        <tr><td><b>别信"低价海景房"网红滤镜</b></td><td>夹缝看海、遮挡、潮湿返潮、海风噪音是高频投诉，订前看真实点评图。</td></tr>
+        <tr><td><b>景区手写招牌小旅馆别碰</b></td><td>又吵又贵还不一定干净，订房走携程等正规平台，有评价兜底。</td></tr>
+        <tr><td><b>提前订</b></td><td>暑期热门海景户型需提前1–2周，临时订选不到心仪房型。</td></tr>
+        <tr><td><b>金石滩慎选</b></td><td>除非专程玩水，否则每天轻轨1小时通勤太累。</td></tr>
       </table>
     </div>
   </section>
@@ -859,6 +877,83 @@
       window.scrollTo({top:document.querySelector('.tabs').offsetTop-10,behavior:'smooth'});
     };
   });
+  /* ===== 本地编辑 / 自动保存（仅存本机，不写服务器） ===== */
+  (function(){
+    var KEY='dalian-guide-edits::';
+    var editBtn, statusEl, saveTimer;
+    function editableEls(){
+      var sel='.plan-table td,.plan-table th,.card p,.card li,.card h3,.card h4,.card .note,.ed';
+      return Array.prototype.slice.call(document.querySelectorAll(sel)).filter(function(el){
+        if(el.querySelector('a')) return false;
+        if(el.closest('.tabs')) return false;
+        return true;
+      });
+    }
+    function docVersion(){
+      var els=editableEls();
+      var f=document.querySelector('.plan-table');
+      return els.length+'|'+document.title+'|'+(f?(f.parentElement.id||f.parentElement.className):'x');
+    }
+    function skey(){ return KEY+docVersion(); }
+    function flash(m){ if(statusEl) statusEl.textContent=m; }
+    function save(){
+      try{
+        var els=editableEls(), map={};
+        els.forEach(function(el,i){ map[i]=el.innerHTML; });
+        localStorage.setItem(skey(), JSON.stringify({v:docVersion(), map:map}));
+        var t=new Date();
+        flash('✓ 已自动保存本机 '+('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2));
+      }catch(e){ flash('⚠️ 保存失败（本机存储可能已满）'); }
+    }
+    function load(){
+      try{
+        var raw=localStorage.getItem(skey()); if(!raw) return false;
+        var d=JSON.parse(raw); if(d.v!==docVersion()) return false;
+        var els=editableEls();
+        for(var k in d.map){ var el=els[+k]; if(el) el.innerHTML=d.map[k]; }
+        return true;
+      }catch(e){ return false; }
+    }
+    function setMode(on){
+      if(on){
+        document.body.classList.add('editing');
+        editableEls().forEach(function(el){ el.setAttribute('contenteditable','true'); });
+        flash('✏️ 编辑中：改完自动存这台手机');
+        editBtn.textContent='🔒 完成';
+      }else{
+        editableEls().forEach(function(el){ el.removeAttribute('contenteditable'); });
+        document.body.classList.remove('editing');
+        save(); editBtn.textContent='✏️ 编辑';
+      }
+    }
+    function onInput(){
+      clearTimeout(saveTimer); flash('… 输入中');
+      saveTimer=setTimeout(save,700);
+    }
+    function init(){
+      var bar=document.getElementById('editbar');
+      if(!bar) return;
+      editBtn=document.getElementById('editToggle');
+      statusEl=document.getElementById('editStatus');
+      var resetBtn=document.getElementById('editReset');
+      flash(load()?'📝 已载入本机改动':'🔒 只读模式（点「编辑」可改）');
+      editBtn.addEventListener('click',function(){ setMode(!document.body.classList.contains('editing')); });
+      resetBtn.addEventListener('click',function(){
+        if(confirm('还原成官方原版？本机保存的改动会清除（不可恢复）。')){ localStorage.removeItem(skey()); location.reload(); }
+      });
+      document.addEventListener('input',function(e){
+        if(document.body.classList.contains('editing') && e.target.closest && e.target.closest('.plan-table,.card')) onInput();
+      });
+      window.addEventListener('beforeunload',function(){ if(document.body.classList.contains('editing')) save(); });
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
 </script>
+  <div id="editbar">
+    <button id="editToggle" type="button">✏️ 编辑</button>
+    <button id="editReset" type="button">↺ 还原</button>
+    <span id="editStatus">🔒 只读模式（点「编辑」可改）</span>
+  </div>
 </body>
 </html>
