@@ -69,6 +69,8 @@
   .links{margin:10px 0 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
   .ext{display:inline-block;padding:6px 14px;border-radius:20px;background:var(--sea);color:#fff;font-size:13px;text-decoration:none;font-weight:600;transition:.15s}
   .ext:hover{background:var(--sea2)}
+  .plan-table .links-row td{padding:4px 10px;background:#f7fafc}
+  .plan-table .links-row td .links{margin:0;font-size:12.5px;gap:6px}
 
   .spot .hd .meta{font-size:12px;color:var(--sub);margin-top:3px}
   .spot .bd{padding:11px 14px;font-size:13px;color:var(--sub)}
@@ -580,14 +582,86 @@
     <div class="card">
       <table class="plan-table">
         <tr><th>特色</th><th>是什么</th><th>推荐去处</th><th>人均</th></tr>
-        <tr><td><b>海胆水饺</b></td><td>皮薄馅足，鲜掉眉毛的爆款</td><td>品海楼等海景餐厅</td><td>¥60–100</td></tr>
-        <tr><td><b>海肠捞饭</b></td><td>冷水海肠+韭菜，米饭杀手</td><td>市区海鲜馆/夜市</td><td>¥50–90</td></tr>
-        <tr><td><b>海鲜焖子</b></td><td>焖子+海鲜+麻酱，街头代表</td><td>夜市/小吃街</td><td>¥15–30</td></tr>
-        <tr><td><b>鲅鱼/海菜饺子</b></td><td>本地家常鲜味</td><td>任意饺子馆</td><td>¥30–60</td></tr>
-        <tr><td><b>咸鱼饼子</b></td><td>经典家常，咸香酥脆</td><td>老菜馆</td><td>¥30–50</td></tr>
-        <tr><td><b>清蒸皮皮虾/虾爬子</b></td><td>原味鲜甜，夏季肥美</td><td>市场现买现加工</td><td>¥80–150</td></tr>
-        <tr><td><b>烤鱿鱼/铁板鱿鱼</b></td><td>夜市王者</td><td>交大/山东路夜市</td><td>¥10–30</td></tr>
-        <tr><td><b>红油肉</b></td><td>甜口酱汁嫩里脊，本地人爱</td><td>老菜馆</td><td>¥40–60</td></tr>
+        <tr>
+          <td><b>海胆水饺</b></td><td>皮薄馅足，鲜掉眉毛的爆款</td><td>品海楼等海景餐厅</td><td>¥60–100</td>
+          </tr>
+          <tr class="links-row"><td colspan="4">
+            <div class="links">
+              📍 品海楼(星海广场店)：沙河口区中山路星海广场F区10号 · 行程 <a class="spot-link" onclick="gotoDay(1)">🔗 Day1</a> / <a class="spot-link" onclick="gotoDay(4)">🔗 Day4</a>
+              <a class="ext" href="https://uri.amap.com/search?keyword=品海楼&city=%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">🗺️ 高德地图</a>
+              <a class="ext" href="https://www.douyin.com/search/%E5%93%81%E6%B5%B7%E6%A5%BC%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">📱 抖音看环境</a>
+            </div>
+          </td></tr>
+        <tr>
+          <td><b>海肠捞饭</b></td><td>冷水海肠+韭菜，米饭杀手</td><td>市区海鲜馆/夜市</td><td>¥50–90</td>
+          </tr>
+          <tr class="links-row"><td colspan="4">
+            <div class="links">
+              📍 推荐交大夜市/山东路夜市：沙河口区山东路与五一路交口附近 · 行程 <a class="spot-link" onclick="gotoDay(2)">🔗 Day2</a> / <a class="spot-link" onclick="gotoDay(5)">🔗 Day5</a>
+              <a class="ext" href="https://uri.amap.com/search?keyword=%E4%BA%A4%E5%A4%A7%E5%A4%9C%E5%B8%82&city=%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">🗺️ 高德地图</a>
+              <a class="ext" href="https://www.douyin.com/search/%E5%A4%A7%E8%BF%9E%E6%B5%B7%E9%B2%9C%E5%A4%9C%E5%B8%82" target="_blank" rel="noopener">📱 抖音看环境</a>
+            </div>
+          </td></tr>
+        <tr>
+          <td><b>海鲜焖子</b></td><td>焖子+海鲜+麻酱，街头代表</td><td>夜市/小吃街</td><td>¥15–30</td>
+          </tr>
+          <tr class="links-row"><td colspan="4">
+            <div class="links">
+              📍 推荐天津街/中原小吃街：中山区天津街（近火车站）· 行程 <a class="spot-link" onclick="gotoDay(4)">🔗 Day4</a>
+              <a class="ext" href="https://uri.amap.com/search?keyword=%E5%A4%A9%E6%B4%A5%E8%A1%97%E5%B0%8F%E5%90%83%E8%A1%97&city=%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">🗺️ 高德地图</a>
+              <a class="ext" href="https://www.douyin.com/search/%E5%A4%A7%E8%BF%9E%E7%83%9F%E5%AD%90" target="_blank" rel="noopener">📱 抖音看环境</a>
+            </div>
+          </td></tr>
+        <tr>
+          <td><b>鲅鱼/海菜饺子</b></td><td>本地家常鲜味</td><td>任意饺子馆</td><td>¥30–60</td>
+          </tr>
+          <tr class="links-row"><td colspan="4">
+            <div class="links">
+              📍 推荐：日丰源饺子（小平岛店）甘井子区小平岛路 · 行程 <a class="spot-link" onclick="gotoDay(4)">🔗 Day4</a>
+              <a class="ext" href="https://uri.amap.com/search?keyword=%E6%97%A5%E4%B8%B0%E6%BA%90%E9%A5%BA%E5%AD%90&city=%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">🗺️ 高德地图</a>
+              <a class="ext" href="https://www.douyin.com/search/%E5%A4%A7%E8%BF%9E%E9%A5%BA%E5%AD%90" target="_blank" rel="noopener">📱 抖音看环境</a>
+            </div>
+          </td></tr>
+        <tr>
+          <td><b>咸鱼饼子</b></td><td>经典家常，咸香酥脆</td><td>老菜馆</td><td>¥30–50</td>
+          </tr>
+          <tr class="links-row"><td colspan="4">
+            <div class="links">
+              📍 推荐：老菜馆（青泥洼桥/西安路商圈）中山区友好广场附近 · 行程 <a class="spot-link" onclick="gotoDay(4)">🔗 Day4</a>
+              <a class="ext" href="https://uri.amap.com/search?keyword=%E5%A4%A7%E8%BF%9E%E8%80%81%E8%8F%9C%E9%A6%86&city=%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">🗺️ 高德地图</a>
+              <a class="ext" href="https://www.douyin.com/search/%E5%A4%A7%E8%BF%9E%E8%80%81%E8%8F%9C%E9%A6%86" target="_blank" rel="noopener">📱 抖音看环境</a>
+            </div>
+          </td></tr>
+        <tr>
+          <td><b>清蒸皮皮虾/虾爬子</b></td><td>原味鲜甜，夏季肥美</td><td>市场现买现加工</td><td>¥80–150</td>
+          </tr>
+          <tr class="links-row"><td colspan="4">
+            <div class="links">
+              📍 推荐：新长兴市场 / 桃源市场 西岗区长春路200号 · 行程 <a class="spot-link" onclick="gotoDay(4)">🔗 Day4</a>
+              <a class="ext" href="https://uri.amap.com/search?keyword=%E6%96%B0%E9%95%BF%E5%85%B4%E5%B8%82%E5%9C%BA&city=%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">🗺️ 高德地图</a>
+              <a class="ext" href="https://www.douyin.com/search/%E5%A4%A7%E8%BF%9E%E6%B5%B7%E9%B2%9C%E5%B8%82%E5%9C%BA" target="_blank" rel="noopener">📱 抖音看环境</a>
+            </div>
+          </td></tr>
+        <tr>
+          <td><b>烤鱿鱼/铁板鱿鱼</b></td><td>夜市王者</td><td>交大/山东路夜市</td><td>¥10–30</td>
+          </tr>
+          <tr class="links-row"><td colspan="4">
+            <div class="links">
+              📍 交大夜市：沙河口区山东路与五一路交叉口附近 · 行程 <a class="spot-link" onclick="gotoDay(2)">🔗 Day2</a> / <a class="spot-link" onclick="gotoDay(5)">🔗 Day5</a>
+              <a class="ext" href="https://uri.amap.com/search?keyword=%E4%BA%A4%E5%A4%A7%E5%A4%9C%E5%B8%82&city=%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">🗺️ 高德地图</a>
+              <a class="ext" href="https://www.douyin.com/search/%E5%A4%A7%E8%BF%9E%E7%83%A4%E9%B1%BF%E9%B1%BF" target="_blank" rel="noopener">📱 抖音看环境</a>
+            </div>
+          </td></tr>
+        <tr>
+          <td><b>红油肉</b></td><td>甜口酱汁嫩里脊，本地人爱</td><td>老菜馆</td><td>¥40–60</td>
+          </tr>
+          <tr class="links-row"><td colspan="4">
+            <div class="links">
+              📍 推荐：老菜馆（西安路商圈）沙河口区西安路附近 · 行程 <a class="spot-link" onclick="gotoDay(4)">🔗 Day4</a>
+              <a class="ext" href="https://uri.amap.com/search?keyword=%E8%A5%BF%E5%AE%89%E8%B7%AF%E8%80%81%E8%8F%9C%E9%A6%86&city=%E5%A4%A7%E8%BF%9E" target="_blank" rel="noopener">🗺️ 高德地图</a>
+              <a class="ext" href="https://www.douyin.com/search/%E5%A4%A7%E8%BF%9E%E7%BA%A2%E6%B2%B9%E8%82%89" target="_blank" rel="noopener">📱 抖音看环境</a>
+            </div>
+          </td></tr>
       </table>
     </div>
 
