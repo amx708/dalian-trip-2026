@@ -877,17 +877,13 @@
       window.scrollTo({top:document.querySelector('.tabs').offsetTop-10,behavior:'smooth'});
     };
   });
-    /* ===== 云端共享版：编辑直接存 GitHub（多端同步） ===== */
+    /* ===== 云端共享版：Firebase RTDB + 分享码双后端 ===== */
   (function(){
-    var REPO='amx708/dalian-trip-2026';
-    var PATH='cloud-data.json';
-    var TOKEN='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';
-    var API='https://api.github.com/repos/'+REPO+'/contents/'+PATH;
-    var AUTH={'Authorization':'Bearer '+TOKEN,'Accept':'application/vnd.github.v3+json'};
-    var editBtn, statusEl, saveTimer;
+    var FB_URL=''; /* 留空=分享码模式；填入 Firebase URL 即切真云端 */
+    var FB_KEY='dalian-guide-data';
+    var LS_KEY='dalian-share-code';
+    var editBtn, statusEl, saveTimer, shareCode='';
     function pad(n){ return ('0'+n).slice(-2); }
-    function b64e(s){ return btoa(unescape(encodeURIComponent(s))); }
-    function b64d(b){ return decodeURIComponent(escape(atob(b))); }
     function editableEls(){
       var sel='.plan-table td,.plan-table th,.card p,.card li,.card h3,.card h4,.card .note,.ed';
       return Array.prototype.slice.call(document.querySelectorAll(sel)).filter(function(el){
@@ -902,69 +898,89 @@
       return els.length+'|'+document.title+'|'+(f?(f.parentElement.id||f.parentElement.className):'x');
     }
     function flash(m){ if(statusEl) statusEl.textContent=m; }
-    function load(){
-      return fetch(API,{headers:AUTH}).then(function(r){
-        if(r.status===404) return null;
-        if(!r.ok) throw new Error('load'+r.status);
-        return r.json();
-      }).then(function(j){
-        if(!j) return false;
-        var d=JSON.parse(b64d(j.content));
-        if(d.v!==docVersion()) return false;
-        var els=editableEls();
-        for(var k in d.map){ var el=els[+k]; if(el) el.innerHTML=d.map[k]; }
-        return true;
-      }).catch(function(e){ flash('⚠️ 云端读取失败'); return false; });
-    }
-    function save(){
-      clearTimeout(saveTimer);
+    function collectData(){
       var els=editableEls(), map={};
       els.forEach(function(el,i){ map[i]=el.innerHTML; });
-      var body=JSON.stringify({v:docVersion(), map:map});
-      fetch(API,{headers:AUTH}).then(function(r){
-        if(r.status===404) return null;
-        if(!r.ok) throw new Error('get');
-        return r.json();
-      }).then(function(j){
-        var payload={ message:'cloud edit '+new Date().toISOString(), content:b64e(body) };
-        if(j) payload.sha=j.sha;
-        return fetch(API,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},AUTH),body:JSON.stringify(payload)});
-      }).then(function(r){ if(!r.ok) throw new Error('put'+r.status); return r.json(); })
-      .then(function(j){ flash('☁️ 已存云端 '+pad(new Date().getHours())+':'+pad(new Date().getMinutes())); })
-      .catch(function(e){ flash('⚠️ 云端保存失败（可重试）'); });
+      return {v:docVersion(), map:map};
     }
+    function applyData(d){
+      if(!d||d.v!==docVersion()) return false;
+      var els=editableEls();
+      for(var k in d.map){ var el=els[+k]; if(el) el.innerHTML=d.map[k]; }
+      return true;
+    }
+    /* --- Firebase 后端 --- */
+    function fbLoad(){
+      if(!FB_URL) return Promise.resolve(false);
+      return fetch(FB_URL+'/'+FB_KEY+'.json').then(function(r){ if(!r.ok) throw new Error('fb'); return r.json(); })
+        .then(function(d){ return applyData(d); }).catch(function(){ return false; });
+    }
+    function fbSave(){
+      if(!FB_URL) return;
+      var d=collectData();
+      fetch(FB_URL+'/'+FB_KEY+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+        .then(function(r){ if(r.ok) flash('☁️ 已存云端 '+pad(new Date().getHours())+':'+pad(new Date().getMinutes())); else throw new Error('fb'); })
+        .catch(function(){ flash('⚠️ 云端保存失败（可重试）'); });
+    }
+    function fbReset(){ if(FB_URL) return fetch(FB_URL+'/'+FB_KEY+'.json',{method:'DELETE'}); return Promise.resolve(); }
+    /* --- 分享码后端（localStorage + 复制粘贴）--- */
+    function codeSave(){
+      shareCode=btoa(unescape(encodeURIComponent(JSON.stringify(collectData()))));
+      localStorage.setItem(LS_KEY,shareCode);
+      try{ navigator.clipboard.writeText(shareCode); flash('📋 已复制分享码（微信发给家人→他们点导入）'); } catch(e){ flash('📋 已生成分享码（见下方输入框）'); }
+    }
+    function codeLoad(code){
+      try{
+        var d=JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
+        if(applyData(d)){ shareCode=code; localStorage.setItem(LS_KEY,code); return true; }
+      }catch(e){}
+      return false;
+    }
+    function codeInit(){
+      var c=localStorage.getItem(LS_KEY);
+      if(c) codeLoad(c);
+      return !!c;
+    }
+    /* --- 统一入口 --- */
+    function isFirebase(){ return FB_URL && FB_URL.length>5; }
+    function load(){ return isFirebase()? fbLoad() : Promise.resolve(codeInit()); }
+    function save(){ clearTimeout(saveTimer); if(isFirebase()) fbSave(); else codeSave(); }
     function onInput(){ flash('… 输入中'); clearTimeout(saveTimer); saveTimer=setTimeout(save,900); }
-    function resetCloud(){
-      return fetch(API,{headers:AUTH}).then(function(r){
-        if(r.status===404) return null;
-        if(!r.ok) throw new Error('get');
-        return r.json();
-      }).then(function(j){
-        if(!j) return null;
-        return fetch(API,{method:'DELETE',headers:Object.assign({'Content-Type':'application/json'},AUTH),body:JSON.stringify({message:'reset to official',sha:j.sha})});
-      });
+    function resetAll(){
+      if(confirm(isFirebase()?'还原成官方原版？云端数据会清除（不可恢复）。':'还原成官方原版？本机分享码会清除。')){
+        (isFirebase()?fbReset():Promise.resolve()).then(function(){ localStorage.removeItem(LS_KEY); location.reload(); });
+      }
     }
     function init(){
       var bar=document.getElementById('editbar'); if(!bar) return;
       editBtn=document.getElementById('editToggle');
       statusEl=document.getElementById('editStatus');
       var resetBtn=document.getElementById('editReset');
-      flash('☁️ 云端只读（点编辑可改，改完大家同步）');
-      load().then(function(ok){ flash(ok?'📝 已载入云端改动':'☁️ 云端只读（点编辑可改，改完大家同步）'); });
+      var modeLabel=isFirebase()?'☁️ Firebase 云端':'📤 分享码模式';
+      flash(modeLabel+'（点编辑可改）');
+      load().then(function(ok){ flash(ok?'📝 已载入改动':modeLabel+'（点编辑可改）'); });
       editBtn.addEventListener('click',function(){
         var on=document.body.classList.toggle('editing');
         editableEls().forEach(function(el){ if(on) el.setAttribute('contenteditable','true'); else el.removeAttribute('contenteditable'); });
-        if(on){ flash('✏️ 编辑中：改完自动存云端'); editBtn.textContent='🔒 完成'; }
+        if(on){ flash('✏️ 编辑中'+(isFirebase()?'：改完自动存云端':'：改完生成分享码')); editBtn.textContent='🔒 完成'; }
         else { save(); editBtn.textContent='✏️ 编辑'; }
       });
-      resetBtn.addEventListener('click',function(){
-        if(confirm('还原成官方原版？云端保存的改动会被所有人清除（不可恢复）。')){
-          resetCloud().then(function(){ location.reload(); }).catch(function(){ location.reload(); });
-        }
-      });
+      resetBtn.addEventListener('click',resetAll);
       document.addEventListener('input',function(e){
         if(document.body.classList.contains('editing') && e.target.closest && e.target.closest('.plan-table,.card')) onInput();
       });
+      /* 分享码模式的额外 UI */
+      if(!isFirebase()){
+        var imp=document.createElement('input'); imp.type='text'; imp.placeholder='粘贴分享码导入…';
+        imp.style.cssText='flex:1;min-width:0;border:1px solid #ccc;border-radius:6px;padding:5px 8px;font-size:12px;';
+        var go=document.createElement('button'); go.textContent='导入';
+        go.style.cssText='flex:0 0 auto;border:0;border-radius:9px;padding:7px 11px;font-size:12px;background:#22c55e;color:#fff;cursor:pointer;';
+        go.onclick=function(){ var v=imp.value.trim(); if(v&&codeLoad(v)){ flash('✅ 导入成功'); imp.value=''; } else flash('⚠️ 无效分享码'); };
+        bar.appendChild(document.createElement('div')).id='shareRow';
+        var sr=document.getElementById('shareRow');
+        sr.style.cssText='display:flex;gap:6px;margin-top:4px;width:100%';
+        sr.appendChild(imp); sr.appendChild(go);
+      }
     }
     if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
     else init();
