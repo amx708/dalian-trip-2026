@@ -137,6 +137,12 @@
   #editbar{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;gap:8px;align-items:center;
     padding:9px 12px;background:rgba(18,28,46,.95);color:#fff;font-size:13px;
     box-shadow:0 -3px 12px rgba(0,0,0,.3);}
+  .edithelp{position:relative;margin:0;padding:0;}
+  .edithelp > summary{list-style:none;cursor:pointer;font-size:16px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.15);color:#fff;line-height:1;}
+  .edithelp > summary::-webkit-details-marker{display:none;}
+  .edithelp-body{position:absolute;bottom:calc(100% + 10px);right:0;width:min(320px,calc(100vw - 24px));background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:12px 14px;font-size:13px;color:#0f172a;line-height:1.65;box-shadow:0 4px 16px rgba(2,132,199,.18);max-height:70vh;overflow:auto;z-index:1000;}
+  .edithelp-body p{margin:6px 0;}
+
   #editbar button{flex:0 0 auto;border:0;border-radius:9px;padding:8px 13px;font-size:13px;cursor:pointer;}
   #editToggle{background:#ff7a18;color:#fff;font-weight:700;}
   #editReset{background:#33425c;color:#dfe6f0;}
@@ -146,6 +152,19 @@
     background:#fffbe9;border-radius:5px;}
   body.editing .plan-table td[contenteditable="true"],
   body.editing .plan-table th[contenteditable="true"]{background:#fffbe9;}
+/* 手机端表格转卡片，避免左右滑动 */
+  @media(max-width:680px){
+    .plan-table, .plan-table thead, .plan-table tbody, .plan-table th, .plan-table td, .plan-table tr{display:block;}
+    .plan-table thead tr{display:none;}
+    .plan-table tr{margin-bottom:12px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);}
+    .plan-table td{border:none;border-bottom:1px solid var(--line);padding:10px 11px 10px 42%;position:relative;min-height:1.5em;line-height:1.6;}
+    .plan-table td:last-child{border-bottom:none;}
+    .plan-table td:before{content:attr(data-label);position:absolute;left:11px;top:10px;font-weight:600;color:var(--sea);font-size:12.5px;}
+    .plan-table .links-row td{padding-left:11px;}
+    .plan-table .links-row td:before{display:none;}
+    .plan-table td.long-cell{padding-left:11px;padding-top:28px;}
+    .plan-table td.long-cell:before{left:11px;top:8px;}
+  }
   @media(max-width:680px){
     #editbar{font-size:12px;padding:8px 9px;gap:6px;}
     #editbar button{padding:7px 10px;font-size:12px;}
@@ -1328,8 +1347,8 @@
       });
       window.addEventListener('beforeunload',function(){ if(document.body.classList.contains('editing')) save(); });
     }
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
-    else init();
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);  else init();
+    labelTables();
   })();
 </script>
   <div id="editbar">
