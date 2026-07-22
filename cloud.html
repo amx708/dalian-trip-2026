@@ -1295,7 +1295,12 @@
     /* --- 统一入口 --- */
     function isFirebase(){ return FB_URL && FB_URL.length>5; }
     function load(){
-      if(isFirebase()) return fbLoad();
+      if(isFirebase()){
+        return fbLoad().then(function(ok){
+          if(!ok){ var c=localStorage.getItem(LS_KEY); if(c){ try{ var d=JSON.parse(decodeURIComponent(escape(atob(c.trim())))); if(applyData(d)){ fbSave(); return true; } }catch(e){} } }
+          return false;
+        });
+      }
       if(localStorage.getItem(LS_KEY)) return Promise.resolve(codeInit());
       var h=location.hash.replace(/^#/,'').trim();
       if(h.length>20 && codeLoad(h)) return Promise.resolve(true);
