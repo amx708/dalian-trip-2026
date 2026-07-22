@@ -1008,6 +1008,82 @@
       <div class="note">🍗 鸡架是沈阳人的"城市暗号"，熏拌/烤/炸都好吃；西塔韩餐水准普遍高于大连。东北菜量偏大，8人同行<b>少点几样、多尝几种</b>最划算。</div>
     </div>
 
+    <h3>📊 沈阳美食 CP 值总表（视频实测，仅供参考）</h3>
+    <div class="note">下面这张表来自 5 支沈阳美食视频的实吃测评，按「每元获得感」给 CP 评级：<b>S 顶值 / A 高值 / B 中 / ⚠ 地雷 / ★ 最爱</b>。价格为视频当时实测，可能变动，以大众点评实时为准。点上方按钮可按评级筛选。</div>
+    <style>
+      .sy-cp{margin-top:4px}
+      .sy-cp .filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 14px}
+      .sy-cp .filters button{border:1px solid var(--line);background:#fff;color:var(--ink);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px;transition:.15s}
+      .sy-cp .filters button:hover{border-color:#C2700F;color:#C2700F}
+      .sy-cp .filters button.on{background:#C2700F;color:#fff;border-color:#C2700F}
+      .sy-cp .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
+      .sy-cp .b-S{background:#2a9d8f} .sy-cp .b-A{background:#e9c46a;color:#5a4a00}
+      .sy-cp .b-B{background:#8d99ae} .sy-cp .b-mine{background:#e63946} .sy-cp .b-love{background:#f4a261;color:#5a3000}
+      .sy-cp .price{font-weight:700;color:#C2700F;white-space:nowrap}
+      .sy-cp .price small{font-weight:400;color:var(--sub);font-size:11.5px}
+      .sy-cp .ep-tag{font-size:11.5px;color:var(--sub);white-space:nowrap}
+      .sy-cp .pill{display:inline-block;background:#fdf1e7;color:#C2700F;border:1px solid #f3d2b8;padding:2px 10px;border-radius:20px;font-size:12.5px;margin:2px 4px 2px 0}
+    </style>
+    <div class="sy-cp">
+      <div class="filters">
+        <button class="on" data-f="all">全部</button>
+        <button data-f="S">S 顶值</button>
+        <button data-f="A">A 高值</button>
+        <button data-f="B">B 中</button>
+        <button data-f="mine">⚠ 地雷</button>
+        <button data-f="love">★ 最爱</button>
+      </div>
+      <div class="card">
+        <table class="plan-table">
+          <thead><tr><th>集</th><th>品项</th><th>价格</th><th>场景</th><th>CP</th><th>一句点评</th></tr></thead>
+          <tbody id="syCpRows">
+        <tr data-cp="S"><td class="ep-tag">E1</td><td><b>大猪蹄双人餐</b></td><td class="price">138元<br><small>人均69</small></td><td>西塔韩餐</td><td><span class="badge b-S">S</span></td><td>满桌＋无限续小菜，多人分摊最值</td></tr>
+        <tr data-cp="B"><td class="ep-tag">E1</td><td><b>紫菜包饭(金枪鱼)</b></td><td class="price">15元</td><td>西塔</td><td><span class="badge b-B">B</span></td><td>方便单食，但米饭为主、蛋白低</td></tr>
+        <tr data-cp="B"><td class="ep-tag">E1</td><td><b>米肠／血肠</b></td><td class="price">7.5元</td><td>西塔</td><td><span class="badge b-B">B</span></td><td>猪血糯米，微血回味，不爱血慎点</td></tr>
+        <tr data-cp="B"><td class="ep-tag">E1</td><td><b>釜山鱼饼</b></td><td class="price">10元</td><td>西塔</td><td><span class="badge b-B">B</span></td><td>有嚼劲汤鲜，但偏咸</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E2</td><td><b>焦烤鸡架</b></td><td class="price">7.5元<br><small>15两</small></td><td>街边／西塔</td><td><span class="badge b-S">S</span></td><td>外焦里嫩炭香，视频当日最爱</td></tr>
+        <tr data-cp="A"><td class="ep-tag">E2</td><td><b>辣炒鸡架</b></td><td class="price">16元</td><td>饭馆</td><td><span class="badge b-A">A</span></td><td>甜辣下酒，配饭也行</td></tr>
+        <tr data-cp="A"><td class="ep-tag">E2</td><td><b>拌鸡架</b></td><td class="price">未标价</td><td>麻辣拌店</td><td><span class="badge b-A">A</span></td><td>先熏再甜酸酱拌，沈阳人爱甜</td></tr>
+        <tr data-cp="B"><td class="ep-tag">E2</td><td><b>肉末茄子</b></td><td class="price">18元</td><td>鸡架店</td><td><span class="badge b-B">B</span></td><td>下饭神器，单吃偏甜</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E3</td><td><b>包子</b></td><td class="price">1.5元</td><td>早市</td><td><span class="badge b-S">S</span></td><td>茴香／猪肉，馅少但香</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E3</td><td><b>豆腐脑</b></td><td class="price">2.5元</td><td>早市</td><td><span class="badge b-S">S</span></td><td>丝滑带焦香，比哈尔滨好</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E3</td><td><b>炸糕(红豆)</b></td><td class="price">~2元</td><td>早市</td><td><span class="badge b-S">S</span></td><td>红豆馅不甜、酥脆</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E3</td><td><b>鸡蛋汉堡</b></td><td class="price">4元</td><td>早市</td><td><span class="badge b-S">S</span></td><td>有肉馅，便宜版满福堡</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E3</td><td><b>牛肉烧麦(6个)</b></td><td class="price">5元</td><td>早市</td><td><span class="badge b-S">S</span></td><td>单颗＜1元，清蒸牛肉香</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E3</td><td><b>羊杂汤</b></td><td class="price">6元<br><small>汤续</small></td><td>早市</td><td><span class="badge b-S">S</span></td><td>汤无限续，羊杂多，良心价</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E3</td><td><b>甜姑娘(半斤)</b></td><td class="price">3元</td><td>早市收市</td><td><span class="badge b-S">S</span></td><td>番茄＋奶香，没吃过必试</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E4</td><td><b>吊炉饼</b></td><td class="price">1.3元</td><td>菜市场</td><td><span class="badge b-S">S</span></td><td>外酥内嫩，层次丰富(全场最便宜)</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E4</td><td><b>包子</b></td><td class="price">1.5元</td><td>菜市场</td><td><span class="badge b-S">S</span></td><td>茴香鸡蛋／白菜肉</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E4</td><td><b>金家冷面</b></td><td class="price">12元</td><td>菜市场</td><td><span class="badge b-S">S</span></td><td>滑溜Q弹、酸甜，必吃</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E4</td><td><b>锅包肉(番茄+老式)</b></td><td class="price">未标价</td><td>菜市场</td><td><span class="badge b-S">S</span></td><td>老式超脆，视频说吊打上海</td></tr>
+        <tr data-cp="B"><td class="ep-tag">E4</td><td><b>黏食盒(驴打滚+凉糕+切糕)</b></td><td class="price">27.8元</td><td>菜市场</td><td><span class="badge b-B">B</span></td><td>为冲金额买，糯到超载，买1种就够</td></tr>
+        <tr data-cp="B"><td class="ep-tag">E4</td><td><b>八旗手工肠(肉枣)</b></td><td class="price">18元/斤</td><td>菜市场</td><td><span class="badge b-B">B</span></td><td>甜，像台式香肠</td></tr>
+        <tr data-cp="⚠"><td class="ep-tag">E4</td><td><b>熏肉大饼</b></td><td class="price">8元</td><td>菜市场</td><td><span class="badge b-mine">⚠</span></td><td>真材实料但烟熏味不足，差点意思</td></tr>
+        <tr data-cp="S"><td class="ep-tag">E5</td><td><b>7元盒饭(实付8)</b></td><td class="price">8元</td><td>路边</td><td><span class="badge b-S">S</span></td><td>现炒现炸，热食王，性价比炸裂</td></tr>
+        <tr data-cp="A"><td class="ep-tag">E5</td><td><b>15元自助餐</b></td><td class="price">15元</td><td>自助</td><td><span class="badge b-A">A</span></td><td>80菜＋水果＋冷气，选择王</td></tr>
+        <tr data-cp="★"><td class="ep-tag">E5</td><td><b>锅包肉+杀猪菜(现做)</b></td><td class="price">~70元/桌</td><td>必吃榜饭馆</td><td><span class="badge b-love">★</span></td><td>现点现做，reviewer真·最爱(非比价档)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">🏷️ 图例：<b>E1</b> 西塔韩食 · <b>E2</b> 鸡架之王 · <b>E3</b> 早市100元 · <b>E4</b> 菜市场100元 · <b>E5</b> 盒饭vs自助。<br>
+      💡 结论：<span class="pill">S 顶值：早市小吃 / 焦烤鸡架 / 7元盒饭 / 吊炉饼 / 冷面</span><span class="pill">⚠ 地雷：熏肉大饼(味淡)</span><span class="pill">★ 最爱：现做锅包肉+杀猪菜</span></div>
+      <script>
+        (function(){
+          var box=document.querySelector(".sy-cp"); if(!box) return;
+          var btns=box.querySelectorAll(".filters button");
+          var rows=box.querySelectorAll("#syCpRows tr");
+          btns.forEach(function(b){
+            b.addEventListener("click",function(){
+              btns.forEach(function(x){x.classList.remove("on")});
+              b.classList.add("on");
+              var f=b.dataset.f;
+              rows.forEach(function(r){ r.style.display=(f==="all"||r.dataset.cp===f)?"":"none"; });
+            });
+          });
+        })();
+      </script>
+    </div>
+
     <h2 style="margin-top:28px">🍸 沈阳夜生活（可去可不去）</h2>
     <div class="note">🌃 沈阳的夜晚属于西塔的霓虹、浑河边的风、和一场正宗东北洗浴。喝酒别开车，网约车往返；营业以大众点评实时为准。</div>
 
