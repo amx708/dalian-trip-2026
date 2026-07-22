@@ -1342,5 +1342,14 @@
     <button id="editReset" type="button">↺ 还原</button>
     <span id="editStatus">🔒 只读模式（点「编辑」可改）</span>
   </div>
+  <details class="edithelp" style="position:fixed;left:10px;right:10px;bottom:104px;z-index:998;margin:0;padding:10px 13px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;font-size:13px;color:#0f172a;line-height:1.65;max-height:64vh;overflow:auto;box-shadow:0 4px 16px rgba(2,132,199,.18);">
+    <summary style="cursor:pointer;font-weight:700;color:#0369a1;">💡 怎么用「编辑 / 分享码」？（点开看说明）</summary>
+    <div style="margin-top:8px;">
+      <p style="margin:6px 0;"><b>① 改内容：</b>点左下角「✏️ 编辑」，攻略里大部分文字（行程表、备注、卡片等）会变成可直接修改；改完点「🔒 完成」。</p>
+      <p style="margin:6px 0;"><b>② 生成分享码：</b>点「完成」后，系统会把你改过的内容打包成一段「分享码」，并自动复制到剪贴板（也会存在本机）。</p>
+      <p style="margin:6px 0;"><b>③ 发给家人：</b>把这段码通过微信发给家人；他们打开本攻略，在下方「粘贴分享码导入…」框里贴上、点「导入」，就能看到你改的版本。</p>
+      <p style="margin:6px 0;color:#b45309;background:#fffbeb;padding:7px 9px;border-radius:8px;">⚠️ 当前是<b>离线分享码模式</b>：你每次改动都要重新生成、重发一次码；换手机或清浏览器缓存会丢失本机改动。想让全家打开同一链接就看到最新版（实时同步、免发码），可接入 Firebase 云端。</p>
+    </div>
+  </details>
 </body>
 </html>
