@@ -1230,7 +1230,7 @@
   });
   /* ===== 云端共享版：Firebase RTDB + 分享码双后端 ===== */
   (function(){
-    var FB_URL=''; /* 留空=分享码模式；填入 Firebase URL 即切真云端 */
+    var FB_URL='https://dalian-trip-ed4fd-default-rtdb.firebaseio.com'; /* 留空=分享码模式；填入 Firebase URL 即切真云端 */
     var FB_KEY='dalian-guide-data';
     var LS_KEY='dalian-share-code';
     var editBtn, statusEl, saveTimer, shareCode='';
@@ -1366,12 +1366,12 @@
     <span id="editStatus">🔒 只读模式（点「编辑」可改）</span>
   </div>
   <details class="edithelp" style="position:fixed;left:10px;right:10px;bottom:104px;z-index:998;margin:0;padding:10px 13px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;font-size:13px;color:#0f172a;line-height:1.65;max-height:64vh;overflow:auto;box-shadow:0 4px 16px rgba(2,132,199,.18);">
-    <summary style="cursor:pointer;font-weight:700;color:#0369a1;">💡 怎么用「编辑 / 分享链接」？（点开看说明）</summary>
+    <summary style="cursor:pointer;font-weight:700;color:#0369a1;">💡 怎么用「编辑 / 云端同步」？（点开看说明）</summary>
     <div style="margin-top:8px;">
       <p style="margin:6px 0;"><b>① 改内容：</b>点左下角「✏️ 编辑」，攻略里大部分文字（行程表、备注、卡片等）会变成可直接修改；改完点「🔒 完成」。</p>
-      <p style="margin:6px 0;"><b>② 自动保存：</b>点「完成」后，系统会把你改过的内容自动存到本机（也会生成分享码）。</p>
-      <p style="margin:6px 0;"><b>③ 发给家人（两种方式）：</b>方式一·点「📤 复制分享链接」复制一条完整链接发微信，家人打开链接就自动载入你的版本；方式二·手动复制下方「粘贴分享码导入…」框里的码发给家人，他们粘贴导入。</p>
-      <p style="margin:6px 0;color:#b45309;background:#fffbeb;padding:7px 9px;border-radius:8px;">⚠️ 当前是<b>离线分享链接模式</b>：你每次改动都要重新发一次链接/码；换手机或清浏览器缓存会丢失本机改动。想让全家打开同一链接就看到最新版（实时同步、免发链接），可接入 Firebase 云端。</p>
+      <p style="margin:6px 0;"><b>② 自动存云端：</b>点「完成」后，你改过的内容会自动保存到 Firebase 云端。</p>
+      <p style="margin:6px 0;"><b>③ 家人同步：</b>直接把这个页面链接发给家人，他们打开链接就能看到最新版；不用再发什么分享码/链接。</p>
+      <p style="margin:6px 0;color:#0f766e;background:#ccfbf1;padding:7px 9px;border-radius:8px;">☁️ 当前是<b>Firebase 云端模式</b>：编辑自动同步，换手机或清浏览器缓存也不会丢（只要打开同一链接就会从云端加载最新版）。</p>
     </div>
   </details>
 </body>
