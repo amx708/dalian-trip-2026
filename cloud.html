@@ -13,7 +13,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
-    background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+    background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
   .wrap{max-width:960px;margin:0 auto;padding:0 16px 60px}
   header{background:linear-gradient(135deg,#0a6ebd,#1488c9 60%,#37a7d6);color:#fff;
     padding:30px 16px 26px;margin-bottom:18px}
@@ -25,8 +25,8 @@
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-34px 0 20px}
   .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
     padding:14px 12px;text-align:center;box-shadow:0 4px 14px rgba(20,136,201,.06)}
-  .kpi .v{font-size:20px;font-weight:700;color:var(--sea)}
-  .kpi .l{font-size:12px;color:var(--sub);margin-top:3px}
+  .kpi .v{font-size:22px;font-weight:700;color:var(--sea)}
+  .kpi .l{font-size:12.5px;color:var(--sub);margin-top:4px}
   .ver{font-size:12.5px;color:var(--sea2);background:var(--card);border:1px dashed var(--sea2);
     border-radius:8px;padding:6px 12px;margin:0 0 12px;display:inline-block}
   .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:5;
@@ -38,11 +38,11 @@
   .panel{display:none}
   .panel.on{display:block;animation:fade .25s}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
-  h2{font-size:19px;margin:6px 0 14px;padding-left:11px;border-left:4px solid var(--sea)}
-  h3{font-size:15.5px;margin:18px 0 8px;color:var(--sea2)}
-  p,li{font-size:14.5px;color:var(--ink)}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
-    padding:16px;margin-bottom:14px;box-shadow:0 2px 10px rgba(31,45,61,.04)}
+  h2{font-size:21px;line-height:1.35;margin:26px 0 14px;padding-left:14px;border-left:5px solid var(--sea);color:var(--ink)}
+  h3{font-size:17px;line-height:1.4;margin:20px 0 10px;color:var(--sea2)}
+  p,li{font-size:16px;color:var(--ink)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px;margin-bottom:16px;box-shadow:0 2px 12px rgba(31,45,61,.05)}
   .day{display:flex;gap:14px;align-items:flex-start}
   .day .num{flex:0 0 52px;height:52px;border-radius:12px;background:var(--chip);
     color:var(--sea);font-weight:700;font-size:15px;display:flex;align-items:center;
@@ -50,18 +50,18 @@
   .day .num small{display:block;font-size:11px;color:var(--sub);font-weight:500}
   .day .body{flex:1}
   .day .body b{color:var(--ink)}
-  .tag{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:20px;
+  .tag{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;
     background:var(--chip);color:var(--sea2);margin:2px 4px 2px 0}
   .tag.free{background:#e7f7ef;color:var(--good)}
   .tag.pay{background:#fff1e8;color:var(--sun)}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 4px}
-  th,td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;margin:8px 0 4px}
+  th,td{border:1px solid var(--line);padding:11px 12px;text-align:left;vertical-align:top}
   th{background:#eef6fb;color:var(--sea);font-weight:600}
   tr:nth-child(even) td{background:#fafdfe}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
   .spot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
   .spot .hd{background:linear-gradient(120deg,#eaf4fb,#f4fbfe);padding:12px 14px}
-  .spot .hd b{font-size:15px;color:var(--sea)}
+  .spot .hd b{font-size:16px;color:var(--sea)}
 
   .spot-link{color:var(--sea);text-decoration:none;cursor:pointer;
     border-bottom:1px dashed var(--sea2)}
@@ -73,21 +73,21 @@
   .plan-table .links-row td .links{margin:0;font-size:12.5px;gap:6px}
 
   .spot .hd .meta{font-size:12px;color:var(--sub);margin-top:3px}
-  .spot .bd{padding:11px 14px;font-size:13px;color:var(--sub)}
+  .spot .bd{padding:13px 15px;font-size:14px;line-height:1.7;color:var(--sub)}
   .spot .bd .hl{color:var(--ink);margin-top:6px}
   .note{background:#fff8f2;border:1px solid #ffe0cc;border-radius:10px;
-    padding:12px 14px;font-size:13.5px;color:#9a4a25;margin:10px 0}
+    padding:14px 16px;font-size:14.5px;line-height:1.7;color:#9a4a25;margin:12px 0}
   .note b{color:var(--warn)}
   ul.tips{list-style:none}
-  ul.tips li{padding:8px 0 8px 26px;position:relative;border-bottom:1px dashed var(--line);font-size:14px}
+  ul.tips li{padding:9px 0 9px 26px;position:relative;border-bottom:1px dashed var(--line);font-size:15.5px;line-height:1.7}
   ul.tips li:before{content:"✓";position:absolute;left:0;top:8px;color:var(--good);font-weight:700}
   ul.tips li.warn:before{content:"!";color:var(--warn)}
-  .pack{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 18px;font-size:13.5px}
+  .pack{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;font-size:14.5px}
   .pack div{padding:5px 0;border-bottom:1px dashed var(--line)}
-  .foot{font-size:12px;color:var(--sub);margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
+  .foot{font-size:13px;color:var(--sub);margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
   .price{font-weight:700;color:var(--sun)}
   a{color:var(--sea2);word-break:break-all}
-  .plan-table td{line-height:1.82;vertical-align:top}
+  .plan-table td{line-height:1.85;vertical-align:top}
   /* 时间条目间加间距（<br>分隔的每行） */
   .plan-table td br{display:block;content:"";margin-top:3px;}
   .plan-table td[contenteditable]{cursor:text}
@@ -119,11 +119,11 @@
   .kpi .v{font-size:16px}.kpi .l{font-size:11px}
   .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;padding:8px 0 8px}
   .tab{white-space:nowrap;font-size:13px;padding:6px 12px;flex:0 0 auto}
-  h2{font-size:17px;margin:4px 0 10px}
-  h3{font-size:14.5px}
-  p,li{font-size:14px}
-  .card{overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .plan-table{font-size:13.5px;min-width:560px}
+  h2{font-size:18px;margin:18px 0 10px}
+  h3{font-size:15.5px}
+  p,li{font-size:16px}
+  .card{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px}
+  .plan-table{font-size:14.5px;min-width:560px}
   .plan-table td,.plan-table th{padding:10px 11px}
   .grid{grid-template-columns:1fr}
   .pack{grid-template-columns:1fr}
