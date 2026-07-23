@@ -1456,14 +1456,7 @@ function openPlatform(scheme, web){
     if(tip){ tip.classList.add('show'); }
     return;
   }
-  var opened = false;
-  var timer = setTimeout(function(){
-    if(!document.hidden && !opened){ window.location.href = web; }
-  }, 1200);
-  document.addEventListener('visibilitychange', function(){
-    if(document.hidden){ opened = true; clearTimeout(timer); }
-  });
-  window.location.href = scheme;
+  window.open(web, '_blank');
 }
 function hideWxTip(){ var tip = document.getElementById('wxTip'); if(tip){ tip.classList.remove('show'); } }
 </script>
