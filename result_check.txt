@@ -1,0 +1,1 @@
+douyin_scheme=22 xhs_scheme=22
