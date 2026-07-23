@@ -195,13 +195,13 @@
   .plan-table tr[id^="day"]{border:1px solid var(--line);border-radius:16px;margin:0 0 18px;background:#fff;box-shadow:inset 6px 0 0 var(--cc,#185FA5),0 4px 18px rgba(20,136,201,.07);overflow:hidden}
   .plan-table tr[id^="day"].highlight{box-shadow:inset 6px 0 0 var(--cc,#185FA5),0 0 0 3px var(--sun)!important;background:#fff8e6!important}
   @media(min-width:681px){
-    .plan-table tr[id^="day"]{display:grid;grid-template-columns:78px 96px 1fr 1.4fr;grid-template-areas:"date daynum theme kw" "detail detail detail detail";align-items:stretch;column-gap:0}
+    .plan-table tr[id^="day"]{display:grid;grid-template-columns:96px 96px 1fr 1.4fr;grid-template-areas:"date daynum theme kw" "detail detail detail detail";align-items:stretch;column-gap:0}
     .plan-table tr[id^="day"] td{border:none;padding:0;background:transparent!important}
-    .plan-table tr[id^="day"] td:nth-child(1){grid-area:date;background:#f6f9fc;color:var(--ink);font-size:14.5px;font-weight:700;text-align:center;display:flex;flex-direction:column;justify-content:flex-start;padding:16px 6px 8px;border-right:1px solid var(--line);letter-spacing:.3px;line-height:1.45}
+    .plan-table tr[id^="day"] td:nth-child(1){grid-area:date;background:#f6f9fc;color:var(--ink);font-size:14.5px;font-weight:700;text-align:center;white-space:nowrap;display:flex;flex-direction:column;justify-content:flex-start;padding:16px 6px 8px;border-right:1px solid var(--line);letter-spacing:.3px;line-height:1.45}
     .plan-table tr[id^="day"] td:nth-child(2){grid-area:daynum;background:var(--cc,#185FA5);color:#fff;font-size:19px;font-weight:800;text-align:center;display:flex;flex-direction:column;justify-content:flex-start;padding:16px 6px 8px}
     .plan-table tr[id^="day"] td:nth-child(3){grid-area:theme;padding:16px 16px 8px;font-size:19px;font-weight:700;color:var(--ink);line-height:1.35}
     .plan-table tr[id^="day"] td:nth-child(4){grid-area:kw;padding:16px 16px 8px;text-align:right;color:var(--sub);font-size:13px;line-height:1.6}
-    .plan-table tr[id^="day"] td:nth-child(5){grid-area:detail;padding:4px 18px 18px}
+    .plan-table tr[id^="day"] td:nth-child(5){grid-area:detail;padding:8px 18px 18px}
   }
   /* 详情条目块 */
   .dl-item{display:flex;gap:8px;align-items:flex-start;font-size:16.5px;line-height:1.7;padding:8px 11px;margin:7px 0;background:#fafcfe;border:1px solid var(--line);border-left:3px solid #cfe3f3;border-radius:10px}
