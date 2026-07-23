@@ -195,9 +195,9 @@
   .plan-table tr[id^="day"]{border:1px solid var(--line);border-radius:16px;margin:0 0 18px;background:#fff;box-shadow:inset 6px 0 0 var(--cc,#185FA5),0 4px 18px rgba(20,136,201,.07);overflow:hidden}
   .plan-table tr[id^="day"].highlight{box-shadow:inset 6px 0 0 var(--cc,#185FA5),0 0 0 3px var(--sun)!important;background:#fff8e6!important}
   @media(min-width:681px){
-    .plan-table tr[id^="day"]{display:grid;grid-template-columns:96px 1fr 1.4fr;grid-template-areas:"daynum theme kw" "detail detail detail";align-items:stretch}
+    .plan-table tr[id^="day"]{display:grid;grid-template-columns:78px 96px 1fr 1.4fr;grid-template-areas:"date daynum theme kw" "detail detail detail detail";align-items:stretch;column-gap:0}
     .plan-table tr[id^="day"] td{border:none;padding:0;background:transparent!important}
-    .plan-table tr[id^="day"] td:nth-child(1){display:none}
+    .plan-table tr[id^="day"] td:nth-child(1){grid-area:date;background:#f6f9fc;color:var(--ink);font-size:14.5px;font-weight:700;text-align:center;display:flex;flex-direction:column;justify-content:center;padding:14px 6px;border-right:1px solid var(--line);letter-spacing:.3px;line-height:1.45}
     .plan-table tr[id^="day"] td:nth-child(2){grid-area:daynum;background:var(--cc,#185FA5);color:#fff;font-size:19px;font-weight:800;text-align:center;display:flex;flex-direction:column;justify-content:center;padding:16px 6px}
     .plan-table tr[id^="day"] td:nth-child(3){grid-area:theme;padding:16px 16px 8px;font-size:19px;font-weight:700;color:var(--ink);line-height:1.35}
     .plan-table tr[id^="day"] td:nth-child(4){grid-area:kw;padding:16px 16px 8px;text-align:right;color:var(--sub);font-size:13px;line-height:1.6}
@@ -216,8 +216,6 @@
   }
 
 
-  .dl-date{font-size:13.5px;font-weight:700;background:rgba(255,255,255,.22);padding:3px 10px;border-radius:12px;margin-top:5px;display:inline-block;letter-spacing:.3px;white-space:nowrap}
-  @media(max-width:680px){.dl-date{display:none}} /* dl-date mobile hide */
 </style>
 </head>
 <body>
@@ -318,7 +316,7 @@
     <button type="button" class="dl-tl-day dl-city-dl" onclick="gotoDay(3)"><span class="dl-tl-num">Day3</span><span class="dl-tl-ico">🕊️</span><span class="dl-tl-city">大连</span><span class="dl-tl-theme">东港·威尼斯水城</span></button>
     <button type="button" class="dl-tl-day dl-city-cross" onclick="gotoDay(4)"><span class="dl-tl-num">Day4</span><span class="dl-tl-ico">🚄</span><span class="dl-tl-city">跨城</span><span class="dl-tl-theme">大连→沈阳(高铁)</span></button>
     <button type="button" class="dl-tl-day dl-city-sy" onclick="gotoDay(5)"><span class="dl-tl-num">Day5</span><span class="dl-tl-ico">🏯</span><span class="dl-tl-city">沈阳</span><span class="dl-tl-theme">故宫·帅府·中街·西塔</span></button>
-    <button type="button" class="dl-tl-day dl-city-sy" onclick="gotoDay(6)"><span class="dl-tl-num">Day6</span><span class="dl-tl-ico">🕯️</span><span class="dl-tl-city">沈阳</span><span class="dl-tl-theme">九一八·北陵·回大连</span></button>
+    <button type="button" class="dl-tl-day dl-city-sy" onclick="gotoDay(6)"><span class="dl-tl-num">Day6</span><span class="dl-tl-ico">🍂</span><span class="dl-tl-city">沈阳</span><span class="dl-tl-theme">九一八·北陵·回大连</span></button>
     <button type="button" class="dl-tl-day dl-city-dl" onclick="gotoDay(7)"><span class="dl-tl-num">Day7</span><span class="dl-tl-ico">🏛️</span><span class="dl-tl-city">大连</span><span class="dl-tl-theme">俄街·中山广场→飞广州</span></button>
   </div>
 </div>
@@ -343,7 +341,7 @@
         <tr><th>日期</th><th>Day</th><th>主题</th><th>关键词</th><th>详细安排（随手改）</th></tr>
                 <tr id="day1" class="dl-city-dl">
           <td>7/28 周二</td>
-          <td>Day1<br><span class="dl-date">7/28 周二</span></td>
+          <td>Day1</td>
           <td>抵达 · 大连初体验</td>
           <td>滨海路 / 莲花山 / 银沙滩 / 星海广场</td>
           <td>
@@ -363,7 +361,7 @@
         </tr>
                 <tr id="day2" class="dl-city-dl">
           <td>7/29 周三</td>
-          <td>Day2<br><span class="dl-date">7/29 周三</span></td>
+          <td>Day2</td>
           <td>老虎滩 · 棒棰岛 · 赶海</td>
           <td>老虎滩 / 棒棰岛 / 赶海 / 品海楼</td>
           <td>
@@ -381,7 +379,7 @@
         </tr>
                 <tr id="day3" class="dl-city-dl">
           <td>7/30 周四</td>
-          <td>Day3<br><span class="dl-date">7/30 周四</span></td>
+          <td>Day3</td>
           <td>东港 · 喂海鸥 · 威尼斯水城</td>
           <td>东港 / 中央大道 / 美食街 / 喷泉</td>
           <td>
@@ -399,7 +397,7 @@
         </tr>
                 <tr id="day4" class="dl-city-cross">
           <td>7/31 周五</td>
-          <td>Day4<br><span class="dl-date">7/31 周五</span></td>
+          <td>Day4</td>
           <td>大连 → 沈阳（高铁）</td>
           <td>高铁 / 跨城 / parkinn</td>
           <td>
@@ -415,7 +413,7 @@
         </tr>
                 <tr id="day5" class="dl-city-sy">
           <td>8/01 周六</td>
-          <td>Day5<br><span class="dl-date">8/01 周六</span></td>
+          <td>Day5</td>
           <td>沈阳 · 故宫 / 帅府 / 中街 / 西塔</td>
           <td>沈阳故宫 / 张氏帅府 / 中街 / 西塔</td>
           <td>
@@ -439,7 +437,7 @@
         </tr>
                 <tr id="day6" class="dl-city-sy">
           <td>8/02 周日</td>
-          <td>Day6<br><span class="dl-date">8/02 周日</span></td>
+          <td>Day6</td>
           <td>沈阳深度 · 高铁回大连 · 收尾</td>
           <td>九一八 / 北陵 / 高铁 / 南山 / 东关街</td>
           <td>
@@ -464,7 +462,7 @@
         </tr>
                 <tr id="day7" class="dl-city-dl">
           <td>8/03 周一</td>
-          <td>Day7<br><span class="dl-date">8/03 周一</span></td>
+          <td>Day7</td>
           <td>大连 · 俄罗斯风情街 / 中山广场 → 飞广州</td>
           <td>俄街 / 中山广场 / 午饭 / 直飞</td>
           <td>
