@@ -6,7 +6,7 @@ urls = {
 }
 
 markers = {
-    "日期样式增强(.dl-date 13.5px)": lambda t: ('dl-date' in t and '13.5px' in t and 'border-radius:12px' in t),
+    "日期列桌面端可见(date daynum grid)": lambda t: 'grid-template-areas:"date daynum theme kw"' in t and 'td:nth-child(1){grid-area:date' in t,
     "旅顺自驾标记(自驾最划算>=2)": lambda t: t.count('自驾最划算') >= 2,
     "Day6行李寄存(退房+行李寄存)": lambda t: '退房+行李寄存' in t,
     "酒店前台寄存": lambda t: '酒店前台' in t and '行李' in t,
