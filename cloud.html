@@ -233,6 +233,14 @@
   .food-card-links a:hover{background:#e0eef8}
   @media(max-width:680px){.food-grid{grid-template-columns:repeat(2,1fr);gap:10px}.food-card-img{height:90px;font-size:44px}.food-card-title{font-size:14px}}
 
+  /* 可折叠模块（放松环节 / 夜生活等） */
+  .collapse-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px;font-size:13.5px;color:var(--sea);cursor:pointer;margin:4px 0 12px;box-shadow:0 1px 4px rgba(31,45,61,.06)}
+  .collapse-toggle:hover{background:#f0f6fa}
+  .collapse-toggle::before{content:'▶';font-size:10px;transition:.2s}
+  .collapse-toggle.expanded::before{content:'▼'}
+  .collapse-box{background:transparent;border:none;padding:0;margin:0;overflow:hidden}
+  .collapse-box[style*="display:none"]{display:none}
+
   </style>
 </head>
 <body>
@@ -691,6 +699,8 @@
     <div class="note">💬 以上是旅游攻略推荐，仅供参考。</div>
 
     <h2 style="margin-top:28px">🛁 附加 · 放松环节（可去可不去）</h2>
+    <button class="collapse-toggle" aria-controls="relax" onclick="toggleSection('relax')">展开看看 ▼</button>
+    <div id="relax" class="collapse-box" style="display:none">
     <div class="note">🧴 玩累了再考虑，不是必选项。大连洗浴<b>严格分性别</b>（男宾男师傅、女宾女师傅），正规店无异性服务；介意被搓就自己泡自己搓。按摩认准<b>明码标价+持证+点评4.5分以上</b>的连锁/中医店，避开标"特服"的擦边小店。<br>店名前的 <b>⭐</b> 表示推荐度：<b>⭐⭐⭐</b>=强烈推荐（首推）/ <b>⭐⭐</b>=推荐 / <b>⭐</b>=可去。⭐为旅游攻略推荐排序，可随手改。</div>
 
     <h3>🛁💆 洗浴 & 按摩推荐（一张表搞定）</h3>
@@ -709,6 +719,7 @@
       <p class="tips" style="margin:0">泡 10–15 分 → 全身打沐浴露别冲 → 涤纶搓澡巾顺纹理"微红不破"地搓（四肢→肚→胸→脖，后背用长条巾拉锯）→ 冲净趁湿涂身体乳。⚠️ 一周 1–2 次；破皮发炎处避开；<b>搓完别立刻吹空调/暴晒/下海</b>。纯棉巾没用，必须涤纶/尼龙才出泥。</p>
     </div>
 
+    </div>
   </section>
 
   <!-- 美食 -->
@@ -1172,6 +1183,20 @@
       });
       target.classList.add('highlight');
       setTimeout(function(){target.classList.remove('highlight');},3000);
+    }
+  }
+
+  // 展开/折叠可去可不去模块
+  function toggleSection(id){
+    var box=document.getElementById(id);
+    var btn=document.querySelector('[aria-controls="'+id+'"]');
+    if(!box)return;
+    if(box.style.display==='none'){
+      box.style.display='block';
+      if(btn){btn.classList.add('expanded'); btn.textContent='收起 ▲';}
+    }else{
+      box.style.display='none';
+      if(btn){btn.classList.remove('expanded'); btn.textContent='展开看看 ▼';}
     }
   }
 
