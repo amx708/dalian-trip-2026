@@ -35,6 +35,14 @@
   .kpi .v{font-size:22px;font-weight:700;color:var(--sea)}
   .kpi .l{font-size:12.5px;color:var(--sub);margin-top:4px}
   .id-alert + .kpis{margin-top:12px}
+  .wx-tip{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center;padding:20px}
+  .wx-tip.show{display:flex}
+  .wx-tip-box{background:#fff;border-radius:14px;padding:22px 24px;max-width:340px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+  .wx-tip-title{font-size:17px;font-weight:700;color:#c0392b;margin-bottom:12px}
+  .wx-tip-box p{font-size:14px;line-height:1.7;color:var(--text);margin:8px 0}
+  .wx-tip-box b{color:var(--sea)}
+  .wx-tip-btn{margin-top:14px;background:var(--sea);color:#fff;border:0;border-radius:10px;padding:10px 24px;font-size:14.5px;cursor:pointer}
+  .wx-tip-btn:active{opacity:.9}
   .ver{font-size:12.5px;color:var(--sea2);background:var(--card);border:1px dashed var(--sea2);
     border-radius:8px;padding:6px 12px;margin:0 0 12px;display:inline-block}
   .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:5;
@@ -1441,7 +1449,13 @@
   </div>
 
 <script>
+var isWeixin = /MicroMessenger/i.test(navigator.userAgent);
 function openPlatform(scheme, web){
+  if(isWeixin){
+    var tip = document.getElementById('wxTip');
+    if(tip){ tip.classList.add('show'); }
+    return;
+  }
   var opened = false;
   var timer = setTimeout(function(){
     if(!document.hidden && !opened){ window.location.href = web; }
@@ -1451,7 +1465,17 @@ function openPlatform(scheme, web){
   });
   window.location.href = scheme;
 }
+function hideWxTip(){ var tip = document.getElementById('wxTip'); if(tip){ tip.classList.remove('show'); } }
 </script>
+
+<div class="wx-tip" id="wxTip" onclick="hideWxTip()">
+  <div class="wx-tip-box" onclick="event.stopPropagation()">
+    <div class="wx-tip-title">微信内无法直接跳转</div>
+    <p>微信内置浏览器会拦截抖音、小红书等外部 App 链接，所以点了没反应。</p>
+    <p>请点击右上角 <b>⋯</b>，选择 <b>「在浏览器打开」</b>，即可正常唤起 App 查看环境/攻略。</p>
+    <button class="wx-tip-btn" onclick="hideWxTip()">知道了</button>
+  </div>
+</div>
 
 </body>
 </html>
