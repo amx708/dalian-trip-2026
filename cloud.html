@@ -253,7 +253,14 @@
   .collapse-box{background:transparent;border:none;padding:0;margin:0;overflow:hidden}
   .collapse-box[style*="display:none"]{display:none}
 
-  </style>
+  
+  .map-plan{display:none;align-items:center;gap:6px;margin-left:10px;padding-left:10px;border-left:1px solid var(--line)}
+  .map-plan.show{display:flex}
+  .map-plan-btn{font:inherit;font-size:12px;line-height:1;padding:5px 11px;border:1px solid var(--line);background:var(--card);color:var(--sub);border-radius:999px;cursor:pointer;transition:all .18s ease}
+  .map-plan-btn:hover{border-color:var(--sea2);transform:translateY(-1px)}
+  .map-plan-btn.on{background:var(--sea);border-color:var(--sea);color:#fff;font-weight:700}
+
+</style>
 <!--MAP_JS_START-->
 <script src="https://map.qq.com/api/gljs?v=1.exp&key=IACBZ-D3BLJ-NMWFG-XVZOS-BYINK-GMFRD"></script>
 <!--MAP_JS_END-->
@@ -1213,6 +1220,10 @@
   <div class="map-toolbar">
     <button type="button" class="map-city on" id="cityDl" onclick="switchCity('dl')">🌊 大连</button>
     <button type="button" class="map-city" id="citySy" onclick="switchCity('sy')">🏯 沈阳</button>
+    <span id="planBox" class="map-plan">
+      <button type="button" class="map-plan-btn on" id="plan1" onclick="switchPlan(1)">方案1</button>
+      <button type="button" class="map-plan-btn" id="plan2" onclick="switchPlan(2)">方案2</button>
+    </span>
     <span class="map-legend" id="mapLegend"></span>
   </div>
   <div class="map-wrap">
@@ -1222,14 +1233,15 @@
   </div>
   <script>
   (function(){
-    var POIS = [{"id":"dalian_airport","name":"大连周水子机场","city":"dl","day":"T","order":0,"kind":"transport","lat":38.964084,"lng":121.543773},{"id":"atu_hotel","name":"亚朵酒店(港湾广场)","city":"dl","day":"1","order":1,"kind":"hotel","lat":38.925283,"lng":121.661069},{"id":"binhai_road","name":"滨海路·跨海大桥观景台","city":"dl","day":"1","order":2,"kind":"spot","lat":38.872265,"lng":121.60933},{"id":"lianhua_mt","name":"莲花山观景台","city":"dl","day":"1","order":3,"kind":"spot","lat":38.879654,"lng":121.608611},{"id":"yinshatan","name":"银沙滩","city":"dl","day":"1","order":4,"kind":"spot","lat":38.867714,"lng":121.61495},{"id":"xinghai_sq","name":"星海广场","city":"dl","day":"1","order":5,"kind":"spot","lat":38.88202,"lng":121.5879},{"id":"laohutan","name":"老虎滩海洋公园","city":"dl","day":"2","order":1,"kind":"spot","lat":38.873143,"lng":121.675761},{"id":"bangchuidao","name":"棒棰岛","city":"dl","day":"2","order":2,"kind":"spot","lat":38.884811,"lng":121.71925},{"id":"yuren_matou","name":"渔人码头·品海楼","city":"dl","day":"2","order":3,"kind":"food","lat":38.877177,"lng":121.683915},{"id":"donggang","name":"东港·中央大道","city":"dl","day":"3","order":1,"kind":"spot","lat":38.919998,"lng":121.691744},{"id":"venice","name":"威尼斯水城","city":"dl","day":"3","order":2,"kind":"spot","lat":38.924024,"lng":121.693014},{"id":"russia_st","name":"俄罗斯风情街","city":"dl","day":"7","order":1,"kind":"spot","lat":38.927717,"lng":121.635811},{"id":"zhongshan_sq","name":"中山广场","city":"dl","day":"7","order":2,"kind":"spot","lat":38.921532,"lng":121.643851},{"id":"qingniwa","name":"汉庭(青泥洼)·青泥洼商圈","city":"dl","day":"7","order":3,"kind":"hotel","lat":38.916813,"lng":121.63139},{"id":"dalian_nb","name":"大连北站(双城高铁)","city":"dl","day":"T","order":0,"kind":"transport","lat":39.016807,"lng":121.60744},{"id":"shenyang_st","name":"沈阳站","city":"sy","day":"4","order":1,"kind":"transport","lat":41.794601,"lng":123.393368},{"id":"taiyuan_st","name":"parkinn丽柏(太原街)","city":"sy","day":"4","order":2,"kind":"hotel","lat":41.793949,"lng":123.416432},{"id":"gugong","name":"沈阳故宫","city":"sy","day":"5","order":1,"kind":"spot","lat":41.798456,"lng":123.455654},{"id":"shuaifu","name":"张氏帅府","city":"sy","day":"5","order":2,"kind":"spot","lat":41.794085,"lng":123.458056},{"id":"zhongjie","name":"中街步行街","city":"sy","day":"5","order":3,"kind":"spot","lat":41.801381,"lng":123.462181},{"id":"xita","name":"西塔(韩餐夜市)","city":"sy","day":"5","order":4,"kind":"food","lat":41.805094,"lng":123.408718},{"id":"918","name":"九一八历史博物馆","city":"sy","day":"6","order":1,"kind":"spot","lat":41.83639,"lng":123.46752},{"id":"liaoning_museum","name":"辽宁博物馆(辽博)","city":"sy","day":"6","order":2,"kind":"spot","lat":41.677966,"lng":123.460269,"src":"tencent_poi"},{"id":"shenyang_museum","name":"沈阳博物馆","city":"sy","day":"6","order":3,"kind":"spot","lat":41.803398,"lng":123.436594,"src":"tencent_poi"},{"id":"shenyang_nb","name":"沈阳北站(回大连高铁)","city":"sy","day":"T","order":0,"kind":"transport","lat":41.819465,"lng":123.435883},{"id":"industrial_museum","name":"中国工业博物馆","city":"sy","day":"6","order":4,"kind":"spot","lat":41.821117,"lng":123.354776,"src":"tencent_poi"},{"id":"caita_night","name":"彩电塔夜市","city":"sy","day":"6","order":5,"kind":"food","lat":41.785227,"lng":123.43316,"src":"tencent_poi"}];
+    var POIS_PLAN1 = [{"id":"dalian_airport","name":"大连周水子机场","city":"dl","day":"T","order":0,"kind":"transport","lat":38.964084,"lng":121.543773,"src":"tencent_poi"},{"id":"atu_hotel","name":"亚朵酒店(港湾广场)","city":"dl","day":"1","order":1,"kind":"hotel","lat":38.925283,"lng":121.661069,"src":"tencent_poi"},{"id":"binhai_road","name":"滨海路·跨海大桥观景台","city":"dl","day":"1","order":2,"kind":"spot","lat":38.872265,"lng":121.60933,"src":"tencent_poi"},{"id":"lianhua_mt","name":"莲花山观景台","city":"dl","day":"1","order":3,"kind":"spot","lat":38.879654,"lng":121.608611,"src":"tencent_poi"},{"id":"yinshatan","name":"银沙滩","city":"dl","day":"1","order":4,"kind":"spot","lat":38.867714,"lng":121.61495,"src":"tencent_poi"},{"id":"xinghai_sq","name":"星海广场","city":"dl","day":"1","order":5,"kind":"spot","lat":38.88202,"lng":121.5879,"src":"tencent_poi"},{"id":"laohutan","name":"老虎滩海洋公园","city":"dl","day":"2","order":1,"kind":"spot","lat":38.873143,"lng":121.675761,"src":"tencent_poi"},{"id":"bangchuidao","name":"棒棰岛","city":"dl","day":"2","order":2,"kind":"spot","lat":38.884811,"lng":121.71925,"src":"tencent_poi"},{"id":"yuren_matou","name":"渔人码头·品海楼","city":"dl","day":"2","order":3,"kind":"food","lat":38.877177,"lng":121.683915,"src":"tencent_poi"},{"id":"donggang","name":"东港·中央大道","city":"dl","day":"3","order":1,"kind":"spot","lat":38.919998,"lng":121.691744,"src":"tencent_poi"},{"id":"venice","name":"威尼斯水城","city":"dl","day":"3","order":2,"kind":"spot","lat":38.924024,"lng":121.693014,"src":"tencent_poi"},{"id":"russia_st","name":"俄罗斯风情街","city":"dl","day":"7","order":1,"kind":"spot","lat":38.927717,"lng":121.635811,"src":"tencent_poi"},{"id":"zhongshan_sq","name":"中山广场","city":"dl","day":"7","order":2,"kind":"spot","lat":38.921532,"lng":121.643851,"src":"tencent_poi"},{"id":"qingniwa","name":"汉庭(青泥洼)·青泥洼商圈","city":"dl","day":"7","order":3,"kind":"hotel","lat":38.916813,"lng":121.63139,"src":"tencent_poi"},{"id":"dalian_nb","name":"大连北站(双城高铁)","city":"dl","day":"T","order":0,"kind":"transport","lat":39.016807,"lng":121.60744,"src":"tencent_poi"},{"id":"shenyang_st","name":"沈阳站","city":"sy","day":"4","order":1,"kind":"transport","lat":41.794601,"lng":123.393368,"src":"tencent_poi"},{"id":"taiyuan_st","name":"parkinn丽柏(太原街)","city":"sy","day":"4","order":2,"kind":"hotel","lat":41.793949,"lng":123.416432,"src":"tencent_poi"},{"id":"gugong","name":"沈阳故宫","city":"sy","day":"5","order":1,"kind":"spot","lat":41.798456,"lng":123.455654,"src":"tencent_poi"},{"id":"shuaifu","name":"张氏帅府","city":"sy","day":"5","order":2,"kind":"spot","lat":41.794085,"lng":123.458056,"src":"tencent_poi"},{"id":"zhongjie","name":"中街步行街","city":"sy","day":"5","order":3,"kind":"spot","lat":41.801381,"lng":123.462181,"src":"tencent_poi"},{"id":"xita","name":"西塔(韩餐夜市)","city":"sy","day":"5","order":4,"kind":"food","lat":41.805094,"lng":123.408718,"src":"tencent_poi"},{"id":"918","name":"九一八历史博物馆","city":"sy","day":"6","order":1,"kind":"spot","lat":41.83639,"lng":123.46752,"src":"tencent_poi"},{"id":"liaoning_museum","name":"辽宁博物馆(辽博)","city":"sy","day":"6","order":2,"kind":"spot","lat":41.677966,"lng":123.460269,"src":"tencent_poi"},{"id":"shenyang_museum","name":"沈阳博物馆","city":"sy","day":"6","order":3,"kind":"spot","lat":41.803398,"lng":123.436594,"src":"tencent_poi"},{"id":"shenyang_nb","name":"沈阳北站(回大连高铁)","city":"sy","day":"T","order":0,"kind":"transport","lat":41.819465,"lng":123.435883,"src":"tencent_poi"},{"id":"industrial_museum","name":"中国工业博物馆","city":"sy","day":"6","order":4,"kind":"spot","lat":41.821117,"lng":123.354776,"src":"tencent_poi"},{"id":"caita_night","name":"彩电塔夜市","city":"sy","day":"6","order":5,"kind":"food","lat":41.785227,"lng":123.43316,"src":"tencent_poi"}];
+    var POIS_PLAN2 = [{"id":"dalian_airport","name":"大连周水子机场","city":"dl","day":"T","order":0,"kind":"transport","lat":38.964084,"lng":121.543773,"src":"tencent_poi"},{"id":"atu_hotel","name":"亚朵酒店(港湾广场)","city":"dl","day":"1","order":1,"kind":"hotel","lat":38.925283,"lng":121.661069,"src":"tencent_poi"},{"id":"binhai_road","name":"滨海路·跨海大桥观景台","city":"dl","day":"1","order":2,"kind":"spot","lat":38.872265,"lng":121.60933,"src":"tencent_poi"},{"id":"lianhua_mt","name":"莲花山观景台","city":"dl","day":"1","order":3,"kind":"spot","lat":38.879654,"lng":121.608611,"src":"tencent_poi"},{"id":"yinshatan","name":"银沙滩","city":"dl","day":"1","order":4,"kind":"spot","lat":38.867714,"lng":121.61495,"src":"tencent_poi"},{"id":"xinghai_sq","name":"星海广场","city":"dl","day":"1","order":5,"kind":"spot","lat":38.88202,"lng":121.5879,"src":"tencent_poi"},{"id":"laohutan","name":"老虎滩海洋公园","city":"dl","day":"2","order":1,"kind":"spot","lat":38.873143,"lng":121.675761,"src":"tencent_poi"},{"id":"bangchuidao","name":"棒棰岛","city":"dl","day":"2","order":2,"kind":"spot","lat":38.884811,"lng":121.71925,"src":"tencent_poi"},{"id":"yuren_matou","name":"渔人码头·品海楼","city":"dl","day":"2","order":3,"kind":"food","lat":38.877177,"lng":121.683915,"src":"tencent_poi"},{"id":"donggang","name":"东港·中央大道","city":"dl","day":"3","order":1,"kind":"spot","lat":38.919998,"lng":121.691744,"src":"tencent_poi"},{"id":"venice","name":"威尼斯水城","city":"dl","day":"3","order":2,"kind":"spot","lat":38.924024,"lng":121.693014,"src":"tencent_poi"},{"id":"russia_st","name":"俄罗斯风情街","city":"dl","day":"7","order":1,"kind":"spot","lat":38.927717,"lng":121.635811,"src":"tencent_poi"},{"id":"zhongshan_sq","name":"中山广场","city":"dl","day":"7","order":2,"kind":"spot","lat":38.921532,"lng":121.643851,"src":"tencent_poi"},{"id":"qingniwa","name":"汉庭(青泥洼)·青泥洼商圈","city":"dl","day":"7","order":3,"kind":"hotel","lat":38.916813,"lng":121.63139,"src":"tencent_poi"},{"id":"dalian_nb","name":"大连北站(双城高铁)","city":"dl","day":"T","order":0,"kind":"transport","lat":39.016807,"lng":121.60744,"src":"tencent_poi"},{"id":"shenyang_st","name":"沈阳站","city":"sy","day":"4","order":1,"kind":"transport","lat":41.794601,"lng":123.393368,"src":"tencent_poi"},{"id":"taiyuan_st","name":"parkinn丽柏(太原街)","city":"sy","day":"4","order":2,"kind":"hotel","lat":41.793949,"lng":123.416432,"src":"tencent_poi"},{"id":"gugong","name":"沈阳故宫","city":"sy","day":"5","order":1,"kind":"spot","lat":41.798456,"lng":123.455654,"src":"tencent_poi"},{"id":"shuaifu","name":"张氏帅府","city":"sy","day":"5","order":2,"kind":"spot","lat":41.794085,"lng":123.458056,"src":"tencent_poi"},{"id":"zhongjie","name":"中街步行街","city":"sy","day":"5","order":4,"kind":"spot","lat":41.801381,"lng":123.462181,"src":"tencent_poi"},{"id":"xita","name":"西塔(韩餐夜市)","city":"sy","day":"5","order":5,"kind":"food","lat":41.805094,"lng":123.408718,"src":"tencent_poi"},{"id":"918","name":"九一八历史博物馆","city":"sy","day":"6","order":1,"kind":"spot","lat":41.83639,"lng":123.46752,"src":"tencent_poi"},{"id":"liaoning_museum","name":"辽宁博物馆(辽博)","city":"sy","day":"6","order":2,"kind":"spot","lat":41.677966,"lng":123.460269,"src":"tencent_poi"},{"id":"shenyang_museum","name":"沈阳博物馆","city":"sy","day":"5","order":3,"kind":"spot","lat":41.803398,"lng":123.436594,"src":"tencent_poi"},{"id":"shenyang_nb","name":"沈阳北站(回大连高铁)","city":"sy","day":"T","order":0,"kind":"transport","lat":41.819465,"lng":123.435883,"src":"tencent_poi"},{"id":"industrial_museum","name":"中国工业博物馆","city":"sy","day":"6","order":3,"kind":"spot","lat":41.821117,"lng":123.354776,"src":"tencent_poi"},{"id":"caita_night","name":"彩电塔夜市","city":"sy","day":"5","order":6,"kind":"food","lat":41.785227,"lng":123.43316,"src":"tencent_poi"}];
+    var POIS = POIS_PLAN1;
     var DAY_COLORS = {"1":"#1E88E5","2":"#E53935","3":"#43A047","4":"#8E24AA","5":"#FB8C00","6":"#00ACC1","7":"#6D4C41","T":"#9E9E9E"};
-    var DAY_LABEL = {
-      dl:{"1":"Day1 抵达·初体验","2":"Day2 老虎滩·棒棰岛","3":"Day3 东港·威尼斯","7":"Day7 俄街·中山广场"},
-      sy:{"4":"Day4 抵达·太原街","5":"Day5 故宫·帅府·中街·西塔","6":"Day6 九一八·辽博·沈阳博物馆"}
-    };
+    var DAY_LABEL_PLAN1 = {"dl":{"1":"Day1 抵达·初体验","2":"Day2 老虎滩·棒棰岛","3":"Day3 东港·威尼斯","7":"Day7 俄街·中山广场"},"sy":{"4":"Day4 抵达·太原街","5":"Day5 故宫·帅府·中街·西塔","6":"Day6 九一八·辽博·沈阳博物馆"}};
+    var DAY_LABEL_PLAN2 = {"dl":{"1":"Day1 抵达·初体验","2":"Day2 老虎滩·棒棰岛","3":"Day3 东港·威尼斯","7":"Day7 俄街·中山广场"},"sy":{"4":"Day4 抵达·太原街","5":"Day5 故宫·帅府·沈阳博物馆·中街·西塔·彩电塔","6":"Day6 九一八·辽博·工业博物馆"}};
+    var DAY_LABEL = DAY_LABEL_PLAN1;
     var CENTER = {dl:[38.90,121.62], sy:[41.80,123.43]};
-    var map, mLayer, pLayer, info, inited=false, initializing=false, curCity="dl", curFilter="all";
+    var map, mLayer, pLayer, info, inited=false, initializing=false, curCity="dl", curFilter="all", curPlan=1;
 
     // ——— 安全辅助 ———
     // TMap v1.exp 的 InfoWindow 不再暴露 setVisible()，改用 open/close 或 show/hide（运行时特性检测 + 异常兜底）
@@ -1324,11 +1336,25 @@
       try{ renderList(curCity, curFilter); }catch(e){ console.warn("renderList error",e); }
       if(inited && map){ try{ renderCity(curCity, curFilter); map.resize(); }catch(e){ console.warn("renderCity error",e); } }
     };
+    
+    window.switchPlan=function(plan){
+      if(plan===curPlan) return;
+      curPlan=plan;
+      POIS=plan===1?POIS_PLAN1:POIS_PLAN2;
+      DAY_LABEL=plan===1?DAY_LABEL_PLAN1:DAY_LABEL_PLAN2;
+      document.getElementById("plan1").classList.toggle("on",plan===1);
+      document.getElementById("plan2").classList.toggle("on",plan===2);
+      try{ renderDayFilter(curCity); }catch(e){ console.warn("renderDayFilter error",e); }
+      try{ renderList(curCity,curFilter); }catch(e){ console.warn("renderList error",e); }
+      if(inited && map){ try{ renderCity(curCity,curFilter); map.resize(); }catch(e){ console.warn("renderCity error",e); } }
+    };
     window.switchCity=function(city){
       curCity=city;
       curFilter="all";
       document.getElementById("cityDl").classList.toggle("on",city==="dl");
       document.getElementById("citySy").classList.toggle("on",city==="sy");
+      var planBox=document.getElementById("planBox");
+      if(planBox) planBox.classList.toggle("show",city==="sy");
       try{ renderDayFilter(city); }catch(e){ console.warn("renderDayFilter error",e); }
       try{ renderList(city, curFilter); }catch(e){ console.warn("renderList error",e); }
       if(!inited){ initMap(); }
