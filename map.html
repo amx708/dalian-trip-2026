@@ -192,6 +192,8 @@
   .dl-city-dl{--cc:#185FA5}      /* 大连蓝 */
   .dl-city-sy{--cc:#C2700F}      /* 沈阳橙 */
   .dl-city-cross{--cc:#7a5cff}   /* 跨城高铁 */
+  .map-tip{position:fixed;top:10px;right:10px;z-index:60;background:rgba(20,20,30,.82);color:#fff;font-size:12px;line-height:1.45;padding:8px 11px;border-radius:10px;max-width:262px;box-shadow:0 4px 16px rgba(0,0,0,.3);pointer-events:none}
+  .map-tip b{color:#ffd66b}
   /* 顶部时间轴 */
   .dl-timeline{background:linear-gradient(135deg,#eef6fb,#f4fbfe);border:1px solid var(--line);border-radius:16px;padding:14px 14px 16px;margin:0 0 16px}
   .dl-tl-title{font-size:15px;font-weight:700;color:var(--sea);margin-bottom:10px}
@@ -318,6 +320,7 @@
     <span class="map-legend" id="mapLegend"></span>
   </div>
   <div class="map-wrap">
+    <div class="map-tip">🚄 暑期高铁票紧张，建议提前在 12306 购往返；去程推荐 <b>G8101</b>（10:56 大连北 → 12:28 沈阳站，最快最便宜）。回程车站要与所选方案一致。</div>
     <div id="tmap"></div>
     <div class="day-filter" id="dayFilter"></div>
     <div class="map-list" id="mapList"></div>
