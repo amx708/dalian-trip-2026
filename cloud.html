@@ -1181,15 +1181,30 @@
     .lg-item{display:inline-flex;align-items:center;gap:5px}
     .lg-item i{width:12px;height:12px;border-radius:3px;display:inline-block}
     .map-err{padding:50px 20px;text-align:center;color:var(--sub);font-size:14px;line-height:1.7}
+    .map-wrap{display:flex;gap:14px;align-items:stretch;flex-wrap:wrap;margin-top:4px}
+    #tmap{flex:1 1 360px;min-width:300px;height:540px;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(20,136,201,.10);background:#eef3f7}
+    .map-list{flex:0 0 264px;max-height:540px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:6px 8px;background:var(--card)}
+    .ml-day{display:flex;align-items:center;gap:6px;font-weight:600;font-size:13px;margin:10px 6px 6px;color:var(--ink)}
+    .ml-day i{width:10px;height:10px;border-radius:3px;display:inline-block}
+    .ml-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--ink);transition:.12s}
+    .ml-item:hover{background:#eef5fb}
+    .ml-item.on{background:#dcecf7}
+    .ml-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+    .ml-name{flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ml-tag{font-size:11px;color:var(--sub);background:#f0f4f8;border-radius:6px;padding:1px 6px;flex:0 0 auto}
+    @media(max-width:640px){ .map-list{flex:1 1 100%;max-height:260px} }
   </style>
   <h2>🗺️ 行程地图（腾讯地图 · 按天分色）</h2>
-  <div class="note">点任意标点看当天安排，弹窗里可直接「🧭 高德导航 / 🗺️ 腾讯导航」一键导过去；切换「🌊 大连 / 🏯 沈阳」看各自路线。<b>底图需联网</b>加载腾讯地图（免翻墙版不含此图，请用本主版本或手机系统浏览器打开）。</div>
+  <div class="note">地图右侧（手机上在下方）有「按天分组的景点名单」，<b>点名单里的名称</b>地图就飞过去并弹出导航；也可以直接点地图上的彩色大图钉。切换「🌊 大连 / 🏯 沈阳」看各自路线。<b>底图需联网</b>加载腾讯地图（免翻墙版不含此图，请用本主版本或手机系统浏览器打开）。</div>
   <div class="map-toolbar">
     <button type="button" class="map-city on" id="cityDl" onclick="switchCity('dl')">🌊 大连</button>
     <button type="button" class="map-city" id="citySy" onclick="switchCity('sy')">🏯 沈阳</button>
     <span class="map-legend" id="mapLegend"></span>
   </div>
-  <div id="tmap"></div>
+  <div class="map-wrap">
+    <div id="tmap"></div>
+    <div class="map-list" id="mapList"></div>
+  </div>
   <script>
   (function(){
     var POIS = [{"id":"dalian_airport","name":"大连周水子机场","city":"dl","day":"T","order":0,"kind":"transport","lat":38.962478,"lng":121.541627},{"id":"atu_hotel","name":"亚朵酒店(港湾广场)","city":"dl","day":"1","order":1,"kind":"hotel","lat":38.922,"lng":121.643},{"id":"binhai_road","name":"滨海路·跨海大桥观景台","city":"dl","day":"1","order":2,"kind":"spot","lat":38.868,"lng":121.56},{"id":"lianhua_mt","name":"莲花山观景台","city":"dl","day":"1","order":3,"kind":"spot","lat":38.866,"lng":121.583},{"id":"yinshatan","name":"银沙滩","city":"dl","day":"1","order":4,"kind":"spot","lat":38.875,"lng":121.59},{"id":"xinghai_sq","name":"星海广场","city":"dl","day":"1","order":5,"kind":"spot","lat":38.879,"lng":121.602},{"id":"laohutan","name":"老虎滩海洋公园","city":"dl","day":"2","order":1,"kind":"spot","lat":38.883,"lng":121.632},{"id":"bangchuidao","name":"棒棰岛","city":"dl","day":"2","order":2,"kind":"spot","lat":38.878,"lng":121.667},{"id":"yuren_matou","name":"渔人码头·品海楼","city":"dl","day":"2","order":3,"kind":"food","lat":38.886,"lng":121.645},{"id":"donggang","name":"东港·中央大道","city":"dl","day":"3","order":1,"kind":"spot","lat":38.925,"lng":121.655},{"id":"venice","name":"威尼斯水城","city":"dl","day":"3","order":2,"kind":"spot","lat":38.928,"lng":121.658},{"id":"russia_st","name":"俄罗斯风情街","city":"dl","day":"7","order":1,"kind":"spot","lat":38.916,"lng":121.622},{"id":"zhongshan_sq","name":"中山广场","city":"dl","day":"7","order":2,"kind":"spot","lat":38.918,"lng":121.63},{"id":"qingniwa","name":"汉庭(青泥洼)·青泥洼商圈","city":"dl","day":"7","order":3,"kind":"hotel","lat":38.914,"lng":121.628},{"id":"dalian_nb","name":"大连北站(双城高铁)","city":"dl","day":"T","order":0,"kind":"transport","lat":39.009,"lng":121.686},{"id":"shenyang_st","name":"沈阳站","city":"sy","day":"4","order":1,"kind":"transport","lat":41.793,"lng":123.407},{"id":"taiyuan_st","name":"parkinn丽柏(太原街)","city":"sy","day":"4","order":2,"kind":"hotel","lat":41.791,"lng":123.4},{"id":"gugong","name":"沈阳故宫","city":"sy","day":"5","order":1,"kind":"spot","lat":41.796,"lng":123.456},{"id":"shuaifu","name":"张氏帅府","city":"sy","day":"5","order":2,"kind":"spot","lat":41.794,"lng":123.459},{"id":"zhongjie","name":"中街步行街","city":"sy","day":"5","order":3,"kind":"spot","lat":41.799,"lng":123.463},{"id":"xita","name":"西塔(韩餐夜市)","city":"sy","day":"5","order":4,"kind":"food","lat":41.8,"lng":123.385},{"id":"918","name":"九一八历史博物馆","city":"sy","day":"6","order":1,"kind":"spot","lat":41.839,"lng":123.462},{"id":"beiling","name":"北陵公园(清昭陵)","city":"sy","day":"6","order":2,"kind":"spot","lat":41.849,"lng":123.428},{"id":"shenyang_nb","name":"沈阳北站(回大连高铁)","city":"sy","day":"T","order":0,"kind":"transport","lat":41.817,"lng":123.44}];
@@ -1235,6 +1250,34 @@
       if(!inited){ initMap(); }
       if(inited){ renderCity(city); if(map){ map.resize(); } }
     };
+    function mlItem(p){
+      var tag=p.kind==="hotel"?"住宿":p.kind==="transport"?"交通":p.kind==="food"?"美食":"景点";
+      return '<div class="ml-item" id="ml-'+p.id+'" onclick="focusPoi(\''+p.id+'\')">'
+        +'<span class="ml-dot" style="background:'+DAY_COLORS[p.day]+'"></span>'
+        +'<span class="ml-name">'+p.name+'</span>'
+        +'<span class="ml-tag">'+tag+'</span></div>';
+    }
+    window.focusPoi=function(id){
+      var p=null;
+      for(var i=0;i<POIS.length;i++){ if(POIS[i].id===id){p=POIS[i];break;} }
+      if(!p) return;
+      if(p.city!==curCity){ switchCity(p.city); }
+      if(!map) return;
+      var ll=new TMap.LatLng(p.lat,p.lng);
+      map.setCenter(ll);
+      map.setZoom(15);
+      var tag=p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
+      var cityName=p.city==="dl"?"大连":"沈阳";
+      var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
+      var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
+      info.setPosition(ll);
+      info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px"><b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag+'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a><a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
+      info.setVisible(true);
+      var items=document.querySelectorAll(".ml-item");
+      for(var k=0;k<items.length;k++){ items[k].classList.remove("on"); }
+      var me=document.getElementById("ml-"+id);
+      if(me) me.classList.add("on");
+    };
     function renderCity(city){
       var pts=POIS.filter(function(p){return p.city===city;});
       var days=[];
@@ -1244,7 +1287,7 @@
       var geos=pts.map(function(p){
         var c=DAY_COLORS[p.day]||"#333";
         // 用腾讯地图默认图钉，按天着色（content自定义DOM在某些浏览器/版本不渲染，默认marker最稳）
-        styles["m"+p.day]={width:22,height:30,anchor:{x:11,y:30},color:c};
+        styles["m"+p.day]={width:32,height:44,anchor:{x:16,y:44},color:c};
         return {id:p.id,styleId:"m"+p.day,position:new TMap.LatLng(p.lat,p.lng),properties:p};
       });
       mLayer.setStyles(styles);
@@ -1275,6 +1318,20 @@
       }).join("");
       html+='<span class="lg-item"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</span>';
       lg.innerHTML=html;
+      // 渲染右侧/下方可点击景点名单（按天分组，含交通枢纽）
+      var listEl=document.getElementById("mapList");
+      var lh="";
+      days.forEach(function(d){
+        var lbl=DAY_LABEL[city][d]||("Day"+d);
+        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS[d]+'"></i>'+lbl+'</div>';
+        pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;}).forEach(function(p){ lh+=mlItem(p); });
+      });
+      var trans=pts.filter(function(p){return p.day==="T";});
+      if(trans.length){
+        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</div>';
+        trans.forEach(function(p){ lh+=mlItem(p); });
+      }
+      listEl.innerHTML=lh;
     }
     window.__initTripMap=function(){ if(!inited){ initMap(); } };
     window.__tripMapResize=function(){ if(map){ setTimeout(function(){ map.resize(); },50); } };
