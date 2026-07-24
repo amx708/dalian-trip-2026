@@ -1212,10 +1212,11 @@
       sy:{"4":"Day4 抵达·太原街","5":"Day5 故宫·帅府·中街·西塔","6":"Day6 九一八·北陵"}
     };
     var CENTER = {dl:[38.90,121.62], sy:[41.80,123.43]};
-    var map, mLayer, pLayer, info, inited=false, curCity="dl";
+    var map, mLayer, pLayer, info, inited=false, initializing=false, curCity="dl";
 
     function initMap(){
-      if(inited) return;
+      if(inited || initializing) return;
+      initializing=true;
       var box=document.getElementById("tmap");
       if(!box) return;
       // 面板刚从 display:none 切过来时，容器可能还没获得尺寸；TMap 在 0/NaN 尺寸容器里初始化会崩溃
@@ -1237,30 +1238,49 @@
         console.log('[initMap] creating Map...');
         map=new TMap.Map("tmap",{center:center,zoom:11});
         console.log('[initMap] Map ok');
-        mLayer=new TMap.MultiMarker({map:map,geometries:[]});
-        pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
-        info=new TMap.InfoWindow({map:map,visible:false});
-        mLayer.on("click",function(e){
-          var p=e.geometry.properties;
-          if(!p) return;
-          var tag = p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
-          var cityName = p.city==="dl"?"大连":"沈阳";
-          // 标点弹窗内直接给导航入口：点一下唤起高德/腾讯地图 App 或网页版，真正"能用"
-          var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
-          var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
-          var pos=e.geometry.position;
-          if(pos) info.setPosition(pos);
-          info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px">'
-            +'<b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag
-            +'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a>'
-            +'<a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
-          info.setVisible(true);
-        });
-        inited=true;
-        renderCity("dl");
+        // TMap Map 创建后内部渲染/WebGL初始化是异步的；立即创建 MultiMarker/InfoWindow
+        // 会导致内部状态不一致（InfoWindow position / projectContainer sizeContainer 报类型错）。
+        // 等 150ms 让 Map 内部就绪后再创建覆盖物和事件。
+        setTimeout(function(){
+          try{
+            console.log('[initMap] creating overlays...');
+            mLayer=new TMap.MultiMarker({map:map,geometries:[]});
+            console.log('[initMap] MultiMarker ok');
+            pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
+            console.log('[initMap] MultiPolyline ok');
+            info=new TMap.InfoWindow({map:map,position:center,visible:false});
+            console.log('[initMap] InfoWindow ok');
+            mLayer.on("click",function(e){
+              var p=e.geometry.properties;
+              if(!p) return;
+              var tag = p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
+              var cityName = p.city==="dl"?"大连":"沈阳";
+              var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
+              var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
+              var pos=e.geometry.position;
+              if(pos) info.setPosition(pos);
+              info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px">'
+                +'<b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag
+                +'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a>'
+                +'<a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
+              info.setVisible(true);
+            });
+            inited=true;
+            initializing=false;
+            console.log('[initMap] rendering dl...');
+            renderCity("dl");
+            console.log('[initMap] all done');
+          }catch(e2){
+            console.error('[initMap] overlay init error', e2);
+            box.innerHTML='<div class="map-err">⚠️ 地图初始化失败<br>'+(e2&&e2.message?e2.message:'覆盖物初始化失败')+'</div>';
+            inited=false;
+            initializing=false;
+          }
+        },150);
       }catch(e){
         box.innerHTML='<div class="map-err">⚠️ 地图初始化失败<br>'+(e&&e.message?e.message:'请检查网络或腾讯地图 Key 配置')+'</div>';
         inited=false;
+        initializing=false;
       }
     }
     window.switchCity=function(city){
