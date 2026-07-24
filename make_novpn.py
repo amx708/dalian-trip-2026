@@ -1,10 +1,15 @@
 import os
+import re
 
 src = r'C:\Users\Administrator\WorkBuddy\2026-07-20-17-46-20\dalian-deploy\cloud.html'
 out_dir = r'C:\Users\Administrator\WorkBuddy\2026-07-20-17-46-20\dalian-deploy\novpn-deploy'
 out = os.path.join(out_dir, 'index.html')
 
 s = open(src, encoding='utf-8').read()
+
+# 0) 剥离腾讯地图实时组件（需要联网 + Key），保持免翻墙版零依赖、可离线
+for tag in ('MAP_JS', 'MAP_TAB', 'MAP_PANEL'):
+    s = re.sub(r'<!--%s_START-->.*?<!--%s_END-->\s*' % (tag, tag), '', s, flags=re.DOTALL)
 
 # 1) 关掉 Firebase 后端（改回分享链接模式，无境外依赖）
 s = s.replace(
