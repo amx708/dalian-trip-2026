@@ -289,6 +289,12 @@
     .ml-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
     .ml-name{flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .ml-tag{font-size:11px;color:var(--sub);background:#f0f4f8;border-radius:6px;padding:1px 6px;flex:0 0 auto}
+    .day-filter{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+    .df-btn{font:inherit;font-size:12.5px;line-height:1;padding:6px 12px;border:1px solid var(--line);background:var(--card);color:var(--sub);border-radius:999px;cursor:pointer;transition:all .18s ease}
+    .df-btn:hover{transform:translateY(-1px);border-color:var(--sea)}
+    .df-btn.on{background:var(--sun,#FB8C00);border-color:var(--sun,#FB8C00);color:#fff;font-weight:700}
+    .ml-nav{margin-left:6px;text-decoration:none;font-size:14px;line-height:1;padding:3px 5px;border-radius:8px;background:rgba(30,136,229,.10);flex:0 0 auto;transition:background .18s}
+    .ml-nav:hover{background:rgba(30,136,229,.22)}
   </style>
   <h2>🗺️ 行程地图（腾讯地图 · 按天分色）</h2>
   <div class="note">地图右侧（电脑上）或下方（手机上）是「按天着色的景点名单」。颜色含义：🔵 Day1 抵达·初体验、🔴 Day2 老虎滩·棒棰岛、🟢 Day3 东港·威尼斯、🟤 Day7 俄街·中山广场、⚪ 交通枢纽。点击名单里的地名，地图会自动飞到对应位置并弹出导航入口；也可以直接点地图上的彩色大图钉。点击顶部「🌊 大连 / 🏯 沈阳」可切换双城路线。地图底图由腾讯地图提供，需联网加载；若你使用精简版、离线版或部分 App 内置浏览器，地图可能无法显示，请换用手机/电脑系统浏览器打开本页。</div>
@@ -299,6 +305,7 @@
   </div>
   <div class="map-wrap">
     <div id="tmap"></div>
+    <div class="day-filter" id="dayFilter"></div>
     <div class="map-list" id="mapList"></div>
   </div>
   <script>
@@ -310,7 +317,7 @@
       sy:{"4":"Day4 抵达·太原街","5":"Day5 故宫·帅府·中街·西塔","6":"Day6 九一八·北陵"}
     };
     var CENTER = {dl:[38.90,121.62], sy:[41.80,123.43]};
-    var map, mLayer, pLayer, info, inited=false, initializing=false, curCity="dl";
+    var map, mLayer, pLayer, info, inited=false, initializing=false, curCity="dl", curFilter="all";
 
     // ——— 安全辅助 ———
     // TMap v1.exp 的 InfoWindow 不再暴露 setVisible()，改用 open/close 或 show/hide（运行时特性检测 + 异常兜底）
@@ -373,7 +380,7 @@
             });
             inited=true;
             initializing=false;
-            renderCity("dl");
+            renderCity("dl", curFilter);
           }catch(e2){
             console.error('[initMap] overlay init error', e2);
             box.innerHTML='<div class="map-err">⚠️ 地图初始化失败<br>'+(e2&&e2.message?e2.message:'覆盖物初始化失败')+'</div>';
@@ -387,16 +394,39 @@
         initializing=false;
       }
     }
+    function renderDayFilter(city){
+      var pts=POIS.filter(function(p){return p.city===city;});
+      var days=[];
+      pts.forEach(function(p){ if(p.day!=="T"&&days.indexOf(p.day)<0) days.push(p.day); });
+      days.sort();
+      var html='<button type="button" class="df-btn'+(curFilter==="all"?" on":"")+'" onclick="setDayFilter(\'all\')">全部</button>';
+      days.forEach(function(d){
+        html+='<button type="button" class="df-btn'+(curFilter===d?" on":"")+'" onclick="setDayFilter(\''+d+'\')">Day'+d+'</button>';
+      });
+      var box=document.getElementById("dayFilter");
+      if(box) box.innerHTML=html;
+    }
+    window.setDayFilter=function(d){
+      curFilter=d;
+      try{ renderDayFilter(curCity); }catch(e){ console.warn("renderDayFilter error",e); }
+      try{ renderList(curCity, curFilter); }catch(e){ console.warn("renderList error",e); }
+      if(inited && map){ try{ renderCity(curCity, curFilter); map.resize(); }catch(e){ console.warn("renderCity error",e); } }
+    };
     window.switchCity=function(city){
       curCity=city;
+      curFilter="all";
       document.getElementById("cityDl").classList.toggle("on",city==="dl");
       document.getElementById("citySy").classList.toggle("on",city==="sy");
-      try{ renderList(city); }catch(e){ console.warn("renderList error",e); }
+      try{ renderDayFilter(city); }catch(e){ console.warn("renderDayFilter error",e); }
+      try{ renderList(city, curFilter); }catch(e){ console.warn("renderList error",e); }
       if(!inited){ initMap(); }
-      if(inited && map){ try{ renderCity(city); map.resize(); }catch(e){ console.warn("renderCity error",e); } }
+      if(inited && map){ try{ renderCity(city, curFilter); map.resize(); }catch(e){ console.warn("renderCity error",e); } }
     };
-    function renderList(city){
+    function renderList(city, filterDay){
       var pts=POIS.filter(function(p){return p.city===city;});
+      if(filterDay && filterDay!=="all"){
+        pts=pts.filter(function(p){ return p.day===filterDay; });
+      }
       var days=[];
       pts.forEach(function(p){ if(p.day!=="T"&&days.indexOf(p.day)<0) days.push(p.day); });
       days.sort();
@@ -406,22 +436,28 @@
         lh+='<div class="ml-day"><i style="background:'+DAY_COLORS[d]+'"></i>'+lbl+'</div>';
         pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;}).forEach(function(p){ lh+=mlItem(p); });
       });
-      var trans=pts.filter(function(p){return p.day==="T";});
-      if(trans.length){
-        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</div>';
-        trans.forEach(function(p){ lh+=mlItem(p); });
+      if(!filterDay || filterDay==="all"){
+        var trans=pts.filter(function(p){return p.day==="T";});
+        if(trans.length){
+          lh+='<div class="ml-day"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</div>';
+          trans.forEach(function(p){ lh+=mlItem(p); });
+        }
       }
       var listEl=document.getElementById("mapList");
       if(listEl) listEl.innerHTML=lh;
     }
     // 页面加载即预渲染大连名单，避免空白
-    try{ renderList(curCity); }catch(e){ console.warn("initial renderList error",e); }
+    try{ renderList(curCity, curFilter); }catch(e){ console.warn("initial renderList error",e); }
+    try{ renderDayFilter(curCity); }catch(e){ console.warn("initial renderDayFilter error",e); }
     function mlItem(p){
       var tag=p.kind==="hotel"?"住宿":p.kind==="transport"?"交通":p.kind==="food"?"美食":"景点";
-      return '<div class="ml-item" id="ml-'+p.id+'" onclick="focusPoi(\''+p.id+'\')">'
+      var cityName=p.city==="dl"?"大连":"沈阳";
+      var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
+      return '<div class="ml-item" id="ml-'+p.id+'">'
         +'<span class="ml-dot" style="background:'+DAY_COLORS[p.day]+'"></span>'
-        +'<span class="ml-name">'+p.name+'</span>'
-        +'<span class="ml-tag">'+tag+'</span></div>';
+        +'<span class="ml-name" onclick="focusPoi(\''+p.id+'\')">'+p.name+'</span>'
+        +'<span class="ml-tag">'+tag+'</span>'
+        +'<a class="ml-nav" href="'+qq+'" target="_blank" title="导航到此处" onclick="event.stopPropagation()">🧭</a></div>';
     }
     window.focusPoi=function(id,retry){
       var p=null;
@@ -449,8 +485,11 @@
       var me=document.getElementById("ml-"+id);
       if(me) me.classList.add("on");
     };
-    function renderCity(city){
+    function renderCity(city, filterDay){
       var pts=POIS.filter(function(p){return p.city===city;});
+      if(filterDay && filterDay!=="all"){
+        pts=pts.filter(function(p){ return p.day===filterDay; });
+      }
       var days=[];
       pts.forEach(function(p){ if(p.day!=="T"&&days.indexOf(p.day)<0) days.push(p.day); });
       days.sort();
