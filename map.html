@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%BA%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<title>大连+沈阳7天双城自由行 · 行程地图</title>
+<style>
+  :root{
+    --bg:#f4f9fc; --card:#ffffff; --ink:#1f2d3d; --sub:#5a6b7b;
+    --line:#e2edf3; --sea:#0a6ebd; --sea2:#1488c9; --sun:#f4813f; --sun2:#f4a259;
+    --good:#1f9d6b; --warn:#e0533d; --chip:#eaf4fb;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 16px 60px}
+  header{background:linear-gradient(135deg,#0a6ebd,#1488c9 60%,#37a7d6);color:#fff;
+    padding:30px 16px 26px;margin-bottom:18px}
+  header .inner{max-width:960px;margin:0 auto;padding:0 16px}
+  header h1{font-size:25px;letter-spacing:.5px}
+  header .meta{margin-top:8px;font-size:14px;opacity:.92}
+  header .lead{margin-top:14px;background:rgba(255,255,255,.14);border-radius:10px;
+    padding:12px 14px;font-size:14.5px;line-height:1.65}
+  .id-alert{display:flex;align-items:center;gap:12px;background:#fffbe6;border:1.5px solid #ffd666;
+    border-radius:12px;padding:12px 16px;margin:16px 0 4px;box-shadow:0 3px 12px rgba(255,180,0,.12)}
+  .id-alert .icon{font-size:26px;line-height:1;flex:0 0 auto}
+  .id-alert .txt{font-size:14.5px;line-height:1.6;color:#7a5b00}
+  .id-alert b{color:#c0392b}
+  .id-alert .tag{display:inline-block;background:#fff1b8;border:1px solid #ffd666;border-radius:6px;
+    padding:1px 8px;margin:0 2px;font-weight:700;color:#a35b00}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:-34px 0 20px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px 12px;text-align:center;box-shadow:0 4px 14px rgba(20,136,201,.06)}
+  .kpi .v{font-size:22px;font-weight:700;color:var(--sea)}
+  .kpi .l{font-size:12.5px;color:var(--sub);margin-top:4px}
+  .id-alert + .kpis{margin-top:12px}
+  .wx-tip{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center;padding:20px}
+  .wx-tip.show{display:flex}
+  .wx-tip-box{background:#fff;border-radius:14px;padding:22px 24px;max-width:340px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+  .wx-tip-title{font-size:17px;font-weight:700;color:#c0392b;margin-bottom:12px}
+  .wx-tip-box p{font-size:14px;line-height:1.7;color:var(--text);margin:8px 0}
+  .wx-tip-box b{color:var(--sea)}
+  .wx-tip-btn{margin-top:14px;background:var(--sea);color:#fff;border:0;border-radius:10px;padding:10px 24px;font-size:14.5px;cursor:pointer}
+  .wx-tip-btn:active{opacity:.9}
+  .ver{font-size:12.5px;color:var(--sea2);background:var(--card);border:1px dashed var(--sea2);
+    border-radius:8px;padding:6px 12px;margin:0 0 12px;display:inline-block}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:5;
+    background:var(--bg);padding:10px 0 12px;border-bottom:1px solid var(--line);margin-bottom:18px}
+  .tab{border:1px solid var(--line);background:var(--card);color:var(--sub);
+    padding:7px 15px;border-radius:20px;font-size:14px;cursor:pointer;transition:.15s}
+  .tab:hover{border-color:var(--sea2)}
+  .tab.on{background:var(--sea);color:#fff;border-color:var(--sea)}
+  .panel{display:none}
+  .panel.on{display:block;animation:fade .25s}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+  h2{font-size:21px;line-height:1.35;margin:26px 0 14px;padding-left:14px;border-left:5px solid var(--sea);color:var(--ink)}
+  h3{font-size:17px;line-height:1.4;margin:20px 0 10px;color:var(--sea2)}
+  p,li{font-size:16px;color:var(--ink)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px;margin-bottom:16px;box-shadow:0 2px 12px rgba(31,45,61,.05)}
+  .day{display:flex;gap:14px;align-items:flex-start}
+  .day .num{flex:0 0 52px;height:52px;border-radius:12px;background:var(--chip);
+    color:var(--sea);font-weight:700;font-size:15px;display:flex;align-items:center;
+    justify-content:center;text-align:center;line-height:1.2}
+  .day .num small{display:block;font-size:11px;color:var(--sub);font-weight:500}
+  .day .body{flex:1}
+  .day .body b{color:var(--ink)}
+  .tag{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;
+    background:var(--chip);color:var(--sea2);margin:2px 4px 2px 0}
+  .tag.free{background:#e7f7ef;color:var(--good)}
+  .tag.pay{background:#fff1e8;color:var(--sun)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;margin:8px 0 4px}
+  th,td{border:1px solid var(--line);padding:11px 12px;text-align:left;vertical-align:top}
+  th{background:#eef6fb;color:var(--sea);font-weight:600}
+  tr:nth-child(even) td{background:#fafdfe}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .spot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+  .spot .hd{background:linear-gradient(120deg,#eaf4fb,#f4fbfe);padding:12px 14px}
+  .spot .hd b{font-size:16px;color:var(--sea)}
+
+  .spot-link{color:var(--sea);text-decoration:none;cursor:pointer;
+    border-bottom:1px dashed var(--sea2)}
+  .spot-link:hover{color:var(--sea2);background:#eaf4fb;border-radius:4px}
+  .links{margin:10px 0 4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .ext{display:inline-block;padding:6px 14px;border-radius:20px;background:var(--sea);color:#fff;font-size:13px;text-decoration:none;font-weight:600;transition:.15s}
+  .ext:hover{background:var(--sea2)}
+  .plan-table .links-row td{padding:4px 10px;background:#f7fafc}
+  .plan-table .links-row td .links{margin:0;font-size:12.5px;gap:6px}
+
+  .spot .hd .meta{font-size:12px;color:var(--sub);margin-top:3px}
+  .spot .bd{padding:13px 15px;font-size:14px;line-height:1.7;color:var(--sub)}
+  .spot .bd .hl{color:var(--ink);margin-top:6px}
+  .note{background:#fff8f2;border:1px solid #ffe0cc;border-radius:10px;
+    padding:14px 16px;font-size:14.5px;line-height:1.7;color:#9a4a25;margin:12px 0}
+  .note b{color:var(--warn)}
+  ul.tips{list-style:none}
+  ul.tips li{padding:9px 0 9px 26px;position:relative;border-bottom:1px dashed var(--line);font-size:15.5px;line-height:1.7}
+  ul.tips li:before{content:"✓";position:absolute;left:0;top:8px;color:var(--good);font-weight:700}
+  ul.tips li.warn:before{content:"!";color:var(--warn)}
+  .pack{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;font-size:14.5px}
+  .pack div{padding:5px 0;border-bottom:1px dashed var(--line)}
+  .foot{font-size:13px;color:var(--sub);margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
+  .price{font-weight:700;color:var(--sun)}
+  a{color:var(--sea2);word-break:break-all}
+  .plan-table td{line-height:1.85;vertical-align:top}
+  /* 时间条目间加间距（<br>分隔的每行） */
+  .plan-table td br{display:block;content:"";margin-top:3px;}
+  .plan-table td[contenteditable]{cursor:text}
+  .plan-table td[contenteditable]:hover{background:#fffdf3}
+  .plan-table td[contenteditable]:focus{background:#fff6e8;box-shadow:inset 0 0 0 2px var(--sun);border-radius:4px}
+  .edit-hint{background:#eef9f1;border-color:#cdeadd;color:#1f7a52}
+  .edit-hint b{color:var(--good)}
+  
+  /* 关键字搜索高亮 */
+  .search-bar{display:flex;gap:8px;margin:10px 0 14px;align-items:center}
+  .search-bar input{flex:1;border:2px solid var(--line);border-radius:10px;
+    padding:9px 14px;font-size:14px;outline:none;transition:.2s;
+    background:var(--card);color:var(--ink)}
+  .search-bar input:focus{border-color:var(--sea);box-shadow:0 0 0 3px rgba(10,110,189,.12)}
+  .search-bar .btn{background:var(--sea);color:#fff;border:none;padding:9px 18px;
+    border-radius:10px;font-size:13.5px;cursor:pointer;white-space:nowrap}
+  .search-bar .btn:hover{background:var(--sea2)}
+  .search-bar .btn.clear{background:var(--sub);font-size:12px;padding:7px 12px}
+  .plan-table tr.highlight{background:#fff3c4 !important;box-shadow:inset 3px 0 0 var(--sun);transition:background .2s}
+  .plan-table tr.highlight td{background:transparent !important}
+  .search-count{font-size:12.5px;color:var(--sub);white-space:nowrap}
+
+@media(max-width:680px){
+  .wrap{padding:0 11px 50px}
+  header{padding:22px 14px 20px;margin-bottom:14px}
+  header h1{font-size:20px}
+  header .lead{font-size:13.5px;padding:10px 12px}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:8px;margin-top:-26px}
+  .kpi .v{font-size:16px}.kpi .l{font-size:11px}
+  .tabs{overflow-x:visible;flex-wrap:wrap;justify-content:center;gap:8px;padding:8px 0 8px;-webkit-overflow-scrolling:auto}
+  .tab{white-space:nowrap;font-size:13px;padding:6px 12px;flex:0 0 auto}
+  h2{font-size:18px;margin:18px 0 10px}
+  h3{font-size:15.5px}
+  p,li{font-size:16px}
+  .card{overflow-x:auto;-webkit-overflow-scrolling:touch;padding:14px}
+  .plan-table{font-size:14.5px;min-width:560px}
+  .plan-table td,.plan-table th{padding:10px 11px}
+  .grid{grid-template-columns:1fr}
+  .pack{grid-template-columns:1fr}
+  .day{flex-direction:column}.day .num{flex:0 0 auto;width:100%}
+  .links{flex-wrap:wrap;gap:7px}
+  .ext{font-size:12.5px;padding:6px 12px}
+  .search-bar{flex-wrap:wrap}
+  .search-bar input{flex:1 1 100%}
+}
+  /* ===== 本地编辑 / 自动保存（仅存本机） ===== */
+  #editbar{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;gap:8px;align-items:center;
+    padding:9px 12px;background:rgba(18,28,46,.95);color:#fff;font-size:13px;
+    box-shadow:0 -3px 12px rgba(0,0,0,.3);}
+  .edithelp{position:relative;margin:0;padding:0;}
+  .edithelp > summary{list-style:none;cursor:pointer;font-size:16px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.15);color:#fff;line-height:1;}
+  .edithelp > summary::-webkit-details-marker{display:none;}
+  .edithelp-body{position:absolute;bottom:calc(100% + 10px);right:0;width:min(320px,calc(100vw - 24px));background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:12px 14px;font-size:13px;color:#0f172a;line-height:1.65;box-shadow:0 4px 16px rgba(2,132,199,.18);max-height:70vh;overflow:auto;z-index:1000;}
+  .edithelp-body p{margin:6px 0;}
+
+  #editbar button{flex:0 0 auto;border:0;border-radius:9px;padding:8px 13px;font-size:13px;cursor:pointer;}
+  #editToggle{background:#ff7a18;color:#fff;font-weight:700;}
+  #editReset{background:#33425c;color:#dfe6f0;}
+  #editStatus{flex:1 1 auto;text-align:left;opacity:.92;font-size:12.5px;line-height:1.3;}
+  body{padding-bottom:58px;}
+  body.editing [contenteditable="true"]{outline:1.6px dashed #ff7a18;outline-offset:1px;
+    background:#fffbe9;border-radius:5px;}
+  body.editing .plan-table td[contenteditable="true"],
+  body.editing .plan-table th[contenteditable="true"]{background:#fffbe9;}
+/* 手机端表格转卡片，避免左右滑动 */
+  @media(max-width:680px){
+    .plan-table{min-width:0;width:100%;box-sizing:border-box;}
+    .plan-table, .plan-table thead, .plan-table tbody, .plan-table th, .plan-table td, .plan-table tr{display:block;}
+    .plan-table thead tr{display:none;}
+    .plan-table tr{margin-bottom:12px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);}
+    .plan-table td{border:none;border-bottom:1px solid var(--line);padding:10px 11px 10px 42%;position:relative;min-height:1.5em;line-height:1.6;}
+    .plan-table td:last-child{border-bottom:none;}
+    .plan-table td:before{content:attr(data-label);position:absolute;left:11px;top:10px;font-weight:600;color:var(--sea);font-size:12.5px;}
+    .plan-table .links-row td{padding-left:11px;}
+    .plan-table .links-row td:before{display:none;}
+    .plan-table td.long-cell{padding-left:11px;padding-top:28px;}
+    .plan-table td.long-cell:before{left:11px;top:8px;}
+  }
+  @media(max-width:680px){
+    #editbar{font-size:12px;padding:8px 9px;gap:6px;}
+    #editbar button{padding:7px 10px;font-size:12px;}
+    body{padding-bottom:62px;}
+  }
+
+  /* ===== 小孩/长者友好：每日大卡片 + 城市色 ===== */
+  .dl-city-dl{--cc:#185FA5}      /* 大连蓝 */
+  .dl-city-sy{--cc:#C2700F}      /* 沈阳橙 */
+  .dl-city-cross{--cc:#7a5cff}   /* 跨城高铁 */
+  /* 顶部时间轴 */
+  .dl-timeline{background:linear-gradient(135deg,#eef6fb,#f4fbfe);border:1px solid var(--line);border-radius:16px;padding:14px 14px 16px;margin:0 0 16px}
+  .dl-tl-title{font-size:15px;font-weight:700;color:var(--sea);margin-bottom:10px}
+  .dl-tl-track{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+  .dl-tl-day{flex:1 1 0;min-width:104px;border:none;cursor:pointer;background:#fff;border-radius:12px;padding:10px 8px;display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;box-shadow:0 2px 8px rgba(20,136,201,.10);border-top:5px solid var(--cc,#185FA5);transition:.15s}
+  .dl-tl-day:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(20,136,201,.20)}
+  .dl-tl-num{font-size:15px;font-weight:800;color:var(--cc,#185FA5)}
+  .dl-tl-ico{font-size:24px;line-height:1}
+  .dl-tl-city{font-size:11.5px;color:var(--sub)}
+  .dl-tl-theme{font-size:12px;color:var(--ink);line-height:1.3}
+  /* 新手引导 */
+  /* 每日大卡片 */
+  .plan-table tr[id^="day"]{border:1px solid var(--line);border-radius:16px;margin:0 0 18px;background:#fff;box-shadow:inset 6px 0 0 var(--cc,#185FA5),0 4px 18px rgba(20,136,201,.07);overflow:hidden}
+  .plan-table tr[id^="day"].highlight{box-shadow:inset 6px 0 0 var(--cc,#185FA5),0 0 0 3px var(--sun)!important;background:#fff8e6!important}
+  @media(min-width:681px){
+    .plan-table tr[id^="day"]{display:grid;grid-template-columns:96px 96px 1fr 1.4fr;grid-template-areas:"date daynum theme kw" "detail detail detail detail";align-items:stretch;column-gap:0}
+    .plan-table tr[id^="day"] td{border:none;padding:0;background:transparent!important}
+    .plan-table tr[id^="day"] td:nth-child(1){grid-area:date;background:#f6f9fc;color:var(--ink);font-size:14.5px;font-weight:700;text-align:center;white-space:nowrap;display:flex;flex-direction:column;justify-content:flex-start;padding:16px 6px 8px;border-right:1px solid var(--line);letter-spacing:.3px;line-height:1.45}
+    .plan-table tr[id^="day"] td:nth-child(2){grid-area:daynum;background:var(--cc,#185FA5);color:#fff;font-size:19px;font-weight:800;text-align:center;display:flex;flex-direction:column;justify-content:flex-start;padding:16px 6px 8px}
+    .plan-table tr[id^="day"] td:nth-child(3){grid-area:theme;padding:16px 16px 8px;font-size:19px;font-weight:700;color:var(--ink);line-height:1.35}
+    .plan-table tr[id^="day"] td:nth-child(4){grid-area:kw;padding:16px 16px 8px;text-align:right;color:var(--sub);font-size:13px;line-height:1.6}
+    .plan-table tr[id^="day"] td:nth-child(5){grid-area:detail;padding:8px 18px 18px}
+  }
+  /* 详情条目块 */
+  .dl-item{display:flex;gap:8px;align-items:flex-start;font-size:16.5px;line-height:1.7;padding:8px 11px;margin:7px 0;background:#fafcfe;border:1px solid var(--line);border-left:3px solid #cfe3f3;border-radius:10px}
+  .dl-item .em{font-size:21px;line-height:1.35;flex:0 0 auto;width:26px;text-align:center}
+  .dl-item .tx{flex:1;min-width:0;line-height:1.7}
+  .dl-item.sub{margin-left:22px;background:#f3f8fc;font-size:14.5px;color:var(--sub);border-style:dashed;border-left-color:#bcd6ea}
+  @media(max-width:680px){
+    .dl-tl-track{flex-wrap:wrap}
+    .dl-tl-day{flex:1 1 28%}
+    .dl-tl-theme{font-size:11px}
+    .dl-item{font-size:16px}
+  }
+
+
+
+  /* 小红书式美食卡片 */
+  .food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:10px 0}
+  .food-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(31,45,61,.05);transition:.15s}
+  .food-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(31,45,61,.1)}
+  .food-card-img{height:100px;display:flex;align-items:center;justify-content:center;font-size:52px;background:linear-gradient(135deg,#fff8f0,#ffecd2)}
+  .food-card-body{padding:10px 12px 12px}
+  .food-card-title{font-size:15px;font-weight:800;color:var(--ink);line-height:1.25;margin-bottom:2px}
+  .food-card-price{color:var(--sun);font-size:13px;font-weight:700;margin-bottom:5px}
+  .food-card-desc{font-size:12px;color:var(--sub);line-height:1.45;margin-bottom:8px;min-height:34px}
+  .food-card-tags{display:flex;gap:5px;flex-wrap:wrap}
+  .food-card-tag{background:#f0f6fa;border-radius:10px;padding:3px 8px;font-size:10.5px;color:var(--sea)}
+  .food-card-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .food-card-links a{font-size:11px;color:var(--sea);text-decoration:none;background:#f0f6fa;padding:3px 8px;border-radius:10px}
+  .food-card-links a:hover{background:#e0eef8}
+  @media(max-width:680px){.food-grid{grid-template-columns:repeat(2,1fr);gap:10px}.food-card-img{height:90px;font-size:44px}.food-card-title{font-size:14px}}
+
+  /* 可折叠模块（放松环节 / 夜生活等） */
+  .collapse-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px;font-size:13.5px;color:var(--sea);cursor:pointer;margin:4px 0 12px;box-shadow:0 1px 4px rgba(31,45,61,.06)}
+  .collapse-toggle:hover{background:#f0f6fa}
+  .collapse-toggle::before{content:'▶';font-size:10px;transition:.2s}
+  .collapse-toggle.expanded::before{content:'▼'}
+  .collapse-box{background:transparent;border:none;padding:0;margin:0;overflow:hidden}
+  .collapse-box[style*="display:none"]{display:none}
+
+  </style>
+<!--MAP_JS_START-->
+<script src="https://map.qq.com/api/gljs?v=1.exp&key=IACBZ-D3BLJ-NMWFG-XVZOS-BYINK-GMFRD"></script>
+<!--MAP_JS_END-->
+</head>
+
+<body>
+<header>
+  <div class="inner">
+    <h1>🗺️ 大连+沈阳7天双城自由行 · 行程地图</h1>
+    <div class="meta">腾讯地图按天分色 · 点图钉或右侧名单可查看导航</div>
+  </div>
+</header>
+<div class="wrap">
+<!--MAP_PANEL_START-->
+<section class="panel on" id="map">
+  <style>
+    .map-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 12px}
+    .map-city{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 16px;font-size:14px;cursor:pointer;color:var(--ink);transition:.15s}
+    .map-city:hover{background:#f0f6fa}
+    .map-city.on{background:var(--sea);color:#fff;border-color:var(--sea)}
+    .map-legend{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto;font-size:12.5px;color:var(--sub)}
+    .lg-item{display:inline-flex;align-items:center;gap:5px}
+    .lg-item i{width:12px;height:12px;border-radius:3px;display:inline-block}
+    .map-err{padding:50px 20px;text-align:center;color:var(--sub);font-size:14px;line-height:1.7}
+    .map-wrap{display:block;margin-top:4px}
+    #tmap{width:100%;height:540px;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(20,136,201,.10);background:#eef3f7}
+    .map-list{width:100%;max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:8px;margin-top:12px;background:var(--card)}
+    .ml-day{display:flex;align-items:center;gap:6px;font-weight:600;font-size:13px;margin:10px 6px 6px;color:var(--ink)}
+    .ml-day i{width:10px;height:10px;border-radius:3px;display:inline-block}
+    .ml-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--ink);transition:.12s}
+    .ml-item:hover{background:#eef5fb}
+    .ml-item.on{background:#dcecf7}
+    .ml-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+    .ml-name{flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ml-tag{font-size:11px;color:var(--sub);background:#f0f4f8;border-radius:6px;padding:1px 6px;flex:0 0 auto}
+  </style>
+  <h2>🗺️ 行程地图（腾讯地图 · 按天分色）</h2>
+  <div class="note">地图右侧（手机上在下方）有「按天分组的景点名单」，<b>点名单里的名称</b>地图就飞过去并弹出导航；也可以直接点地图上的彩色大图钉。切换「🌊 大连 / 🏯 沈阳」看各自路线。<b>底图需联网</b>加载腾讯地图（免翻墙版不含此图，请用本主版本或手机系统浏览器打开）。</div>
+  <div class="map-toolbar">
+    <button type="button" class="map-city on" id="cityDl" onclick="switchCity('dl')">🌊 大连</button>
+    <button type="button" class="map-city" id="citySy" onclick="switchCity('sy')">🏯 沈阳</button>
+    <span class="map-legend" id="mapLegend"></span>
+  </div>
+  <div class="map-wrap">
+    <div id="tmap"></div>
+    <div class="map-list" id="mapList"></div>
+  </div>
+  <script>
+  (function(){
+    var POIS = [{"id":"dalian_airport","name":"大连周水子机场","city":"dl","day":"T","order":0,"kind":"transport","lat":38.962478,"lng":121.541627},{"id":"atu_hotel","name":"亚朵酒店(港湾广场)","city":"dl","day":"1","order":1,"kind":"hotel","lat":38.922,"lng":121.643},{"id":"binhai_road","name":"滨海路·跨海大桥观景台","city":"dl","day":"1","order":2,"kind":"spot","lat":38.868,"lng":121.56},{"id":"lianhua_mt","name":"莲花山观景台","city":"dl","day":"1","order":3,"kind":"spot","lat":38.866,"lng":121.583},{"id":"yinshatan","name":"银沙滩","city":"dl","day":"1","order":4,"kind":"spot","lat":38.875,"lng":121.59},{"id":"xinghai_sq","name":"星海广场","city":"dl","day":"1","order":5,"kind":"spot","lat":38.879,"lng":121.602},{"id":"laohutan","name":"老虎滩海洋公园","city":"dl","day":"2","order":1,"kind":"spot","lat":38.883,"lng":121.632},{"id":"bangchuidao","name":"棒棰岛","city":"dl","day":"2","order":2,"kind":"spot","lat":38.878,"lng":121.667},{"id":"yuren_matou","name":"渔人码头·品海楼","city":"dl","day":"2","order":3,"kind":"food","lat":38.886,"lng":121.645},{"id":"donggang","name":"东港·中央大道","city":"dl","day":"3","order":1,"kind":"spot","lat":38.925,"lng":121.655},{"id":"venice","name":"威尼斯水城","city":"dl","day":"3","order":2,"kind":"spot","lat":38.928,"lng":121.658},{"id":"russia_st","name":"俄罗斯风情街","city":"dl","day":"7","order":1,"kind":"spot","lat":38.916,"lng":121.622},{"id":"zhongshan_sq","name":"中山广场","city":"dl","day":"7","order":2,"kind":"spot","lat":38.918,"lng":121.63},{"id":"qingniwa","name":"汉庭(青泥洼)·青泥洼商圈","city":"dl","day":"7","order":3,"kind":"hotel","lat":38.914,"lng":121.628},{"id":"dalian_nb","name":"大连北站(双城高铁)","city":"dl","day":"T","order":0,"kind":"transport","lat":39.009,"lng":121.686},{"id":"shenyang_st","name":"沈阳站","city":"sy","day":"4","order":1,"kind":"transport","lat":41.793,"lng":123.407},{"id":"taiyuan_st","name":"parkinn丽柏(太原街)","city":"sy","day":"4","order":2,"kind":"hotel","lat":41.791,"lng":123.4},{"id":"gugong","name":"沈阳故宫","city":"sy","day":"5","order":1,"kind":"spot","lat":41.796,"lng":123.456},{"id":"shuaifu","name":"张氏帅府","city":"sy","day":"5","order":2,"kind":"spot","lat":41.794,"lng":123.459},{"id":"zhongjie","name":"中街步行街","city":"sy","day":"5","order":3,"kind":"spot","lat":41.799,"lng":123.463},{"id":"xita","name":"西塔(韩餐夜市)","city":"sy","day":"5","order":4,"kind":"food","lat":41.8,"lng":123.385},{"id":"918","name":"九一八历史博物馆","city":"sy","day":"6","order":1,"kind":"spot","lat":41.839,"lng":123.462},{"id":"beiling","name":"北陵公园(清昭陵)","city":"sy","day":"6","order":2,"kind":"spot","lat":41.849,"lng":123.428},{"id":"shenyang_nb","name":"沈阳北站(回大连高铁)","city":"sy","day":"T","order":0,"kind":"transport","lat":41.817,"lng":123.44}];
+    var DAY_COLORS = {"1":"#1E88E5","2":"#E53935","3":"#43A047","4":"#8E24AA","5":"#FB8C00","6":"#00ACC1","7":"#6D4C41","T":"#9E9E9E"};
+    var DAY_LABEL = {
+      dl:{"1":"Day1 抵达·初体验","2":"Day2 老虎滩·棒棰岛","3":"Day3 东港·威尼斯","7":"Day7 俄街·中山广场"},
+      sy:{"4":"Day4 抵达·太原街","5":"Day5 故宫·帅府·中街·西塔","6":"Day6 九一八·北陵"}
+    };
+    var CENTER = {dl:[38.90,121.62], sy:[41.80,123.43]};
+    var map, mLayer, pLayer, info, inited=false, initializing=false, curCity="dl";
+
+    // ——— 安全辅助 ———
+    // TMap v1.exp 的 InfoWindow 不再暴露 setVisible()，改用 open/close 或 show/hide（运行时特性检测 + 异常兜底）
+    function safeLatLng(lat,lng){
+      if(lat==null||lng==null||isNaN(lat)||isNaN(lng)) return null;
+      return new TMap.LatLng(lat,lng);
+    }
+    function showInfo(){
+      if(!info) return;
+      if(typeof info.open==='function'){ try{ info.open(); return; }catch(e){ console.warn('info.open failed',e); } }
+      if(typeof info.show==='function'){ try{ info.show(); return; }catch(e){ console.warn('info.show failed',e); } }
+      if(typeof info.setVisible==='function'){ try{ info.setVisible(true); return; }catch(e){ console.warn('info.setVisible failed',e); } }
+    }
+    function hideInfo(){
+      if(!info) return;
+      if(typeof info.close==='function'){ try{ info.close(); return; }catch(e){ console.warn('info.close failed',e); } }
+      if(typeof info.hide==='function'){ try{ info.hide(); return; }catch(e){ console.warn('info.hide failed',e); } }
+      if(typeof info.setVisible==='function'){ try{ info.setVisible(false); return; }catch(e){ console.warn('info.setVisible failed',e); } }
+    }
+
+    function initMap(){
+      if(inited || initializing) return;
+      initializing=true;
+      var box=document.getElementById("tmap");
+      if(!box) return;
+      // 面板刚从 display:none 切过来时，容器可能还没获得尺寸；TMap 在 0/NaN 尺寸容器里初始化会崩溃
+      if(!box.offsetWidth || !box.offsetHeight || isNaN(box.offsetWidth) || isNaN(box.offsetHeight)){
+        console.log('[initMap] box size invalid, retry', box.offsetWidth, box.offsetHeight);
+        setTimeout(initMap,120);
+        return;
+      }
+      if(typeof TMap==="undefined"){
+        console.log('[initMap] TMap undefined');
+        box.innerHTML='<div class="map-err">⚠️ 地图组件加载失败<br>请确认网络可访问腾讯地图（map.qq.com），或用手机系统浏览器打开本页面。</div>';
+        return;
+      }
+      console.log('[initMap] start', 'box:', box.offsetWidth+'x'+box.offsetHeight, 'CENTER:', CENTER, 'TMap.version:', (window.TMap&&TMap.version));
+      try{
+        console.log('[initMap] creating LatLng...');
+        var center=new TMap.LatLng(CENTER.dl[0],CENTER.dl[1]);
+        console.log('[initMap] LatLng ok', center);
+        console.log('[initMap] creating Map...');
+        map=new TMap.Map("tmap",{center:center,zoom:11});
+        console.log('[initMap] Map ok');
+        // TMap Map 创建后内部渲染/WebGL初始化是异步的；立即创建 MultiMarker/InfoWindow
+        // 会导致内部状态不一致（InfoWindow position / projectContainer sizeContainer 报类型错）。
+        // 等 150ms 让 Map 内部就绪后再创建覆盖物和事件。
+        setTimeout(function(){
+          try{
+            console.log('[initMap] creating overlays...');
+            mLayer=new TMap.MultiMarker({map:map,geometries:[]});
+            console.log('[initMap] MultiMarker ok');
+            pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
+            console.log('[initMap] MultiPolyline ok');
+            info=new TMap.InfoWindow({map:map,position:center,visible:false});
+            console.log('[initMap] InfoWindow ok');
+            try{ console.log('[initMap] InfoWindow methods:', Object.keys(info).filter(function(k){return typeof info[k]==='function';}).join(',')); }catch(_){}
+            mLayer.on("click",function(e){
+              var p=e.geometry.properties;
+              if(!p) return;
+              var tag = p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
+              var cityName = p.city==="dl"?"大连":"沈阳";
+              var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
+              var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
+              var pos=safeLatLng(p.lat,p.lng);
+              if(pos) info.setPosition(pos);
+              info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px">'
+                +'<b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag
+                +'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a>'
+                +'<a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
+              showInfo();
+            });
+            inited=true;
+            initializing=false;
+            console.log('[initMap] rendering dl...');
+            renderCity("dl");
+            console.log('[initMap] all done');
+          }catch(e2){
+            console.error('[initMap] overlay init error', e2);
+            box.innerHTML='<div class="map-err">⚠️ 地图初始化失败<br>'+(e2&&e2.message?e2.message:'覆盖物初始化失败')+'</div>';
+            inited=false;
+            initializing=false;
+          }
+        },150);
+      }catch(e){
+        box.innerHTML='<div class="map-err">⚠️ 地图初始化失败<br>'+(e&&e.message?e.message:'请检查网络或腾讯地图 Key 配置')+'</div>';
+        inited=false;
+        initializing=false;
+      }
+    }
+    window.switchCity=function(city){
+      curCity=city;
+      document.getElementById("cityDl").classList.toggle("on",city==="dl");
+      document.getElementById("citySy").classList.toggle("on",city==="sy");
+      renderList(city); // 名单不依赖地图，始终渲染
+      if(!inited){ initMap(); }
+      if(inited && map){ try{ renderCity(city); map.resize(); }catch(e){ console.warn("renderCity error",e); } }
+    };
+    function renderList(city){
+      var pts=POIS.filter(function(p){return p.city===city;});
+      var days=[];
+      pts.forEach(function(p){ if(p.day!=="T"&&days.indexOf(p.day)<0) days.push(p.day); });
+      days.sort();
+      var lh="";
+      days.forEach(function(d){
+        var lbl=DAY_LABEL[city][d]||("Day"+d);
+        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS[d]+'"></i>'+lbl+'</div>';
+        pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;}).forEach(function(p){ lh+=mlItem(p); });
+      });
+      var trans=pts.filter(function(p){return p.day==="T";});
+      if(trans.length){
+        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</div>';
+        trans.forEach(function(p){ lh+=mlItem(p); });
+      }
+      var listEl=document.getElementById("mapList");
+      if(listEl) listEl.innerHTML=lh;
+    }
+    function mlItem(p){
+      var tag=p.kind==="hotel"?"住宿":p.kind==="transport"?"交通":p.kind==="food"?"美食":"景点";
+      return '<div class="ml-item" id="ml-'+p.id+'" onclick="focusPoi(\''+p.id+'\')">'
+        +'<span class="ml-dot" style="background:'+DAY_COLORS[p.day]+'"></span>'
+        +'<span class="ml-name">'+p.name+'</span>'
+        +'<span class="ml-tag">'+tag+'</span></div>';
+    }
+    window.focusPoi=function(id,retry){
+      var p=null;
+      for(var i=0;i<POIS.length;i++){ if(POIS[i].id===id){p=POIS[i];break;} }
+      if(!p) return;
+      if(!map){
+        if(!inited) initMap();
+        if((retry||0)<8){ setTimeout(function(){ focusPoi(id,(retry||0)+1); },120); }
+        return;
+      }
+      if(p.city!==curCity){ switchCity(p.city); }
+      var ll=safeLatLng(p.lat,p.lng);
+      if(!ll){ console.warn('[focusPoi] 坐标无效，跳过', p); return; }
+      map.setCenter(ll);
+      map.setZoom(15);
+      var tag=p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
+      var cityName=p.city==="dl"?"大连":"沈阳";
+      var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
+      var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
+      info.setPosition(ll);
+      info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px"><b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag+'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a><a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
+      showInfo();
+      var items=document.querySelectorAll(".ml-item");
+      for(var k=0;k<items.length;k++){ items[k].classList.remove("on"); }
+      var me=document.getElementById("ml-"+id);
+      if(me) me.classList.add("on");
+    };
+    function renderCity(city){
+      var pts=POIS.filter(function(p){return p.city===city;});
+      var days=[];
+      pts.forEach(function(p){ if(p.day!=="T"&&days.indexOf(p.day)<0) days.push(p.day); });
+      days.sort();
+      var styles={};
+      var geos=[];
+      pts.forEach(function(p){
+        var ll=safeLatLng(p.lat,p.lng);
+        if(!ll){ console.warn('[renderCity] 坐标无效，跳过标记', p.id, p.lat, p.lng); return; }
+        var c=DAY_COLORS[p.day]||"#333";
+        // 用腾讯地图默认图钉，按天着色；TMap新版要求传入 MarkerStyle 实例
+        var sid="m"+p.day;
+        if(window.TMap && window.TMap.MarkerStyle){
+          styles[sid]=new TMap.MarkerStyle({width:32,height:44,anchor:{x:16,y:44},color:c});
+        }else{
+          styles[sid]={width:32,height:44,anchor:{x:16,y:44},color:c};
+        }
+        geos.push({id:p.id,styleId:sid,position:ll,properties:p});
+      });
+      mLayer.setStyles(styles);
+      mLayer.setGeometries(geos);
+      var pstyles={},pgeos=[];
+      days.forEach(function(d){
+        var dp=pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;});
+        if(dp.length>=2){
+          var psid="s"+d;
+          if(window.TMap && window.TMap.PolylineStyle){
+            pstyles[psid]=new TMap.PolylineStyle({color:DAY_COLORS[d]||"#333",width:5,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round"});
+          }else{
+            pstyles[psid]={color:DAY_COLORS[d]||"#333",width:5,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round"};
+          }
+          pgeos.push({id:"d"+d,styleId:psid,paths:dp.map(function(p){return safeLatLng(p.lat,p.lng);}).filter(function(x){return x;})});
+        }
+      });
+      pLayer.setStyles(pstyles);
+      pLayer.setGeometries(pgeos);
+      var minLat=90,minLng=180,maxLat=-90,maxLng=-180,validCount=0;
+      pts.forEach(function(p){
+        if(p.lat==null||p.lng==null||isNaN(p.lat)||isNaN(p.lng)) return;
+        validCount++;
+        if(p.lat<minLat)minLat=p.lat; if(p.lat>maxLat)maxLat=p.lat;
+        if(p.lng<minLng)minLng=p.lng; if(p.lng>maxLng)maxLng=p.lng;
+      });
+      if(validCount){
+        map.setCenter(new TMap.LatLng((minLat+maxLat)/2,(minLng+maxLng)/2));
+        try{
+          var b=new TMap.LatLngBounds(new TMap.LatLng(minLat,minLng),new TMap.LatLng(maxLat,maxLng));
+          map.fitBounds(b,{padding:{top:50,bottom:50,left:50,right:50}});
+        }catch(e){ map.setZoom(11); }
+      }else{
+        map.setZoom(11);
+      }
+      var lg=document.getElementById("mapLegend");
+      var html=days.map(function(d){
+        return '<span class="lg-item"><i style="background:'+DAY_COLORS[d]+'"></i>'+(DAY_LABEL[city][d]||("Day"+d))+'</span>';
+      }).join("");
+      html+='<span class="lg-item"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</span>';
+      lg.innerHTML=html;
+    }
+    window.__initTripMap=function(){
+      if(inited) return;
+      var box=document.getElementById("tmap");
+      if(!box) return;
+      function doInit(){
+        if(inited) return;
+        // 等浏览器下一帧重绘，确保容器尺寸已稳定（避免 offsetWidth NaN）
+        if(typeof requestAnimationFrame==='function'){
+          requestAnimationFrame(function(){ if(!inited) initMap(); });
+        }else{
+          initMap();
+        }
+      }
+      // 优先使用 TMap 官方加载完成回调 TMap.__load
+      // 该回调会在 gljs loader 把 Map/LatLng/InfoWindow 等所有核心子模块加载完后触发
+      if(window.TMap && typeof window.TMap.__load === 'function'){
+        console.log('[__initTripMap] using TMap.__load callback');
+        window.TMap.__load(function(meta){
+          console.log('[__initTripMap] __load fired, version=', meta && meta.version);
+          doInit();
+        });
+        return;
+      }
+      // fallback: 手动轮询核心类是否就绪
+      console.log('[__initTripMap] fallback polling');
+      var attempts=0;
+      (function tryStart(){
+        if(inited) return;
+        if(window.TMap && window.TMap.Map && window.TMap.LatLng && window.TMap.MultiMarker && window.TMap.MultiPolyline && window.TMap.InfoWindow){
+          doInit();
+        }else{
+          attempts++;
+          if(attempts<50){
+            if(box.children.length===0){ box.innerHTML='<div class="map-err" style="color:#999">⏳ 地图加载中...</div>'; }
+            setTimeout(tryStart,120);
+          }else{
+            box.innerHTML='<div class="map-err">⚠️ 地图组件加载超时<br>请检查网络或刷新重试</div>';
+          }
+        }
+      })();
+    };
+    window.__tripMapResize=function(retry){
+      if(map){ setTimeout(function(){ map.resize(); },50); return; }
+      // map 还在异步初始化中(showPanel 切到地图面板时常见),稍后重试
+      if((retry||0)<10){ setTimeout(function(){ window.__tripMapResize((retry||0)+1); },150); }
+    };
+  })();
+  </script>
+</section>
+
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    if(window.__initTripMap) window.__initTripMap();
+  });
+</script>
+</body>
+</html>
