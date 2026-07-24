@@ -1218,10 +1218,10 @@
       if(inited) return;
       var box=document.getElementById("tmap");
       if(!box) return;
-      // 面板刚从 display:none 切过来时，容器可能还没获得尺寸；TMap 在 0 尺寸容器里初始化会崩溃
-      if(box.offsetWidth===0 || box.offsetHeight===0){
-        console.log('[initMap] box zero size, retry');
-        setTimeout(initMap,80);
+      // 面板刚从 display:none 切过来时，容器可能还没获得尺寸；TMap 在 0/NaN 尺寸容器里初始化会崩溃
+      if(!box.offsetWidth || !box.offsetHeight || isNaN(box.offsetWidth) || isNaN(box.offsetHeight)){
+        console.log('[initMap] box size invalid, retry', box.offsetWidth, box.offsetHeight);
+        setTimeout(initMap,120);
         return;
       }
       if(typeof TMap==="undefined"){
@@ -1367,7 +1367,15 @@
       if(inited) return;
       var box=document.getElementById("tmap");
       if(!box) return;
-      function doInit(){ if(!inited) initMap(); }
+      function doInit(){
+        if(inited) return;
+        // 等浏览器下一帧重绘，确保容器尺寸已稳定（避免 offsetWidth NaN）
+        if(typeof requestAnimationFrame==='function'){
+          requestAnimationFrame(function(){ if(!inited) initMap(); });
+        }else{
+          initMap();
+        }
+      }
       // 优先使用 TMap 官方加载完成回调 TMap.__load
       // 该回调会在 gljs loader 把 Map/LatLng/InfoWindow 等所有核心子模块加载完后触发
       if(window.TMap && typeof window.TMap.__load === 'function'){
@@ -1384,7 +1392,7 @@
       (function tryStart(){
         if(inited) return;
         if(window.TMap && window.TMap.Map && window.TMap.LatLng && window.TMap.MultiMarker && window.TMap.MultiPolyline && window.TMap.InfoWindow){
-          initMap();
+          doInit();
         }else{
           attempts++;
           if(attempts<50){
