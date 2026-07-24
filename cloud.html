@@ -1236,8 +1236,8 @@
       var styles={};
       var geos=pts.map(function(p){
         var c=DAY_COLORS[p.day]||"#333";
-        styles["m"+p.day]={width:30,height:30,anchor:{x:15,y:30},
-          content:'<div style="width:30px;height:30px;border-radius:50%;background:'+c+';color:#fff;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;box-shadow:0 1px 5px rgba(0,0,0,.35)">'+p.day+'</div>'};
+        // 用腾讯地图默认图钉，按天着色（content自定义DOM在某些浏览器/版本不渲染，默认marker最稳）
+        styles["m"+p.day]={width:22,height:30,anchor:{x:11,y:30},color:c};
         return {id:p.id,styleId:"m"+p.day,position:new TMap.LatLng(p.lat,p.lng),properties:p};
       });
       mLayer.setStyles(styles);
@@ -1252,9 +1252,16 @@
       });
       pLayer.setStyles(pstyles);
       pLayer.setGeometries(pgeos);
-      var b=new TMap.LatLngBounds();
-      pts.forEach(function(p){ b.extend(new TMap.LatLng(p.lat,p.lng)); });
-      map.fitBounds(b,{padding:{top:50,bottom:50,left:50,right:50}});
+      var minLat=90,minLng=180,maxLat=-90,maxLng=-180;
+      pts.forEach(function(p){
+        if(p.lat<minLat)minLat=p.lat; if(p.lat>maxLat)maxLat=p.lat;
+        if(p.lng<minLng)minLng=p.lng; if(p.lng>maxLng)maxLng=p.lng;
+      });
+      map.setCenter(new TMap.LatLng((minLat+maxLat)/2,(minLng+maxLng)/2));
+      try{
+        var b=new TMap.LatLngBounds(new TMap.LatLng(minLat,minLng),new TMap.LatLng(maxLat,maxLng));
+        map.fitBounds(b,{padding:{top:50,bottom:50,left:50,right:50}});
+      }catch(e){ map.setZoom(11); }
       var lg=document.getElementById("mapLegend");
       var html=days.map(function(d){
         return '<span class="lg-item"><i style="background:'+DAY_COLORS[d]+'"></i>'+(DAY_LABEL[city][d]||("Day"+d))+'</span>';
