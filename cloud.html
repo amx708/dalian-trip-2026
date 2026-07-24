@@ -1183,7 +1183,7 @@
     .map-err{padding:50px 20px;text-align:center;color:var(--sub);font-size:14px;line-height:1.7}
   </style>
   <h2>🗺️ 行程地图（腾讯地图 · 按天分色）</h2>
-  <div class="note">点任意标点弹窗看当天安排；切换「🌊 大连 / 🏯 沈阳」看各自路线。<b>底图需联网</b>加载腾讯地图（免翻墙版不含此图，请用本主版本或手机系统浏览器打开）。</div>
+  <div class="note">点任意标点看当天安排，弹窗里可直接「🧭 高德导航 / 🗺️ 腾讯导航」一键导过去；切换「🌊 大连 / 🏯 沈阳」看各自路线。<b>底图需联网</b>加载腾讯地图（免翻墙版不含此图，请用本主版本或手机系统浏览器打开）。</div>
   <div class="map-toolbar">
     <button type="button" class="map-city on" id="cityDl" onclick="switchCity('dl')">🌊 大连</button>
     <button type="button" class="map-city" id="citySy" onclick="switchCity('sy')">🏯 沈阳</button>
@@ -1215,8 +1215,15 @@
       mLayer.on("click",function(e){
         var p=e.geometry.properties;
         var tag = p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
+        var cityName = p.city==="dl"?"大连":"沈阳";
+        // 标点弹窗内直接给导航入口：点一下唤起高德/腾讯地图 App 或网页版，真正"能用"
+        var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
+        var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
         info.setPosition(e.geometry.position);
-        info.setContent('<div style="padding:6px 10px;font-size:13px;line-height:1.5"><b>'+p.name+'</b><br>'+(p.city==="dl"?"大连":"沈阳")+" · Day"+p.day+tag+"</div>");
+        info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px">'
+          +'<b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag
+          +'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a>'
+          +'<a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
         info.setVisible(true);
       });
       renderCity("dl");
@@ -1290,6 +1297,12 @@
     var panel=document.getElementById(name);
     if(tab)tab.classList.add('on');
     if(panel)panel.classList.add('on');
+    // 地图面板：首次进入时初始化；面板由隐藏(display:none)变可见后必须 resize，
+    // 否则腾讯地图 GL 画布停留在 0 尺寸、整片空白（表现为"点出来没反应"）。
+    if(name==='map'){
+      if(window.__initTripMap) window.__initTripMap();
+      setTimeout(function(){ if(window.__tripMapResize) window.__tripMapResize(); },60);
+    }
     return panel;
   }
 
