@@ -242,14 +242,25 @@
     "src": "tencent_poi"
   },
   {
-    "id": "beiling",
-    "name": "北陵公园(清昭陵)",
+    "id": "liaoning_museum",
+    "name": "辽宁博物馆(辽博)",
     "city": "sy",
     "day": "6",
     "order": 2,
     "kind": "spot",
-    "lat": 41.851591,
-    "lng": 123.42857,
+    "lat": 41.677966,
+    "lng": 123.460269,
+    "src": "tencent_poi"
+  },
+  {
+    "id": "shenyang_museum",
+    "name": "沈阳博物馆",
+    "city": "sy",
+    "day": "6",
+    "order": 3,
+    "kind": "spot",
+    "lat": 41.803398,
+    "lng": 123.436594,
     "src": "tencent_poi"
   },
   {
