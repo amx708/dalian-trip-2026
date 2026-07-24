@@ -273,5 +273,27 @@
     "lat": 41.819465,
     "lng": 123.435883,
     "src": "tencent_poi"
+  },
+  {
+    "id": "industrial_museum",
+    "name": "中国工业博物馆",
+    "city": "sy",
+    "day": "6",
+    "order": 4,
+    "kind": "spot",
+    "lat": 41.821117,
+    "lng": 123.354776,
+    "src": "tencent_poi"
+  },
+  {
+    "id": "caita_night",
+    "name": "彩电塔夜市",
+    "city": "sy",
+    "day": "6",
+    "order": 5,
+    "kind": "food",
+    "lat": 41.785227,
+    "lng": 123.43316,
+    "src": "tencent_poi"
   }
 ]
