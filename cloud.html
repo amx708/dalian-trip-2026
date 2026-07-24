@@ -1408,9 +1408,11 @@
       var tag=p.kind==="hotel"?"住宿":p.kind==="transport"?"交通":p.kind==="food"?"美食":p.kind==="station"?"回程车站":"景点";
       var cityName=p.city==="dl"?"大连":"沈阳";
       var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
+      var timeHtml=p.time?'<span class="ml-time">'+p.time+'</span>':'';
       return '<div class="ml-item" id="ml-'+p.id+'">'
         +'<span class="ml-dot" style="background:'+DAY_COLORS[p.day]+'"></span>'
         +'<span class="ml-name" onclick="focusPoi(\''+p.id+'\')">'+p.name+'</span>'
+        +timeHtml
         +'<span class="ml-tag">'+tag+'</span>'
         +'<a class="ml-nav" href="'+qq+'" target="_blank" title="导航到此处" onclick="event.stopPropagation()">🧭</a></div>';
     }
