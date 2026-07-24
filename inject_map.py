@@ -136,11 +136,12 @@ if "<!--MAP_TAB_START-->" not in s:
     assert tab_anchor in s, "tab anchor not found"
     s = s.replace(tab_anchor, tab_anchor + TAB, 1)
 
-# 插入面板（在机场 section 结束 </section> 后、.foot 前）
+# 插入面板（在机场 section 结束 </section> 后、.foot 前，成为同级的独立 section）
 if "<!--MAP_PANEL_START-->" not in s:
     panel_anchor = '  </section>\n\n  <div class="foot">'
     assert panel_anchor in s, "panel anchor not found"
-    s = s.replace(panel_anchor, PANEL + "\n" + panel_anchor, 1)
+    # 保留机场面板的 </section> 在面板之前，避免地图面板嵌套进机场面板
+    s = s.replace(panel_anchor, '  </section>\n\n' + PANEL + '\n\n  <div class="foot">', 1)
 
 # 修改 showPanel：地图 tab 打开时初始化/resize
 if "window.__initTripMap" not in s:
