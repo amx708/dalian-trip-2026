@@ -4,23 +4,26 @@
 geocode_pois.py — 用腾讯地图 WebService 批量重算全部 POI 的官方 GCJ02 坐标（一劳永逸）。
 
 流程：
-  1. 从 ~/.tencentmap/tempkey.json 读取刚申请的临时体验 Key（绕过 .env 中已耗尽的正式 Key）。
-  2. 对每个 POI 调用 TmapClient.poi_search(keyword, region=城市) 取官方坐标（GCJ02）。
-  3. 边界合理性校验（大连 / 沈阳 各自经纬度范围）。
-  4. 打印 old -> new 对照表（含命中名称、距离偏移，便于人工目检）。
-  5. --write 时：回写 poi_data.json，并用正则同步 cloud.html / map.html 内联 POIS 的 lat/lng。
+  1. 取 Key：优先 --key 参数，否则读 ~/.tencentmap/tempkey.json（临时体验 Key）。
+     （注意：tmap_client 会先读 skill 包内 .env 的正式 Key，但那把已配额耗尽，故必须显式传入。）
+  2. 对每个 POI 调 TmapClient.poi_search(keyword, region=城市) 取官方坐标（GCJ02）。
+  3. 置信度过滤（与 osm_geocode.py 同款）：同城坐标重复=城市中心兜底 / 越界 / 偏移>5km /
+     未命中 POI 特征词 → 一律保留旧值，绝不拿城市中心点覆盖真实景点。
+  4. 打印 old -> new 对照表；--write 时回写 poi_data.json 并同步 cloud.html / map.html。
 
 用法：
-  python geocode_pois.py            # 仅预览，不落盘
-  python geocode_pois.py --write    # 预览 + 写回三个文件
-  python geocode_pois.py --key XXX  # 显式指定 Key（覆盖 tempkey.json）
+  python geocode_pois.py --key XXXX          # 预览（用显式 Key）
+  python geocode_pois.py --key XXXX --write  # 预览 + 写回三文件
+  python geocode_pois.py                      # 预览（用 tempkey.json 里的 Key）
 """
 import os
 import re
 import sys
 import json
 import math
+import time
 import argparse
+from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SKILL_SCRIPTS = os.path.join(os.path.expanduser("~"),
@@ -34,10 +37,8 @@ POI_JSON = os.path.join(HERE, "poi_data.json")
 CLOUD_HTML = os.path.join(HERE, "cloud.html")
 MAP_HTML = os.path.join(HERE, "map.html")
 
-# 城市中文名（poi_search 的 region 参数）
 REGION = {"dl": "大连", "sy": "沈阳"}
 
-# 搜索词：默认用 POI 名称，复杂名称单独覆盖为更稳的官方叫法
 SEARCH = {
     "dalian_airport": "大连周水子国际机场",
     "atu_hotel": "亚朵酒店(港湾广场)",
@@ -65,10 +66,41 @@ SEARCH = {
     "shenyang_nb": "沈阳北站",
 }
 
-# 合理性边界（GCJ02）
+# 每个 POI 的“特征词”：匹配结果的名称/地址里必须包含其中之一，才算真正命中该 POI。
+CORE = {
+    "dalian_airport": ["周水子", "机场"],
+    "atu_hotel": ["港湾广场", "亚朵"],
+    "binhai_road": ["星海湾", "跨海大桥"],
+    "lianhua_mt": ["莲花山"],
+    "yinshatan": ["银沙滩"],
+    "xinghai_sq": ["星海广场"],
+    "laohutan": ["老虎滩"],
+    "bangchuidao": ["棒棰岛"],
+    "yuren_matou": ["渔人码头"],
+    "donggang": ["东港"],
+    "venice": ["威尼斯", "东方水城"],
+    "russia_st": ["俄罗斯风情街", "团结街"],
+    "zhongshan_sq": ["中山广场"],
+    "qingniwa": ["青泥洼"],
+    "dalian_nb": ["大连北站", "北站"],
+    "shenyang_st": ["沈阳站"],
+    "taiyuan_st": ["太原街", "丽柏"],
+    "gugong": ["故宫", "沈阳故宫"],
+    "shuaifu": ["帅府", "张学良", "张氏"],
+    "zhongjie": ["中街"],
+    "xita": ["西塔"],
+    "918": ["九一八"],
+    "beiling": ["北陵"],
+    "shenyang_nb": ["沈阳北站"],
+}
+
 BOUNDS = {
-    "dl": (38.80, 39.12, 121.45, 121.85),   # lat_min, lat_max, lng_min, lng_max
+    "dl": (38.80, 39.12, 121.45, 121.85),
     "sy": (41.68, 41.92, 123.28, 123.58),
+}
+CITY_TOKENS = {
+    "dl": ["大连", "Dalian", "辽宁", "Liaoning"],
+    "sy": ["沈阳", "Shenyang", "辽宁", "Liaoning"],
 }
 
 
@@ -92,10 +124,10 @@ def load_tempkey():
 
 def haversine(a_lat, a_lng, b_lat, b_lng):
     R = 6371000.0
-    p1 = math.radians(a_lat); p2 = math.radians(b_lat)
-    dp = math.radians(b_lat - a_lat); dl = math.radians(b_lng - a_lng)
+    p1, p2 = math.radians(a_lat), math.radians(b_lat)
+    dp, dl = math.radians(b_lat - a_lat), math.radians(b_lng - a_lng)
     x = math.sin(dp/2)**2 + math.cos(p1)*math.cos(p2)*math.sin(dl/2)**2
-    return 2 * R * math.asin(math.sqrt(x))
+    return 2*R*math.asin(math.sqrt(x))
 
 
 def main():
@@ -106,79 +138,120 @@ def main():
 
     key = args.key or load_tempkey()
     if not key:
-        print("❌ 未找到临时 Key：请先完成 send_code -> create_key -> save_config 流程")
+        print("❌ 未找到可用 Key：请加 --key，或先完成 send_code -> create_key -> save_config 流程")
         sys.exit(1)
     print("🔑 使用 Key 前缀:", key[:6] + "...")
 
     client = TmapClient(key=key)  # 显式传入，绕过 .env 中已耗尽的正式 Key
 
     pois = json.load(open(POI_JSON, "r", encoding="utf-8"))
-    report = []
+
+    # —— 第一遍：取候选坐标 ——
+    cands = []
     for p in pois:
-        pid = p["id"]; city = p["city"]
+        pid, city = p["id"], p["city"]
         kw = SEARCH.get(pid, p["name"])
         region = REGION.get(city, "大连")
         try:
             resp = client.poi_search(kw, region=region)
+            time.sleep(0.3)
             data = resp.get("data") or []
             if not data:
-                report.append((pid, p["name"], kw, p["lat"], p["lng"], None, None, "⚠️ 无结果", 0))
+                cands.append((p, pid, city, kw, None, None, "NONE"))
                 continue
             top = data[0]
             loc = top.get("location", {})
             nlat = float(loc.get("lat")); nlng = float(loc.get("lng"))
             title = top.get("title", "")
-            lat_min, lat_max, lng_min, lng_max = BOUNDS[city]
-            in_bounds = (lat_min <= nlat <= lat_max) and (lng_min <= nlng <= lng_max)
-            dist = haversine(p["lat"], p["lng"], nlat, nlng)
-            flag = "✅" if in_bounds else "⚠️ 越界"
-            report.append((pid, p["name"], kw, p["lat"], p["lng"], nlat, nlng, flag, dist))
-            p["_new_lat"] = nlat; p["_new_lng"] = nlng; p["_title"] = title
+            addr = top.get("address", "")
+            cands.append((p, pid, city, kw, nlat, nlng, title + " " + addr))
         except Exception as e:
-            report.append((pid, p["name"], kw, p["lat"], p["lng"], None, None, f"❌ {e}", 0))
+            cands.append((p, pid, city, kw, None, None, "ERR:%s" % e))
 
-    # 打印对照表
-    print("\n%-16s %-22s %-10s %s" % ("id", "name", "flag", "offset(m)"))
-    print("-" * 70)
-    for pid, name, kw, olat, olng, nlat, nlng, flag, dist in report:
-        if nlat is None:
-            print("%-16s %-22s %s" % (pid, name, flag))
-        else:
-            print("%-16s %-22s %-8s %8.0f" % (pid, name, flag, dist))
-    print()
-    for pid, name, kw, olat, olng, nlat, nlng, flag, dist in report:
+    # —— 检测“城市中心兜底”：同城内坐标高度重复 ——
+    seen = defaultdict(list)
+    for p, pid, city, kw, nlat, nlng, disp in cands:
         if nlat is None:
             continue
-        print("%-16s old=(%.6f,%.6f) new=(%.6f,%.6f) hit=%s" %
-              (pid, olat, olng, nlat, nlng, pid in [r[0] for r in report] and "" or ""))
+        key2 = (city, round(nlat, 4), round(nlng, 4))
+        seen[key2].append(pid)
+    centroid_pids = set()
+    for k, ids in seen.items():
+        if len(ids) >= 2:
+            centroid_pids.update(ids)
+
+    # —— 第二遍：定稿 + 置信度 ——
+    report = []
+    decides = {}
+    disp_map = {}
+    for p, pid, city, kw, nlat, nlng, disp in cands:
+        olat, olng = p["lat"], p["lng"]
+        if nlat is None:
+            report.append((pid, p["name"], kw, olat, olng, None, None, "⚠️无结果/异常", 0.0))
+            decides[pid] = None
+            continue
+        dist = haversine(olat, olng, nlat, nlng)
+        lat_min, lat_max, lng_min, lng_max = BOUNDS[city]
+        in_bounds = (lat_min <= nlat <= lat_max) and (lng_min <= nlng <= lng_max)
+        hit_city = any(tok in disp for tok in CITY_TOKENS[city])
+        has_core = any(tok in disp for tok in CORE.get(pid, []))
+        if pid in centroid_pids:
+            flag = "🟡保留旧(命中城市中心)"
+            decides[pid] = None
+        elif not in_bounds:
+            flag = "⚠️越界→保留旧"
+            decides[pid] = None
+        elif dist > 5000:
+            flag = "🟡保留旧(偏移>5km)"
+            decides[pid] = None
+        elif in_bounds and has_core:
+            flag = "✅高"
+            decides[pid] = (nlat, nlng)
+        else:
+            flag = "🟡保留旧(未命中POI名)"
+            decides[pid] = None
+        report.append((pid, p["name"], kw, olat, olng, nlat, nlng, flag, dist))
+        disp_map[pid] = disp
+
+    # —— 打印 ——
+    print("\n%-15s %-20s %-24s %9s" % ("id", "name", "conf", "Δ(m)"))
+    print("-" * 80)
+    for pid, name, q, olat, olng, nlat, nlng, flag, dist in report:
+        if nlat is None:
+            print("%-15s %-20s %s" % (pid, name, flag))
+        else:
+            print("%-15s %-20s %-24s %8.0f" % (pid, name, flag, dist))
+    print()
+    for pid, name, q, olat, olng, nlat, nlng, flag, dist in report:
+        if nlat is None:
+            continue
+        print("%-15s old=(%.6f,%.6f) new=(%.6f,%.6f)  %s" %
+              (pid, olat, olng, nlat, nlng, flag))
+        print("    q=%-36s match=%s" % (q[:36], disp_map.get(pid, "")))
 
     if not args.write:
         print("\n（预览模式，未落盘。加 --write 写回 poi_data.json 与两个 HTML）")
         return
 
-    # 写回 poi_data.json
+    # —— 写回 ——
     out = []
     for p in pois:
-        if "_new_lat" in p:
-            p["lat"] = round(p["_new_lat"], 6)
-            p["lng"] = round(p["_new_lng"], 6)
+        pid = p["id"]
+        d = decides.get(pid)
+        if d is not None:
+            p["lat"] = round(d[0], 6)
+            p["lng"] = round(d[1], 6)
             p["src"] = "tencent_poi"
-            del p["_new_lat"]; del p["_new_lng"]
-            if "_title" in p: del p["_title"]
         out.append(p)
-    json.dump(out, open(POI_JSON, "w", encoding="utf-8"),
-              ensure_ascii=False, indent=2)
+    json.dump(out, open(POI_JSON, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     print("✅ 已写回 poi_data.json")
 
-    # 同步两个 HTML 内联 POIS
     for html_path in (CLOUD_HTML, MAP_HTML):
         if not os.path.exists(html_path):
-            print("⚠️ 跳过不存在:", html_path); continue
+            print("⚠️ 跳过:", html_path); continue
         s = open(html_path, "r", encoding="utf-8").read()
         for p in out:
-            pat = re.compile(
-                r'("id":"%s"[^}]*"lat":)\s*[-0-9.]+(\s*,\s*"lng":)\s*[-0-9.]+'
-                % re.escape(p["id"]))
+            pat = re.compile(r'("id":"%s"[^}]*"lat":)\s*[-0-9.]+(\s*,\s*"lng":)\s*[-0-9.]+' % re.escape(p["id"]))
             repl = r'\g<1>%s\g<2>%s' % (repr(p["lat"]), repr(p["lng"]))
             s, n = pat.subn(repl, s)
             print("  %s <- %s 替换 %d 处" % (os.path.basename(html_path), p["id"], n))

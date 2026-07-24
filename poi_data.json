@@ -6,9 +6,9 @@
     "day": "T",
     "order": 0,
     "kind": "transport",
-    "lat": 38.965026,
-    "lng": 121.544228,
-    "src": "osm_gcj02"
+    "lat": 38.964084,
+    "lng": 121.543773,
+    "src": "tencent_poi"
   },
   {
     "id": "atu_hotel",
@@ -17,9 +17,9 @@
     "day": "1",
     "order": 1,
     "kind": "hotel",
-    "lat": 38.926537,
-    "lng": 121.659934,
-    "src": "osm_gcj02"
+    "lat": 38.925283,
+    "lng": 121.661069,
+    "src": "tencent_poi"
   },
   {
     "id": "binhai_road",
@@ -28,9 +28,9 @@
     "day": "1",
     "order": 2,
     "kind": "spot",
-    "lat": 38.868051,
-    "lng": 121.578604,
-    "src": "osm_gcj02"
+    "lat": 38.872265,
+    "lng": 121.60933,
+    "src": "tencent_poi"
   },
   {
     "id": "lianhua_mt",
@@ -39,9 +39,9 @@
     "day": "1",
     "order": 3,
     "kind": "spot",
-    "lat": 38.879658,
-    "lng": 121.608795,
-    "src": "osm_gcj02"
+    "lat": 38.879654,
+    "lng": 121.608611,
+    "src": "tencent_poi"
   },
   {
     "id": "yinshatan",
@@ -50,9 +50,9 @@
     "day": "1",
     "order": 4,
     "kind": "spot",
-    "lat": 38.86885,
-    "lng": 121.612644,
-    "src": "geocoded"
+    "lat": 38.867714,
+    "lng": 121.61495,
+    "src": "tencent_poi"
   },
   {
     "id": "xinghai_sq",
@@ -61,9 +61,9 @@
     "day": "1",
     "order": 5,
     "kind": "spot",
-    "lat": 38.882123,
-    "lng": 121.587968,
-    "src": "osm_gcj02"
+    "lat": 38.88202,
+    "lng": 121.5879,
+    "src": "tencent_poi"
   },
   {
     "id": "laohutan",
@@ -72,9 +72,9 @@
     "day": "2",
     "order": 1,
     "kind": "spot",
-    "lat": 38.871444,
-    "lng": 121.679919,
-    "src": "geocoded"
+    "lat": 38.873143,
+    "lng": 121.675761,
+    "src": "tencent_poi"
   },
   {
     "id": "bangchuidao",
@@ -85,7 +85,7 @@
     "kind": "spot",
     "lat": 38.884811,
     "lng": 121.71925,
-    "src": "geocoded"
+    "src": "tencent_poi"
   },
   {
     "id": "yuren_matou",
@@ -94,9 +94,9 @@
     "day": "2",
     "order": 3,
     "kind": "food",
-    "lat": 38.877564,
-    "lng": 121.686472,
-    "src": "osm_gcj02"
+    "lat": 38.877177,
+    "lng": 121.683915,
+    "src": "tencent_poi"
   },
   {
     "id": "donggang",
@@ -105,9 +105,9 @@
     "day": "3",
     "order": 1,
     "kind": "spot",
-    "lat": 38.920193,
-    "lng": 121.689557,
-    "src": "osm_gcj02"
+    "lat": 38.919998,
+    "lng": 121.691744,
+    "src": "tencent_poi"
   },
   {
     "id": "venice",
@@ -116,9 +116,9 @@
     "day": "3",
     "order": 2,
     "kind": "spot",
-    "lat": 38.927602,
-    "lng": 121.662142,
-    "src": "geocoded"
+    "lat": 38.924024,
+    "lng": 121.693014,
+    "src": "tencent_poi"
   },
   {
     "id": "russia_st",
@@ -127,9 +127,9 @@
     "day": "7",
     "order": 1,
     "kind": "spot",
-    "lat": 38.927769,
-    "lng": 121.635675,
-    "src": "osm_gcj02"
+    "lat": 38.927717,
+    "lng": 121.635811,
+    "src": "tencent_poi"
   },
   {
     "id": "zhongshan_sq",
@@ -138,9 +138,9 @@
     "day": "7",
     "order": 2,
     "kind": "spot",
-    "lat": 38.92154,
-    "lng": 121.643785,
-    "src": "osm_gcj02"
+    "lat": 38.921532,
+    "lng": 121.643851,
+    "src": "tencent_poi"
   },
   {
     "id": "qingniwa",
@@ -149,9 +149,9 @@
     "day": "7",
     "order": 3,
     "kind": "hotel",
-    "lat": 38.9136,
-    "lng": 121.632139,
-    "src": "geocoded"
+    "lat": 38.916813,
+    "lng": 121.63139,
+    "src": "tencent_poi"
   },
   {
     "id": "dalian_nb",
@@ -162,7 +162,7 @@
     "kind": "transport",
     "lat": 39.016807,
     "lng": 121.60744,
-    "src": "geocoded"
+    "src": "tencent_poi"
   },
   {
     "id": "shenyang_st",
@@ -171,9 +171,9 @@
     "day": "4",
     "order": 1,
     "kind": "transport",
-    "lat": 41.792846,
-    "lng": 123.402631,
-    "src": "geocoded"
+    "lat": 41.794601,
+    "lng": 123.393368,
+    "src": "tencent_poi"
   },
   {
     "id": "taiyuan_st",
@@ -182,9 +182,9 @@
     "day": "4",
     "order": 2,
     "kind": "hotel",
-    "lat": 41.791811,
-    "lng": 123.405556,
-    "src": "geocoded"
+    "lat": 41.793949,
+    "lng": 123.416432,
+    "src": "tencent_poi"
   },
   {
     "id": "gugong",
@@ -193,9 +193,9 @@
     "day": "5",
     "order": 1,
     "kind": "spot",
-    "lat": 41.798511,
-    "lng": 123.455745,
-    "src": "osm_gcj02"
+    "lat": 41.798456,
+    "lng": 123.455654,
+    "src": "tencent_poi"
   },
   {
     "id": "shuaifu",
@@ -204,9 +204,9 @@
     "day": "5",
     "order": 2,
     "kind": "spot",
-    "lat": 41.794504,
-    "lng": 123.457766,
-    "src": "osm_gcj02"
+    "lat": 41.794085,
+    "lng": 123.458056,
+    "src": "tencent_poi"
   },
   {
     "id": "zhongjie",
@@ -215,9 +215,9 @@
     "day": "5",
     "order": 3,
     "kind": "spot",
-    "lat": 41.801147,
-    "lng": 123.461449,
-    "src": "geocoded"
+    "lat": 41.801381,
+    "lng": 123.462181,
+    "src": "tencent_poi"
   },
   {
     "id": "xita",
@@ -226,9 +226,9 @@
     "day": "5",
     "order": 4,
     "kind": "food",
-    "lat": 41.804891,
-    "lng": 123.408553,
-    "src": "osm_gcj02"
+    "lat": 41.805094,
+    "lng": 123.408718,
+    "src": "tencent_poi"
   },
   {
     "id": "918",
@@ -239,7 +239,7 @@
     "kind": "spot",
     "lat": 41.83639,
     "lng": 123.46752,
-    "src": "geocoded"
+    "src": "tencent_poi"
   },
   {
     "id": "beiling",
@@ -248,9 +248,9 @@
     "day": "6",
     "order": 2,
     "kind": "spot",
-    "lat": 41.850962,
-    "lng": 123.430844,
-    "src": "osm_gcj02"
+    "lat": 41.851591,
+    "lng": 123.42857,
+    "src": "tencent_poi"
   },
   {
     "id": "shenyang_nb",
@@ -259,8 +259,8 @@
     "day": "T",
     "order": 0,
     "kind": "transport",
-    "lat": 41.819725,
-    "lng": 123.435877,
-    "src": "osm_gcj02"
+    "lat": 41.819465,
+    "lng": 123.435883,
+    "src": "tencent_poi"
   }
 ]
