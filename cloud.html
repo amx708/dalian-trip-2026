@@ -1172,7 +1172,6 @@
 <!--MAP_PANEL_START-->
 <section class="panel" id="map">
   <style>
-    #tmap{height:540px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(20,136,201,.10);background:#eef3f7}
     .map-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0 12px}
     .map-city{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:7px 16px;font-size:14px;cursor:pointer;color:var(--ink);transition:.15s}
     .map-city:hover{background:#f0f6fa}
@@ -1217,39 +1216,73 @@
     var map, mLayer, pLayer, info, inited=false, curCity="dl";
 
     function initMap(){
-      if(inited) return; inited=true;
+      if(inited) return;
       var box=document.getElementById("tmap");
+      if(!box) return;
+      // 面板刚从 display:none 切过来时，容器可能还没获得尺寸；TMap 在 0 尺寸容器里初始化会崩溃
+      if(box.offsetWidth===0 || box.offsetHeight===0){
+        setTimeout(initMap,80);
+        return;
+      }
       if(typeof TMap==="undefined"){
         box.innerHTML='<div class="map-err">⚠️ 地图组件加载失败<br>请确认网络可访问腾讯地图（map.qq.com），或用手机系统浏览器打开本页面。</div>';
         return;
       }
-      map=new TMap.Map("tmap",{center:new TMap.LatLng(CENTER.dl[0],CENTER.dl[1]),zoom:11});
-      mLayer=new TMap.MultiMarker({map:map,geometries:[]});
-      pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
-      info=new TMap.InfoWindow({map:map,visible:false});
-      mLayer.on("click",function(e){
-        var p=e.geometry.properties;
-        var tag = p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
-        var cityName = p.city==="dl"?"大连":"沈阳";
-        // 标点弹窗内直接给导航入口：点一下唤起高德/腾讯地图 App 或网页版，真正"能用"
-        var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
-        var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
-        info.setPosition(e.geometry.position);
-        info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px">'
-          +'<b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag
-          +'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a>'
-          +'<a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
-        info.setVisible(true);
-      });
-      renderCity("dl");
+      try{
+        map=new TMap.Map("tmap",{center:new TMap.LatLng(CENTER.dl[0],CENTER.dl[1]),zoom:11});
+        mLayer=new TMap.MultiMarker({map:map,geometries:[]});
+        pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
+        info=new TMap.InfoWindow({map:map,visible:false});
+        mLayer.on("click",function(e){
+          var p=e.geometry.properties;
+          if(!p) return;
+          var tag = p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
+          var cityName = p.city==="dl"?"大连":"沈阳";
+          // 标点弹窗内直接给导航入口：点一下唤起高德/腾讯地图 App 或网页版，真正"能用"
+          var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
+          var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
+          var pos=e.geometry.position;
+          if(pos) info.setPosition(pos);
+          info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px">'
+            +'<b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag
+            +'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a>'
+            +'<a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
+          info.setVisible(true);
+        });
+        inited=true;
+        renderCity("dl");
+      }catch(e){
+        box.innerHTML='<div class="map-err">⚠️ 地图初始化失败<br>'+(e&&e.message?e.message:'请检查网络或腾讯地图 Key 配置')+'</div>';
+        inited=false;
+      }
     }
     window.switchCity=function(city){
       curCity=city;
       document.getElementById("cityDl").classList.toggle("on",city==="dl");
       document.getElementById("citySy").classList.toggle("on",city==="sy");
+      renderList(city); // 名单不依赖地图，始终渲染
       if(!inited){ initMap(); }
-      if(inited){ renderCity(city); if(map){ map.resize(); } }
+      if(inited && map){ try{ renderCity(city); map.resize(); }catch(e){ console.warn("renderCity error",e); } }
     };
+    function renderList(city){
+      var pts=POIS.filter(function(p){return p.city===city;});
+      var days=[];
+      pts.forEach(function(p){ if(p.day!=="T"&&days.indexOf(p.day)<0) days.push(p.day); });
+      days.sort();
+      var lh="";
+      days.forEach(function(d){
+        var lbl=DAY_LABEL[city][d]||("Day"+d);
+        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS[d]+'"></i>'+lbl+'</div>';
+        pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;}).forEach(function(p){ lh+=mlItem(p); });
+      });
+      var trans=pts.filter(function(p){return p.day==="T";});
+      if(trans.length){
+        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</div>';
+        trans.forEach(function(p){ lh+=mlItem(p); });
+      }
+      var listEl=document.getElementById("mapList");
+      if(listEl) listEl.innerHTML=lh;
+    }
     function mlItem(p){
       var tag=p.kind==="hotel"?"住宿":p.kind==="transport"?"交通":p.kind==="food"?"美食":"景点";
       return '<div class="ml-item" id="ml-'+p.id+'" onclick="focusPoi(\''+p.id+'\')">'
@@ -1257,12 +1290,16 @@
         +'<span class="ml-name">'+p.name+'</span>'
         +'<span class="ml-tag">'+tag+'</span></div>';
     }
-    window.focusPoi=function(id){
+    window.focusPoi=function(id,retry){
       var p=null;
       for(var i=0;i<POIS.length;i++){ if(POIS[i].id===id){p=POIS[i];break;} }
       if(!p) return;
+      if(!map){
+        if(!inited) initMap();
+        if((retry||0)<8){ setTimeout(function(){ focusPoi(id,(retry||0)+1); },120); }
+        return;
+      }
       if(p.city!==curCity){ switchCity(p.city); }
-      if(!map) return;
       var ll=new TMap.LatLng(p.lat,p.lng);
       map.setCenter(ll);
       map.setZoom(15);
@@ -1318,20 +1355,6 @@
       }).join("");
       html+='<span class="lg-item"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</span>';
       lg.innerHTML=html;
-      // 渲染右侧/下方可点击景点名单（按天分组，含交通枢纽）
-      var listEl=document.getElementById("mapList");
-      var lh="";
-      days.forEach(function(d){
-        var lbl=DAY_LABEL[city][d]||("Day"+d);
-        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS[d]+'"></i>'+lbl+'</div>';
-        pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;}).forEach(function(p){ lh+=mlItem(p); });
-      });
-      var trans=pts.filter(function(p){return p.day==="T";});
-      if(trans.length){
-        lh+='<div class="ml-day"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</div>';
-        trans.forEach(function(p){ lh+=mlItem(p); });
-      }
-      listEl.innerHTML=lh;
     }
     window.__initTripMap=function(){ if(!inited){ initMap(); } };
     window.__tripMapResize=function(){ if(map){ setTimeout(function(){ map.resize(); },50); } };
@@ -1357,8 +1380,9 @@
     // 地图面板：首次进入时初始化；面板由隐藏(display:none)变可见后必须 resize，
     // 否则腾讯地图 GL 画布停留在 0 尺寸、整片空白（表现为"点出来没反应"）。
     if(name==='map'){
+      if(panel){ panel.offsetHeight; } // 强制浏览器回流，确保容器已获得实际尺寸
       if(window.__initTripMap) window.__initTripMap();
-      setTimeout(function(){ if(window.__tripMapResize) window.__tripMapResize(); },60);
+      setTimeout(function(){ if(window.__tripMapResize) window.__tripMapResize(); },150);
     }
     return panel;
   }
