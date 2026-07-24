@@ -1220,15 +1220,23 @@
       if(!box) return;
       // 面板刚从 display:none 切过来时，容器可能还没获得尺寸；TMap 在 0 尺寸容器里初始化会崩溃
       if(box.offsetWidth===0 || box.offsetHeight===0){
+        console.log('[initMap] box zero size, retry');
         setTimeout(initMap,80);
         return;
       }
       if(typeof TMap==="undefined"){
+        console.log('[initMap] TMap undefined');
         box.innerHTML='<div class="map-err">⚠️ 地图组件加载失败<br>请确认网络可访问腾讯地图（map.qq.com），或用手机系统浏览器打开本页面。</div>';
         return;
       }
+      console.log('[initMap] start', 'box:', box.offsetWidth+'x'+box.offsetHeight, 'CENTER:', CENTER, 'TMap.version:', (window.TMap&&TMap.version));
       try{
-        map=new TMap.Map("tmap",{center:new TMap.LatLng(CENTER.dl[0],CENTER.dl[1]),zoom:11});
+        console.log('[initMap] creating LatLng...');
+        var center=new TMap.LatLng(CENTER.dl[0],CENTER.dl[1]);
+        console.log('[initMap] LatLng ok', center);
+        console.log('[initMap] creating Map...');
+        map=new TMap.Map("tmap",{center:center,zoom:11});
+        console.log('[initMap] Map ok');
         mLayer=new TMap.MultiMarker({map:map,geometries:[]});
         pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
         info=new TMap.InfoWindow({map:map,visible:false});
@@ -1357,11 +1365,21 @@
     }
     window.__initTripMap=function(){
       if(inited) return;
-      // TMap gljs 入口脚本是同步 loader(立即填 window.TMap={}),
-      // 但 TMap 主库(Map/LatLng/MultiMarker/InfoWindow 等)是 loader 异步加载的,
-      // 必须等到核心类齐全才能 new,否则触发 "Cannot read properties of null (reading 'x')"
       var box=document.getElementById("tmap");
       if(!box) return;
+      function doInit(){ if(!inited) initMap(); }
+      // 优先使用 TMap 官方加载完成回调 TMap.__load
+      // 该回调会在 gljs loader 把 Map/LatLng/InfoWindow 等所有核心子模块加载完后触发
+      if(window.TMap && typeof window.TMap.__load === 'function'){
+        console.log('[__initTripMap] using TMap.__load callback');
+        window.TMap.__load(function(meta){
+          console.log('[__initTripMap] __load fired, version=', meta && meta.version);
+          doInit();
+        });
+        return;
+      }
+      // fallback: 手动轮询核心类是否就绪
+      console.log('[__initTripMap] fallback polling');
       var attempts=0;
       (function tryStart(){
         if(inited) return;
