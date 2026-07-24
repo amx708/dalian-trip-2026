@@ -1214,6 +1214,25 @@
     var CENTER = {dl:[38.90,121.62], sy:[41.80,123.43]};
     var map, mLayer, pLayer, info, inited=false, initializing=false, curCity="dl";
 
+    // ——— 安全辅助 ———
+    // TMap v1.exp 的 InfoWindow 不再暴露 setVisible()，改用 open/close 或 show/hide（运行时特性检测 + 异常兜底）
+    function safeLatLng(lat,lng){
+      if(lat==null||lng==null||isNaN(lat)||isNaN(lng)) return null;
+      return new TMap.LatLng(lat,lng);
+    }
+    function showInfo(){
+      if(!info) return;
+      if(typeof info.open==='function'){ try{ info.open(); return; }catch(e){ console.warn('info.open failed',e); } }
+      if(typeof info.show==='function'){ try{ info.show(); return; }catch(e){ console.warn('info.show failed',e); } }
+      if(typeof info.setVisible==='function'){ try{ info.setVisible(true); return; }catch(e){ console.warn('info.setVisible failed',e); } }
+    }
+    function hideInfo(){
+      if(!info) return;
+      if(typeof info.close==='function'){ try{ info.close(); return; }catch(e){ console.warn('info.close failed',e); } }
+      if(typeof info.hide==='function'){ try{ info.hide(); return; }catch(e){ console.warn('info.hide failed',e); } }
+      if(typeof info.setVisible==='function'){ try{ info.setVisible(false); return; }catch(e){ console.warn('info.setVisible failed',e); } }
+    }
+
     function initMap(){
       if(inited || initializing) return;
       initializing=true;
@@ -1250,6 +1269,7 @@
             console.log('[initMap] MultiPolyline ok');
             info=new TMap.InfoWindow({map:map,position:center,visible:false});
             console.log('[initMap] InfoWindow ok');
+            try{ console.log('[initMap] InfoWindow methods:', Object.keys(info).filter(function(k){return typeof info[k]==='function';}).join(',')); }catch(_){}
             mLayer.on("click",function(e){
               var p=e.geometry.properties;
               if(!p) return;
@@ -1257,13 +1277,13 @@
               var cityName = p.city==="dl"?"大连":"沈阳";
               var amap='https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&src=dalian_trip&coordinate=gaode&callnative=1';
               var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
-              var pos=e.geometry.position;
+              var pos=safeLatLng(p.lat,p.lng);
               if(pos) info.setPosition(pos);
               info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px">'
                 +'<b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag
                 +'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a>'
                 +'<a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
-              info.setVisible(true);
+              showInfo();
             });
             inited=true;
             initializing=false;
@@ -1327,7 +1347,8 @@
         return;
       }
       if(p.city!==curCity){ switchCity(p.city); }
-      var ll=new TMap.LatLng(p.lat,p.lng);
+      var ll=safeLatLng(p.lat,p.lng);
+      if(!ll){ console.warn('[focusPoi] 坐标无效，跳过', p); return; }
       map.setCenter(ll);
       map.setZoom(15);
       var tag=p.kind==="hotel"?" · 住宿":p.kind==="transport"?" · 交通":p.kind==="food"?" · 美食":"";
@@ -1336,7 +1357,7 @@
       var qq='https://apis.map.qq.com/uri/v1/marker?marker=coord:'+p.lat+','+p.lng+';title:'+encodeURIComponent(p.name)+';addr:'+encodeURIComponent(cityName)+'&referer=dalian_trip';
       info.setPosition(ll);
       info.setContent('<div style="padding:8px 12px;font-size:13px;line-height:1.6;min-width:170px"><b>'+p.name+'</b><br>'+cityName+" · Day"+p.day+tag+'<br><a href="'+amap+'" target="_blank" style="color:#1E88E5;text-decoration:none;margin-right:12px">🧭 高德导航</a><a href="'+qq+'" target="_blank" style="color:#1E88E5;text-decoration:none">🗺️ 腾讯导航</a></div>');
-      info.setVisible(true);
+      showInfo();
       var items=document.querySelectorAll(".ml-item");
       for(var k=0;k<items.length;k++){ items[k].classList.remove("on"); }
       var me=document.getElementById("ml-"+id);
@@ -1348,7 +1369,10 @@
       pts.forEach(function(p){ if(p.day!=="T"&&days.indexOf(p.day)<0) days.push(p.day); });
       days.sort();
       var styles={};
-      var geos=pts.map(function(p){
+      var geos=[];
+      pts.forEach(function(p){
+        var ll=safeLatLng(p.lat,p.lng);
+        if(!ll){ console.warn('[renderCity] 坐标无效，跳过标记', p.id, p.lat, p.lng); return; }
         var c=DAY_COLORS[p.day]||"#333";
         // 用腾讯地图默认图钉，按天着色；TMap新版要求传入 MarkerStyle 实例
         var sid="m"+p.day;
@@ -1357,7 +1381,7 @@
         }else{
           styles[sid]={width:32,height:44,anchor:{x:16,y:44},color:c};
         }
-        return {id:p.id,styleId:sid,position:new TMap.LatLng(p.lat,p.lng),properties:p};
+        geos.push({id:p.id,styleId:sid,position:ll,properties:p});
       });
       mLayer.setStyles(styles);
       mLayer.setGeometries(geos);
@@ -1371,21 +1395,27 @@
           }else{
             pstyles[psid]={color:DAY_COLORS[d]||"#333",width:5,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round"};
           }
-          pgeos.push({id:"d"+d,styleId:psid,paths:dp.map(function(p){return new TMap.LatLng(p.lat,p.lng);})});
+          pgeos.push({id:"d"+d,styleId:psid,paths:dp.map(function(p){return safeLatLng(p.lat,p.lng);}).filter(function(x){return x;})});
         }
       });
       pLayer.setStyles(pstyles);
       pLayer.setGeometries(pgeos);
-      var minLat=90,minLng=180,maxLat=-90,maxLng=-180;
+      var minLat=90,minLng=180,maxLat=-90,maxLng=-180,validCount=0;
       pts.forEach(function(p){
+        if(p.lat==null||p.lng==null||isNaN(p.lat)||isNaN(p.lng)) return;
+        validCount++;
         if(p.lat<minLat)minLat=p.lat; if(p.lat>maxLat)maxLat=p.lat;
         if(p.lng<minLng)minLng=p.lng; if(p.lng>maxLng)maxLng=p.lng;
       });
-      map.setCenter(new TMap.LatLng((minLat+maxLat)/2,(minLng+maxLng)/2));
-      try{
-        var b=new TMap.LatLngBounds(new TMap.LatLng(minLat,minLng),new TMap.LatLng(maxLat,maxLng));
-        map.fitBounds(b,{padding:{top:50,bottom:50,left:50,right:50}});
-      }catch(e){ map.setZoom(11); }
+      if(validCount){
+        map.setCenter(new TMap.LatLng((minLat+maxLat)/2,(minLng+maxLng)/2));
+        try{
+          var b=new TMap.LatLngBounds(new TMap.LatLng(minLat,minLng),new TMap.LatLng(maxLat,maxLng));
+          map.fitBounds(b,{padding:{top:50,bottom:50,left:50,right:50}});
+        }catch(e){ map.setZoom(11); }
+      }else{
+        map.setZoom(11);
+      }
       var lg=document.getElementById("mapLegend");
       var html=days.map(function(d){
         return '<span class="lg-item"><i style="background:'+DAY_COLORS[d]+'"></i>'+(DAY_LABEL[city][d]||("Day"+d))+'</span>';
