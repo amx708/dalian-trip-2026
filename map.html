@@ -338,36 +338,24 @@
       if(!box) return;
       // 面板刚从 display:none 切过来时，容器可能还没获得尺寸；TMap 在 0/NaN 尺寸容器里初始化会崩溃
       if(!box.offsetWidth || !box.offsetHeight || isNaN(box.offsetWidth) || isNaN(box.offsetHeight)){
-        console.log('[initMap] box size invalid, retry', box.offsetWidth, box.offsetHeight);
         setTimeout(initMap,120);
         return;
       }
       if(typeof TMap==="undefined"){
-        console.log('[initMap] TMap undefined');
         box.innerHTML='<div class="map-err">⚠️ 地图组件加载失败<br>请确认网络可访问腾讯地图（map.qq.com），或用手机系统浏览器打开本页面。</div>';
         return;
       }
-      console.log('[initMap] start', 'box:', box.offsetWidth+'x'+box.offsetHeight, 'CENTER:', CENTER, 'TMap.version:', (window.TMap&&TMap.version));
       try{
-        console.log('[initMap] creating LatLng...');
         var center=new TMap.LatLng(CENTER.dl[0],CENTER.dl[1]);
-        console.log('[initMap] LatLng ok', center);
-        console.log('[initMap] creating Map...');
         map=new TMap.Map("tmap",{center:center,zoom:11});
-        console.log('[initMap] Map ok');
         // TMap Map 创建后内部渲染/WebGL初始化是异步的；立即创建 MultiMarker/InfoWindow
         // 会导致内部状态不一致（InfoWindow position / projectContainer sizeContainer 报类型错）。
         // 等 150ms 让 Map 内部就绪后再创建覆盖物和事件。
         setTimeout(function(){
           try{
-            console.log('[initMap] creating overlays...');
             mLayer=new TMap.MultiMarker({map:map,geometries:[]});
-            console.log('[initMap] MultiMarker ok');
             pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
-            console.log('[initMap] MultiPolyline ok');
             info=new TMap.InfoWindow({map:map,position:center,visible:false});
-            console.log('[initMap] InfoWindow ok');
-            try{ console.log('[initMap] InfoWindow methods:', Object.keys(info).filter(function(k){return typeof info[k]==='function';}).join(',')); }catch(_){}
             mLayer.on("click",function(e){
               var p=e.geometry.properties;
               if(!p) return;
@@ -385,9 +373,7 @@
             });
             inited=true;
             initializing=false;
-            console.log('[initMap] rendering dl...');
             renderCity("dl");
-            console.log('[initMap] all done');
           }catch(e2){
             console.error('[initMap] overlay init error', e2);
             box.innerHTML='<div class="map-err">⚠️ 地图初始化失败<br>'+(e2&&e2.message?e2.message:'覆盖物初始化失败')+'</div>';
@@ -537,15 +523,12 @@
       // 优先使用 TMap 官方加载完成回调 TMap.__load
       // 该回调会在 gljs loader 把 Map/LatLng/InfoWindow 等所有核心子模块加载完后触发
       if(window.TMap && typeof window.TMap.__load === 'function'){
-        console.log('[__initTripMap] using TMap.__load callback');
         window.TMap.__load(function(meta){
-          console.log('[__initTripMap] __load fired, version=', meta && meta.version);
           doInit();
         });
         return;
       }
       // fallback: 手动轮询核心类是否就绪
-      console.log('[__initTripMap] fallback polling');
       var attempts=0;
       (function tryStart(){
         if(inited) return;
