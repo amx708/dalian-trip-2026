@@ -1350,9 +1350,14 @@
       var styles={};
       var geos=pts.map(function(p){
         var c=DAY_COLORS[p.day]||"#333";
-        // 用腾讯地图默认图钉，按天着色（content自定义DOM在某些浏览器/版本不渲染，默认marker最稳）
-        styles["m"+p.day]={width:32,height:44,anchor:{x:16,y:44},color:c};
-        return {id:p.id,styleId:"m"+p.day,position:new TMap.LatLng(p.lat,p.lng),properties:p};
+        // 用腾讯地图默认图钉，按天着色；TMap新版要求传入 MarkerStyle 实例
+        var sid="m"+p.day;
+        if(window.TMap && window.TMap.MarkerStyle){
+          styles[sid]=new TMap.MarkerStyle({width:32,height:44,anchor:{x:16,y:44},color:c});
+        }else{
+          styles[sid]={width:32,height:44,anchor:{x:16,y:44},color:c};
+        }
+        return {id:p.id,styleId:sid,position:new TMap.LatLng(p.lat,p.lng),properties:p};
       });
       mLayer.setStyles(styles);
       mLayer.setGeometries(geos);
@@ -1360,8 +1365,13 @@
       days.forEach(function(d){
         var dp=pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;});
         if(dp.length>=2){
-          pstyles["s"+d]={color:DAY_COLORS[d]||"#333",width:5,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round"};
-          pgeos.push({id:"d"+d,styleId:"s"+d,paths:dp.map(function(p){return new TMap.LatLng(p.lat,p.lng);})});
+          var psid="s"+d;
+          if(window.TMap && window.TMap.PolylineStyle){
+            pstyles[psid]=new TMap.PolylineStyle({color:DAY_COLORS[d]||"#333",width:5,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round"});
+          }else{
+            pstyles[psid]={color:DAY_COLORS[d]||"#333",width:5,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round"};
+          }
+          pgeos.push({id:"d"+d,styleId:psid,paths:dp.map(function(p){return new TMap.LatLng(p.lat,p.lng);})});
         }
       });
       pLayer.setStyles(pstyles);
