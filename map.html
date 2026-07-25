@@ -498,6 +498,9 @@
           lh+='<div style="font-size:12px;color:#FB8C00;font-weight:700;margin:10px 0 4px;padding-left:2px;letter-spacing:1px">🍜 '+p.name+'</div>';
           lh+=mlItem(p, true);
         });
+        if(city==="sy" && d==="6"){
+          lh+='<div style="font-size:12px;color:#0d47a1;background:#e3f2fd;border-radius:8px;padding:8px 10px;margin:8px 2px 4px;line-height:1.5"><b>💡 行李提示</b>：早上可能需要先去高铁站寄存行李，再前往辽博。</div>';
+        }
       });
       if(!filterDay || filterDay==="all"){
         var trans=pts.filter(function(p){return p.day==="T";});
