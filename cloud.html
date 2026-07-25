@@ -1477,9 +1477,9 @@
         // 用腾讯地图默认图钉，按天着色；TMap新版要求传入 MarkerStyle 实例
         var sid=p.kind==="station" ? "mstation" : ("m"+p.day);
         if(window.TMap && window.TMap.MarkerStyle){
-          styles[sid]=new TMap.MarkerStyle({width:32,height:44,anchor:{x:16,y:44},color:c});
+          styles[sid]=new TMap.MarkerStyle({width:22,height:30,anchor:{x:11,y:30},color:c});
         }else{
-          styles[sid]={width:32,height:44,anchor:{x:16,y:44},color:c};
+          styles[sid]={width:22,height:30,anchor:{x:11,y:30},color:c};
         }
         var g={id:p.id,styleId:sid,position:ll,properties:p};
         geos.push(g);
@@ -1546,7 +1546,7 @@
         // 仅显示可视区域内的标签，避免离屏标签堆积
         if(pt.x< -120 || pt.x> box.offsetWidth+120 || pt.y< -40 || pt.y> box.offsetHeight+40) return;
         var cls="map-label"+(p.kind==="food"?" food":"")+(p.kind==="station"?" station":"")+(p.kind==="hotel"?" hotel":"")+(p.kind==="transport"?" transport":"");
-        html+='<div class="'+cls+'" style="left:'+pt.x+'px;top:'+(pt.y-46)+'px">'+p.name+'</div>';
+        html+='<div class="'+cls+'" style="left:'+pt.x+'px;top:'+(pt.y-32)+'px">'+p.name+'</div>';
       });
       if(labelLayer._lastHtml!==html){ labelLayer.innerHTML=html; labelLayer._lastHtml=html; }
     }
