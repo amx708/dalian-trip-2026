@@ -288,7 +288,13 @@
     .lg-item i{width:12px;height:12px;border-radius:3px;display:inline-block}
     .map-err{padding:50px 20px;text-align:center;color:var(--sub);font-size:14px;line-height:1.7}
     .map-wrap{display:block;margin-top:4px}
-    #tmap{width:100%;height:540px;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(20,136,201,.10);background:#eef3f7}
+    #tmap{position:relative;width:100%;height:540px;border-radius:16px;overflow:hidden;box-shadow:0 4px 18px rgba(20,136,201,.10);background:#eef3f7}
+    #mapLabelLayer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:6}
+    .map-label{position:absolute;white-space:nowrap;font-size:12px;font-weight:700;color:#fff;background:rgba(30,41,59,.78);padding:2px 8px;border-radius:11px;transform:translate(-50%,-100%);box-shadow:0 1px 5px rgba(0,0,0,.35);line-height:1.4}
+    .map-label.food{background:rgba(251,140,0,.9)}
+    .map-label.station{background:rgba(92,107,192,.92)}
+    .map-label.hotel{background:rgba(0,172,193,.92)}
+    .map-label.transport{background:rgba(120,120,120,.9)}
     .map-list{width:100%;border:1px solid var(--line);border-radius:12px;padding:8px;margin-top:12px;background:var(--card)}
     .ml-day{display:flex;align-items:center;gap:6px;font-weight:600;font-size:13px;margin:10px 6px 6px;color:var(--ink)}
     .ml-day i{width:10px;height:10px;border-radius:3px;display:inline-block}
@@ -343,7 +349,7 @@
     var DAY_LABEL_PLAN2 = {"dl":{"1":"Day1 抵达·初体验","2":"Day2 老虎滩·棒棰岛","3":"Day3 东港·威尼斯","4":"Day4 大连→沈阳（G8101）","7":"Day7 俄街·中山广场"},"sy":{"4":"Day4 抵达·故宫·帅府·沈博·西塔·中街","5":"Day5 九一八·工业博物馆·彩电塔","6":"Day6 辽博·高铁回大连"}};
     var DAY_LABEL = DAY_LABEL_PLAN2;
     var CENTER = {dl:[38.90,121.62], sy:[41.80,123.43]};
-    var map, mLayer, pLayer, info, inited=false, initializing=false, curCity="dl", curFilter="all", curPlan=1;
+    var map, mLayer, pLayer, info, labelLayer=null, inited=false, initializing=false, curCity="dl", curFilter="all", curPlan=1;
 
     // ——— 安全辅助 ———
     // TMap v1.exp 的 InfoWindow 不再暴露 setVisible()，改用 open/close 或 show/hide（运行时特性检测 + 异常兜底）
@@ -387,14 +393,20 @@
         setTimeout(function(){
           try{
             var markerOpts={map:map,geometries:[]};
-            try{
-              if(window.TMap && window.TMap.LabelStyle){
-                markerOpts.labelStyles={poi:new TMap.LabelStyle({color:"#ffffff",size:12,offset:{x:0,y:-30},alignment:"center",strokeColor:"#222222",strokeWidth:3})};
-              }
-            }catch(e){ console.warn("[initMap] LabelStyle 初始化跳过",e); }
             mLayer=new TMap.MultiMarker(markerOpts);
             pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
             info=new TMap.InfoWindow({map:map,position:center,visible:false});
+            // 自定义 DOM 标签层：不点击也常驻显示景点名（TMap 自带 LabelStyle 在部分环境不渲染，故用 DOM 层）
+            try{
+              if(getComputedStyle(box).position==="static") box.style.position="relative";
+              labelLayer=document.createElement("div");
+              labelLayer.id="mapLabelLayer";
+              box.appendChild(labelLayer);
+              ["bounds_changed","zoom_changed","zoom_change","center_changed","center_change","idle","moveend","drag","dragging","bounds_change"].forEach(function(ev){
+                try{ map.on(ev, updateLabels); }catch(e){}
+              });
+              try{ setInterval(function(){ try{ updateLabels(); }catch(e){} }, 500); }catch(e){}  // 兜底：保证平移缩放后标签始终跟随
+            }catch(e){ console.warn("[initMap] labelLayer 创建失败",e); }
             mLayer.on("click",function(e){
               var p=e.geometry.properties;
               if(!p) return;
@@ -560,7 +572,6 @@
           styles[sid]={width:32,height:44,anchor:{x:16,y:44},color:c};
         }
         var g={id:p.id,styleId:sid,position:ll,properties:p};
-        if(window.TMap && window.TMap.LabelStyle){ g.label={content:p.name,styleId:"poi"}; }
         geos.push(g);
       });
       mLayer.setStyles(styles);
@@ -602,6 +613,32 @@
       }).join("");
       html+='<span class="lg-item"><i style="background:'+DAY_COLORS.T+'"></i>交通枢纽</span>';
       lg.innerHTML=html;
+      try{ updateLabels(); }catch(e){ console.warn("[renderCity] updateLabels 失败",e); }
+      try{ setTimeout(updateLabels, 300); }catch(e){}  // fitBounds 动画结束后坐标才稳定，再校正一次
+    }
+    // 把当前城市/筛选下的 POI 名称以 DOM 标签形式常驻显示在红点上方（不点击也显示）
+    function updateLabels(){
+      if(!labelLayer || !map) return;
+      var box=labelLayer.parentNode;
+      if(!box) return;
+      var pts=POIS.filter(function(p){return p.city===curCity;});
+      if(curFilter && curFilter!=="all") pts=pts.filter(function(p){return p.day===curFilter;});
+      var html="";
+      pts.forEach(function(p){
+        var ll=safeLatLng(p.lat,p.lng);
+        if(!ll) return;
+        var pt=null;
+        try{
+          if(typeof map.projectToContainer==="function"){ pt=map.projectToContainer(ll); }
+          else if(typeof map.projectToScreen==="function"){ var sp=map.projectToScreen(ll); var rb=box.getBoundingClientRect(); pt={x:sp.x-rb.left, y:sp.y-rb.top}; }
+        }catch(e){ return; }
+        if(!pt || pt.x==null || pt.y==null || isNaN(pt.x) || isNaN(pt.y)) return;
+        // 仅显示可视区域内的标签，避免离屏标签堆积
+        if(pt.x< -120 || pt.x> box.offsetWidth+120 || pt.y< -40 || pt.y> box.offsetHeight+40) return;
+        var cls="map-label"+(p.kind==="food"?" food":"")+(p.kind==="station"?" station":"")+(p.kind==="hotel"?" hotel":"")+(p.kind==="transport"?" transport":"");
+        html+='<div class="'+cls+'" style="left:'+pt.x+'px;top:'+(pt.y-46)+'px">'+p.name+'</div>';
+      });
+      if(labelLayer._lastHtml!==html){ labelLayer.innerHTML=html; labelLayer._lastHtml=html; }
     }
     window.__initTripMap=function(){
       if(inited) return;
