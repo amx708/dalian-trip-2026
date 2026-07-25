@@ -1500,9 +1500,9 @@
         if(dp.length>=2){
           var psid="s"+d;
           if(window.TMap && window.TMap.PolylineStyle){
-            pstyles[psid]=new TMap.PolylineStyle({color:DAY_COLORS[d]||"#333",width:5,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round"});
+            pstyles[psid]=new TMap.PolylineStyle({color:DAY_COLORS[d]||"#333",width:2,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round",dashArray:[6,4]});
           }else{
-            pstyles[psid]={color:DAY_COLORS[d]||"#333",width:5,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round"};
+            pstyles[psid]={color:DAY_COLORS[d]||"#333",width:2,borderWidth:1,borderColor:"#ffffff",lineCap:"round",lineJoin:"round",dashArray:[6,4]};
           }
           pgeos.push({id:"d"+d,styleId:psid,paths:dp.map(function(p){return safeLatLng(p.lat,p.lng);}).filter(function(x){return x;})});
         }
