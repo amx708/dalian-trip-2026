@@ -386,7 +386,13 @@
         // 等 150ms 让 Map 内部就绪后再创建覆盖物和事件。
         setTimeout(function(){
           try{
-            mLayer=new TMap.MultiMarker({map:map,geometries:[]});
+            var markerOpts={map:map,geometries:[]};
+            try{
+              if(window.TMap && window.TMap.LabelStyle){
+                markerOpts.labelStyles={poi:new TMap.LabelStyle({color:"#ffffff",size:12,offset:{x:0,y:-30},alignment:"center",strokeColor:"#222222",strokeWidth:3})};
+              }
+            }catch(e){ console.warn("[initMap] LabelStyle 初始化跳过",e); }
+            mLayer=new TMap.MultiMarker(markerOpts);
             pLayer=new TMap.MultiPolyline({map:map,geometries:[]});
             info=new TMap.InfoWindow({map:map,position:center,visible:false});
             mLayer.on("click",function(e){
@@ -553,7 +559,9 @@
         }else{
           styles[sid]={width:32,height:44,anchor:{x:16,y:44},color:c};
         }
-        geos.push({id:p.id,styleId:sid,position:ll,properties:p});
+        var g={id:p.id,styleId:sid,position:ll,properties:p};
+        if(window.TMap && window.TMap.LabelStyle){ g.label={content:p.name,styleId:"poi"}; }
+        geos.push(g);
       });
       mLayer.setStyles(styles);
       mLayer.setGeometries(geos);
