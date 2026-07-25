@@ -473,7 +473,13 @@
       days.forEach(function(d){
         var lbl=(DAY_LABEL[city]&&DAY_LABEL[city][d])||("Day"+d);
         lh+='<div class="ml-day"><i style="background:'+DAY_COLORS[d]+'"></i>'+lbl+'</div>';
-        pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;}).forEach(function(p){ lh+=mlItem(p); });
+        var dayPts=pts.filter(function(p){return p.day===d;}).sort(function(a,b){return a.order-b.order;});
+        dayPts.filter(function(p){return p.kind!=="food";}).forEach(function(p){ lh+=mlItem(p); });
+        var dayFoods=dayPts.filter(function(p){return p.kind==="food";});
+        if(dayFoods.length){
+          lh+='<div style="font-size:12px;color:#FB8C00;font-weight:700;margin:10px 0 4px;padding-left:2px;letter-spacing:1px">🍜 美食</div>';
+          dayFoods.forEach(function(p){ lh+=mlItem(p); });
+        }
       });
       if(!filterDay || filterDay==="all"){
         var trans=pts.filter(function(p){return p.day==="T";});
