@@ -1432,9 +1432,9 @@
       var timeHtml=p.time?'<span class="ml-time">'+p.time+'</span>':'';
       return '<div class="ml-item" id="ml-'+p.id+'">'
         +'<span class="ml-dot" style="background:'+DAY_COLORS[p.day]+'"></span>'
+        +'<span class="ml-tag">'+tag+'</span>'
         +(hideName?'':'<span class="ml-name" onclick="focusPoi(\''+p.id+'\')">'+p.name+'</span>')
         +timeHtml
-        +'<span class="ml-tag">'+tag+'</span>'
         +'<a class="ml-nav" href="'+qq+'" target="_blank" title="导航到此处" onclick="event.stopPropagation()">🧭</a></div>';
     }
     window.focusPoi=function(id,retry){
